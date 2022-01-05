@@ -3,7 +3,7 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
-#include "./player.h"
+#include "./includes/player.h"
 
 #define TAMANHO_JANELA 500
 
@@ -27,7 +27,7 @@ void display(void){
     player.Desenha();
 
     if (shot){
-         shot->drawn();
+         shot->draw();
          }
   
    glEnd();
@@ -51,11 +51,15 @@ void idle(void){
     if(keyStatus['d'] == 1){
       player.moveInX(1);
    }
+    if (keyStatus['w'] == 1){
+        player.moveArm(1);
+   }
+    if(keyStatus['s'] == 1){
+      player.moveArm(-1);
+   }
 
    if(shot){
-       shot->move(deltaTime);
-       printf("Move\n");
-    
+       shot->move(deltaTime);    
     if (!shot->valid()) {
             delete shot;
             shot = NULL;
@@ -73,6 +77,13 @@ void keyPress(unsigned char key, int x, int y){
    } 
    if(key == 'd'){
       keyStatus['d'] = 1;      
+   } 
+    // So para teste
+    if (key == 'w'){      
+      keyStatus['w'] = 1;      
+   } 
+   if(key == 's'){
+      keyStatus['s'] = 1;      
    } 
    if(key == ' '){
      shot = player.shootGun();      
