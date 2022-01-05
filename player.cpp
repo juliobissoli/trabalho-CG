@@ -1,46 +1,57 @@
-#include "./player.h" 
+#include "./includes/player.h"
 #include <string>
 #include <cmath>
 
-
-void Player::drownBody(GLint height, GLint width) {
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    // clang-format off
-        glVertex2f(-width/2, 0);
-        glVertex2f(width/2, 0);
-        glVertex2f(width/2, height);
-        glVertex2f(-width/2, height);
-    // clang-format on
-    glEnd();
-}
-
-void Player::drownPlayer(GLint x, GLint y){
+void Player::drawBody(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
-    Player::drownBody(body_height, body_width);
+    rectangle(body_height, body_width, 0.0, 1.0, 0.0);
+    glPopMatrix();
+}
+
+void Player::drawArm(GLint x, GLint y, GLint angle){
+    glPushMatrix();
+    
+    // double gap = sin(angle) * (arm_width / 2);
+    double gap = angle / 2;
+    glTranslatef(x,  (y + gap), 0);
+    glTranslatef(body_width / 2,  body_height / 2, 0);
+    glRotatef(angle, 0, 0, 1);
+    rectangle(arm_height, arm_width, 0.0, 1.0, 1.0);
+
+    glPopMatrix();
+}
+
+void Player::drawPlayer(GLint x, GLint y, GLint angle){
+    
+    glPushMatrix();
+
+    Player::drawBody(x, y);
+    Player::drawArm(x,y, angle);
+
     glPopMatrix();
 
 }
 
-void Player::moveInX(GLfloat dx){ 
+void Player::moveInX(GLfloat dx){
     int unit = MOVE_UNIT;
     gX += (dx * unit);
 }
 
+void Player::moveArm(GLfloat dy){
+    int unit = MOVE_UNIT;
+    if((gAngleArm < 45 && dy > 0) || (gAngleArm > -45 && dy < 0)){
+        gAngleArm += (dy * unit);
+    }
+}
 
-Shot* Player::shootGun() {
-    printf("Angulo ==> \n");
+
+Shot *Player::shootGun(){
     int radius = 10;
-    // int totalAngle = gTheta1 + gTheta2 + gTheta3;
-    int totalAngle = 30;
-    int firstX = gX + radius * sin(-totalAngle * M_PI / 180);
-    int firstY = gY + (body_height / 2) + radius * cos(-totalAngle * M_PI / 180);
-    // int secondX = firstX + (radius)*sin(-(gTheta1 + gTheta2) * M_PI / 180);
-    // int secondY = firstY + (radius)*cos(-(gTheta1 + gTheta2) * M_PI / 180);
-    // int thirdX = secondX + radius * sin(-totalAngle * M_PI / 180);
-    // int thirdY = secondY + radius * cos(-totalAngle * M_PI / 180);
+    int totalAngle = gAngleArm;
+    int positionX = gX + (arm_width) + radius * sin(totalAngle);
+    // Soma a
+    int positionY = gY + (body_height / 2 ) - (arm_height) + (totalAngle / 2) + radius * cos(totalAngle);
 
-    // return new Shot(thirdX, thirdY, totalAngle);
-    return new Shot(firstX, firstY, totalAngle);
+    return new Shot(positionX, positionY, totalAngle);
 }

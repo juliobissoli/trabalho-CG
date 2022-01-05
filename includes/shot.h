@@ -3,6 +3,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "polygon.h"
+
 #define radiusBullet 5
 
 class Shot {
@@ -14,8 +16,7 @@ class Shot {
     GLfloat gVel;
 
   private:
-    void drownCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void drownShot(GLfloat x, GLfloat y);
+    void drawShot(GLfloat x, GLfloat y);
 
   public:
     Shot(GLfloat x, GLfloat y, GLfloat directionAng) {
@@ -27,7 +28,7 @@ class Shot {
         gVel = 0.1;
     };
     ~Shot();
-    void drawn() { drownShot(gX, gY); };
+    void draw() { drawShot(gX, gY); };
     void move(GLdouble deltaTime);
     bool valid();
     void getPos(GLfloat& xOut, GLfloat& yOut) {
