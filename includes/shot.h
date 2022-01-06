@@ -2,9 +2,12 @@
 #define SHOT_H
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <cmath>
+
 
 #include "polygon.h"
-
+#define arm_width 50.0
+#include <stdio.h>
 #define radiusBullet 5
 
 class Shot {
@@ -25,6 +28,13 @@ class Shot {
         gX = x;
         gY = y;
         gDirectionAng = directionAng;
+
+        printf("-> %f\n", gDirectionAng);
+        printf("-> %f\n", gY );
+
+        // gX +=  arm_width * cos(gDirectionAng * M_PI / 180);
+        gY +=  arm_width * sin(gDirectionAng * M_PI / 180);
+        
         gVel = 0.1;
     };
     ~Shot();

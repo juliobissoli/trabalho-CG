@@ -10,6 +10,7 @@ void Shot::drawShot(GLfloat x, GLfloat y) {
     glTranslatef(x, y, 0);
     circle(radiusBullet,0,0,0);
     glPopMatrix();
+
 }
 
 void Shot::move(GLdouble deltaTime) {

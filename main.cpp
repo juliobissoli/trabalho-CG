@@ -46,16 +46,16 @@ void idle(void){
     framerate = 1.0 / deltaTime * 1000;
 
     if (keyStatus['a'] == 1){
-        player.moveInX(-1);
+        player.moveInX(-1 * deltaTime);
    }
     if(keyStatus['d'] == 1){
-      player.moveInX(1);
+      player.moveInX(1 * deltaTime);
    }
     if (keyStatus['w'] == 1){
-        player.moveArm(1);
+        player.moveArm(1 * deltaTime);
    }
     if(keyStatus['s'] == 1){
-      player.moveArm(-1);
+      player.moveArm(-1 * deltaTime);
    }
 
    if(shot){

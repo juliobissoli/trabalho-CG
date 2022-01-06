@@ -22,11 +22,14 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glPushMatrix();
     
     // double gap = sin(angle) * (arm_width / 2);
-    double gap = angle / 2;
-    glTranslatef(x,  (y + gap), 0);
-    glTranslatef(body_width / 2,  body_height / 2, 0);
+    // double gap = angle / 2;
+    glTranslatef(x,  0 , 0);
+    glTranslatef(0 ,  -body_height / 2.0, 0);
     glRotatef(angle, 0, 0, 1);
-    rectangle(arm_height, arm_width, 0.0, 1.0, 1.0);
+    glTranslatef(body_width / 2.0, 0,0);
+
+
+    rectangle(arm_height, arm_width, 0.0, 0.0, 1.0);
 
     glPopMatrix();
 }
@@ -69,13 +72,12 @@ void Player::moveArm(GLfloat dy){
 Shot *Player::shootGun(){
     int radius = 10;
     int totalAngle = gAngleArm;
-    int positionX = gX + (arm_width) + radius * sin(totalAngle);
-    // Soma a
-    float theta = tan((float)totalAngle * M_PI / 180.0 ) * arm_width/2;
-    float ajuste_y = (body_height /2) - (arm_height / 2) + (totalAngle / 2);
+    int positionX = gX + arm_width * sin(totalAngle);
 
-    int positionY = gY + ajuste_y + radius * cos(totalAngle);
-    printf("ajuste_y => %f \t y => %d tam(%d)=> %f \tteta=> %f \n", ajuste_y, positionY,totalAngle , tan((float)totalAngle), theta);
+    float theta = tan((float)totalAngle * M_PI / 180.0 ) * arm_width/2;
+
+
+    int positionY = (-body_height /2) + radius * cos(totalAngle);
    
-    return new Shot(positionX, positionY, totalAngle);
+    return new Shot(positionX, -30, totalAngle);
 }
