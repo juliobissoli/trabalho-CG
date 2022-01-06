@@ -9,6 +9,15 @@ void Player::drawBody(GLint x, GLint y){
     glPopMatrix();
 }
 
+
+void Player::drawHeader(GLint x, GLint y){
+    glPushMatrix();
+    glTranslatef(x, y, 0);
+    glTranslatef(0,  (body_height + radius_header), 0);
+    circle(radius_header, 0.0, 1.0, 0.0);
+    glPopMatrix();
+}
+
 void Player::drawArm(GLint x, GLint y, GLint angle){
     glPushMatrix();
     
@@ -28,6 +37,7 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
+    Player::drawHeader(x,y);
 
     glPopMatrix();
 

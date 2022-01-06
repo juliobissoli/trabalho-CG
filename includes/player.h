@@ -16,6 +16,7 @@
 #define body_height 80
 #define body_width 60
 
+#define radius_header 30
 #define arm_width 70
 #define arm_height 10
 
@@ -31,6 +32,7 @@ class Player {
     void drawBody(GLint x, GLint y);
     void drawArm(GLint x, GLint y, GLint angle);
     void drawPlayer(GLint x, GLint y, GLint angle);
+    void drawHeader(GLint x, GLint y);
 
   public:
     Player() {
