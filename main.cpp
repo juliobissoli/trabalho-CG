@@ -10,8 +10,8 @@
 Player player;  
 Shot* shot;
 
-const GLint ViewingWidth =  300;
-const GLint ViewingHeight = 300;
+const GLint ViewingWidth =  500;
+const GLint ViewingHeight = 500;
 
 int keyStatus[256];
 

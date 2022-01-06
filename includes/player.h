@@ -10,15 +10,18 @@
 
 
 #define INITIAL_X 0
-#define INITIAL_Y -100
+#define INITIAL_Y -80
 #define INITIAL_ANGLE 0
 
 #define body_height 80
-#define body_width 60
+#define body_width 45
 
 #define radius_header 30
-#define arm_width 70
+#define arm_width 50
 #define arm_height 10
+#define legs_width 10
+#define legs_height 50
+
 
 #define MOVE_UNIT 1
 
@@ -31,8 +34,9 @@ class Player {
   private:
     void drawBody(GLint x, GLint y);
     void drawArm(GLint x, GLint y, GLint angle);
-    void drawPlayer(GLint x, GLint y, GLint angle);
     void drawHeader(GLint x, GLint y);
+    void drawLegs(GLint x, GLint y);
+    void drawPlayer(GLint x, GLint y, GLint angle);
 
   public:
     Player() {

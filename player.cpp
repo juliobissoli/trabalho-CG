@@ -31,6 +31,15 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glPopMatrix();
 }
 
+    void Player::drawLegs(GLint x, GLint y){
+        glPushMatrix();
+        glTranslatef(x, y, 0);
+        glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
+        rectangle(legs_height, legs_width, 1.0, 0, 0);
+        glPopMatrix();
+    }
+
+
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
@@ -38,6 +47,7 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
+    Player::drawLegs(x,y);
 
     glPopMatrix();
 
@@ -61,7 +71,11 @@ Shot *Player::shootGun(){
     int totalAngle = gAngleArm;
     int positionX = gX + (arm_width) + radius * sin(totalAngle);
     // Soma a
-    int positionY = gY + (body_height / 2 ) - (arm_height) + (totalAngle / 2) + radius * cos(totalAngle);
+    float theta = tan((float)totalAngle * M_PI / 180.0 ) * arm_width/2;
+    float ajuste_y = (body_height /2) - (arm_height / 2) + (totalAngle / 2);
 
+    int positionY = gY + ajuste_y + radius * cos(totalAngle);
+    printf("ajuste_y => %f \t y => %d tam(%d)=> %f \tteta=> %f \n", ajuste_y, positionY,totalAngle , tan((float)totalAngle), theta);
+   
     return new Shot(positionX, positionY, totalAngle);
 }
