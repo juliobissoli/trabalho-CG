@@ -21,13 +21,10 @@ void Player::drawHeader(GLint x, GLint y){
 void Player::drawArm(GLint x, GLint y, GLint angle){
     glPushMatrix();
     
-    // double gap = sin(angle) * (arm_width / 2);
-    // double gap = angle / 2;
     glTranslatef(x,  0 , 0);
-    glTranslatef(0 ,  -body_height / 2.0, 0);
+    glTranslatef(0 ,  body_height, 0);
     glRotatef(angle, 0, 0, 1);
     glTranslatef(body_width / 2.0, 0,0);
-
 
     rectangle(arm_height, arm_width, 0.0, 0.0, 1.0);
 
@@ -70,14 +67,21 @@ void Player::moveArm(GLfloat dy){
 
 
 Shot *Player::shootGun(){
-    int radius = 10;
-    int totalAngle = gAngleArm;
-    int positionX = gX + arm_width * sin(totalAngle);
+    
+    //Calcular onde esta a ponta da arma para indicar de onde o diro sairá
+    double positionX = gX + (arm_width * cos(gAngleArm * M_PI / 180));
+    double positionY = gY + (body_height /2) + arm_height / 2 +  (arm_width * sin(gAngleArm * M_PI / 180));
+    
+    return new Shot(positionX, positionY, gAngleArm);
+}
 
-    float theta = tan((float)totalAngle * M_PI / 180.0 ) * arm_width/2;
+void Player::moveArm2(GLfloat dy, GLfloat dx){
 
+    float y =  dy - yCenter;
+    float x =  dx - xCenter;
 
-    int positionY = (-body_height /2) + radius * cos(totalAngle);
-   
-    return new Shot(positionX, -30, totalAngle);
+    float theta = atan (y/x) * 180 / M_PI;
+    if(theta < 45  && theta > -45 ){
+        gAngleArm = theta;
+    }
 }

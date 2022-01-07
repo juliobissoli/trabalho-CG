@@ -10,7 +10,7 @@
 
 
 #define INITIAL_X 0.0
-#define INITIAL_Y -80.0
+#define INITIAL_Y 0.0
 #define INITIAL_ANGLE 0.0
 #define body_height 80.0
 #define body_width 45.0
@@ -28,6 +28,8 @@ class Player {
     GLfloat gX;
     GLfloat gY;
     GLfloat gAngleArm;
+    GLfloat yCenter;
+    GLfloat xCenter;
 
   private:
     void drawBody(GLint x, GLint y);
@@ -35,12 +37,13 @@ class Player {
     void drawHeader(GLint x, GLint y);
     void drawLegs(GLint x, GLint y);
     void drawPlayer(GLint x, GLint y, GLint angle);
-
   public:
     Player() {
-        gX = INITIAL_X;
-        gY = INITIAL_Y;
+        gX = body_width + arm_width;
+        gY =( arm_height + body_height) / 2;
         gAngleArm = INITIAL_ANGLE;
+        yCenter =  gY + (body_height / 2);
+        xCenter =  (body_width / 2);
     };
     void Desenha() {
         drawPlayer(gX, gY, gAngleArm);
@@ -49,6 +52,7 @@ class Player {
 
     void moveInX(GLfloat dx);
     void moveArm(GLfloat dy);
+    void moveArm2(GLfloat dy, GLfloat dx);
 
     Shot* shootGun();
  

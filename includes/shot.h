@@ -29,13 +29,11 @@ class Shot {
         gY = y;
         gDirectionAng = directionAng;
 
-        printf("-> %f\n", gDirectionAng);
-        printf("-> %f\n", gY );
 
         // gX +=  arm_width * cos(gDirectionAng * M_PI / 180);
-        gY +=  arm_width * sin(gDirectionAng * M_PI / 180);
+        // gY +=  arm_width * sin(gDirectionAng * M_PI / 180);
         
-        gVel = 0.1;
+        gVel = 2;
     };
     ~Shot();
     void draw() { drawShot(gX, gY); };

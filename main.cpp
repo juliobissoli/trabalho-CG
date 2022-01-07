@@ -5,7 +5,7 @@
 
 #include "./includes/player.h"
 
-#define TAMANHO_JANELA 500
+#define WINDOW_SIZE 500
 
 Player player;  
 Shot* shot;
@@ -46,16 +46,16 @@ void idle(void){
     framerate = 1.0 / deltaTime * 1000;
 
     if (keyStatus['a'] == 1){
-        player.moveInX(-1 * deltaTime);
+        player.moveInX(-0.5 * deltaTime);
    }
     if(keyStatus['d'] == 1){
-      player.moveInX(1 * deltaTime);
+      player.moveInX(0.5 * deltaTime);
    }
     if (keyStatus['w'] == 1){
-        player.moveArm(1 * deltaTime);
+        player.moveArm(1);
    }
     if(keyStatus['s'] == 1){
-      player.moveArm(-1 * deltaTime);
+      player.moveArm(-1);
    }
 
    if(shot){
@@ -106,31 +106,42 @@ void init(void) {
     // The color the windows will redraw. Its done to erase the previous frame.
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
 
-    glMatrixMode(GL_PROJECTION);  // Select the projection matrix
-    glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
-            (ViewingWidth / 2),   // X coordinate of right edge
-            -(ViewingHeight / 2), // Y coordinate of bottom edge
-            (ViewingHeight / 2),  // Y coordinate of top edge
-            -100,                 // Z coordinate of the “near” plane
-            100);                 // Z coordinate of the “far” plane
-    glMatrixMode(GL_MODELVIEW);   // Select the projection matrix
+   //  glMatrixMode(GL_PROJECTION);  // Select the projection matrix
+   //  glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
+   //          (ViewingWidth / 2),   // X coordinate of right edge
+   //          -(ViewingHeight / 2), // Y coordinate of bottom edge
+   //          (ViewingHeight / 2),  // Y coordinate of top edge
+   //          -100,                 // Z coordinate of the “near” plane
+   //          100);                 // Z coordinate of the “far” plane
+    
+   glMatrixMode(GL_PROJECTION);  
+    glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
+
+
+    glMatrixMode(GL_MODELVIEW);  
     glLoadIdentity();
 }
 
+void mira(int x, int y){
+   y = WINDOW_SIZE  - y;
+   player.moveArm2(y, x);
+}
 
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize (TAMANHO_JANELA, TAMANHO_JANELA); 
+    glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
     glutInitWindowPosition (10, 10);
     glutCreateWindow ("Trabalho-CG");
     init ();
+
     glutDisplayFunc(display); 
 
     glutKeyboardFunc(keyPress);
     glutKeyboardUpFunc(keyUp);    
     glutIdleFunc(idle);
+    glutPassiveMotionFunc(mira);
 
     glutMainLoop();
 
