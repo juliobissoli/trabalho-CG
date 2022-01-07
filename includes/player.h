@@ -31,12 +31,17 @@ class Player {
     GLfloat yCenter;
     GLfloat xCenter;
 
+    int junping;  // flag para informar se o personagem esta pulando
+    GLfloat yInitJump; // posição inicial do pulo em y
+    float timerJump;
+  
   private:
     void drawBody(GLint x, GLint y);
     void drawArm(GLint x, GLint y, GLint angle);
     void drawHeader(GLint x, GLint y);
     void drawLegs(GLint x, GLint y);
     void drawPlayer(GLint x, GLint y, GLint angle);
+
   public:
     Player() {
         gX = body_width + arm_width;
@@ -44,6 +49,10 @@ class Player {
         gAngleArm = INITIAL_ANGLE;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
+
+        junping = 0; //Inicializa com o personagem estatico
+        yInitJump = gY;
+        timerJump = 0;
     };
     void Desenha() {
         drawPlayer(gX, gY, gAngleArm);
@@ -53,6 +62,8 @@ class Player {
     void moveInX(GLfloat dx);
     void moveArm(GLfloat dy);
     void moveArm2(GLfloat dy, GLfloat dx);
+    void jump(GLdouble clock);
+    int hasJumping();
 
     Shot* shootGun();
  

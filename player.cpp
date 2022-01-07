@@ -22,7 +22,7 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glPushMatrix();
     
     glTranslatef(x,  0 , 0);
-    glTranslatef(0 ,  body_height, 0);
+    glTranslatef(0 , y + (body_height /2), 0);
     glRotatef(angle, 0, 0, 1);
     glTranslatef(body_width / 2.0, 0,0);
 
@@ -85,3 +85,33 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
         gAngleArm = theta;
     }
 }
+
+void Player::jump(GLdouble clock){
+    
+
+
+    int total_body_height = body_height  + legs_height + (radius_header * 2);
+    float dy = -(timerJump * timerJump) + 2*timerJump ;
+
+    float vel = 1/clock;
+    timerJump += 0.05 ;
+    junping = 1;
+
+    
+    gY = (dy *  gY) + yInitJump;
+
+    // gY = yInitJump +  clock*timerJump - ((timerJump * timerJump) / 2);
+
+    printf("dy => %f \t gY %f \n", dy, gY);
+
+
+    if(timerJump > 2.0){
+        junping = 0;
+        timerJump = 0;
+
+        printf("Acabo o pulo\n");
+    }
+
+}
+
+int Player::hasJumping() {return junping;}

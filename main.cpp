@@ -57,6 +57,14 @@ void idle(void){
     if(keyStatus['s'] == 1){
       player.moveArm(-1);
    }
+   if(keyStatus[' '] ==  1){
+     player.jump(deltaTime);      
+
+   }
+
+   if(player.hasJumping()){
+      player.jump(deltaTime);  
+   }
 
    if(shot){
        shot->move(deltaTime);    
@@ -65,7 +73,6 @@ void idle(void){
             shot = NULL;
         }
    }
-
 
     glutPostRedisplay();
 }
@@ -85,9 +92,12 @@ void keyPress(unsigned char key, int x, int y){
    if(key == 's'){
       keyStatus['s'] = 1;      
    } 
-   if(key == ' '){
+   if(key == 't'){
      shot = player.shootGun();      
    } 
+   if(key == ' '){
+      keyStatus[' '] = 1;   
+   }
 //    if(key == 'w'){
 //       keyStatus['w'] = 1;      
 //    }
@@ -127,6 +137,11 @@ void mira(int x, int y){
    player.moveArm2(y, x);
 }
 
+void click(int button, int state, int x, int y){
+   printf("Atirou \n");
+    shot = player.shootGun();     
+}
+
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -142,6 +157,8 @@ int main(int argc, char** argv)
     glutKeyboardUpFunc(keyUp);    
     glutIdleFunc(idle);
     glutPassiveMotionFunc(mira);
+    glutMouseFunc(click);
+
 
     glutMainLoop();
 
