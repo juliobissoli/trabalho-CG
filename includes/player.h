@@ -48,14 +48,14 @@ class Player {
   public:
     Player() {
         gX = body_width + arm_width + 10;
-        gY = ( arm_height  + body_height) / 2;
+        gY =   ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
         gFacing = 1;
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;
-        timerJump = 0;
+        timerJump = -1;
     };
     void Desenha() {
         drawPlayer(gX, gY, gAngleArm);

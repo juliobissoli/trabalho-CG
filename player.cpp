@@ -103,12 +103,20 @@ void Player::jump(GLdouble clock){
     
     float dy = -(timerJump * timerJump) + 2*timerJump ;
     timerJump += (1 / clock );
-    junping = 1;
-    gY = (dy *  gY ) + yInitJump;
 
-    if(timerJump > 2.0){
+    float max_jupm = (body_height + arm_height + legs_height) * 2;
+
+    junping = 1;
+    // gY = (dy *  gY ) + yInitJump;
+    gY = -(timerJump * timerJump * max_jupm ) + max_jupm ;
+    gY += yInitJump + (legs_width );
+
+
+    printf("dy = %f \t gY %f  \t size %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
+
+    if(timerJump > 1.0){
         junping = 0;
-        timerJump = 0;
+        timerJump = -1;
     }
 
 }

@@ -3,10 +3,12 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
+#include "./includes/world.h"
 #include "./includes/player.h"
 
 #define WINDOW_SIZE 500
 
+World world;
 Player player;  
 Shot* shot;
 
@@ -23,10 +25,11 @@ static GLdouble framerate = 0;
 void display(void){
    /* Limpar todos os pixels  */
    glClear (GL_COLOR_BUFFER_BIT);
+   
+   world.build(); 
+   player.Desenha();
 
-    player.Desenha();
-
-    if (shot){
+   if (shot){
          shot->draw();
          }
   
