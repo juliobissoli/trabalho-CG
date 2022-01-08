@@ -43,18 +43,20 @@ void Player::drawLegs(GLint x, GLint y){
 
 void Player::drawRef(GLint x, GLint y){
         glPushMatrix();
-        glTranslatef(x, y, 0);
-        circle(10, 0.5, 0.5, 0.5);
+        glTranslatef(x, y + (radius_header*2) + body_height, 0);
+        circle(4, 0.5, 0.5, 0.5);
         glPopMatrix();
 }
 
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
+    _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
     Player::drawLegs(x,y);
+    Player::drawRef(x,y);
     glPopMatrix();
 
 }
@@ -62,6 +64,9 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 void Player::moveInX(GLfloat dx){
     int unit = MOVE_UNIT;
     gX += (dx * unit);
+    _surface->resetX(gX);
+    printf("Move player x =>\t %f \n", gX);
+
 }
 
 void Player::moveArm(GLfloat dy){
@@ -110,6 +115,7 @@ void Player::jump(GLdouble clock){
     // gY = (dy *  gY ) + yInitJump;
     gY = -(timerJump * timerJump * max_jupm ) + max_jupm ;
     gY += yInitJump + (legs_width );
+    _surface->resetY(gY - (legs_width + yInitJump));
 
 
     printf("dy = %f \t gY %f  \t size %f  init %f\t \n", dy, gY ,timerJump , yInitJump );

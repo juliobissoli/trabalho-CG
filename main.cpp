@@ -31,7 +31,7 @@ void display(void){
 
    if (shot){
          shot->draw();
-         }
+      }
   
    glEnd();
    /* Desenhar no frame buffer! */
@@ -49,10 +49,20 @@ void idle(void){
     framerate = 1.0 / deltaTime * 1000;
 
     if (keyStatus['a'] == 1){
-        player.moveInX(-0.5 * deltaTime);
+      //  if(player.getRigth() > world.getLeft() || player.getBooton() > world.getTop()){
+        world.moveInX(0.5 * deltaTime);
+        player.moveInX(-0.5 * 0.3 * deltaTime);
+      //  }
    }
     if(keyStatus['d'] == 1){
-      player.moveInX(0.5 * deltaTime);
+       if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
+
+         world.moveInX(-0.5 * deltaTime);
+         player.moveInX(0.5 * 0.3 * deltaTime);
+       }
+       else {
+          printf("n se meche x_player %f x_obj %f\n",player.getRigth(), world.getLeft());
+       }
    }
     if (keyStatus['w'] == 1){
         player.moveArm(1);

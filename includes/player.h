@@ -7,6 +7,7 @@
 
 #include "shot.h"
 #include "polygon.h"
+#include "surface.h"
 
 
 #define INITIAL_X 0.0
@@ -30,11 +31,17 @@ class Player {
     GLfloat gAngleArm;
     GLfloat yCenter;
     GLfloat xCenter;
+
+    Surface* _surface;
+
+
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
 
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
     float timerJump;
+
+    
   
   private:
     void drawBody(GLint x, GLint y);
@@ -56,6 +63,8 @@ class Player {
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;
         timerJump = -1;
+
+        _surface = new Surface(gX, gY - (legs_height) , body_width, body_height + (radius_header * 2) + legs_height);
     };
     void Desenha() {
         drawPlayer(gX, gY, gAngleArm);
@@ -68,6 +77,8 @@ class Player {
     void jump(GLdouble clock);
     int hasJumping();
 
+    float getRigth(){return gX + (body_width / 2);}
+    float getBooton(){return gY - (arm_height);}
     Shot* shootGun();
  
 };
