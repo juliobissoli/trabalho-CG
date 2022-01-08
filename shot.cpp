@@ -1,7 +1,7 @@
 #include "./includes/shot.h"
 #include <cstdio>
 #include <math.h>
-#define DISTANCIA_MAX 500
+#define DISTANCIA_MAX 500 * 3
 
 
 
@@ -14,8 +14,8 @@ void Shot::drawShot(GLfloat x, GLfloat y) {
 }
 
 void Shot::move(GLdouble deltaTime) {
-    gX += gVel * cos(-gDirectionAng * M_PI / 180) * deltaTime;
-    gY += gVel * sin(gDirectionAng * M_PI / 180) * deltaTime ;
+    gX += gVel * cos(-gDirectionAng * M_PI / 180) * deltaTime * gDirection;
+    gY += gVel * sin(gDirectionAng * M_PI / 180) * deltaTime  * gDirection;
 }
 
 Shot::~Shot() {}

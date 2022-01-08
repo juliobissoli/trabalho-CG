@@ -6,9 +6,8 @@
 
 
 #include "polygon.h"
-#define arm_width 50.0
 #include <stdio.h>
-#define radiusBullet 5
+#define radiusBullet 2
 
 class Shot {
     GLfloat gx_init;
@@ -17,23 +16,20 @@ class Shot {
     GLfloat gY;
     GLfloat gDirectionAng;
     GLfloat gVel;
+    GLint gDirection;
 
   private:
     void drawShot(GLfloat x, GLfloat y);
 
   public:
-    Shot(GLfloat x, GLfloat y, GLfloat directionAng) {
+    Shot(GLfloat x, GLfloat y, GLfloat directionAng, GLint direction) {
         gx_init = x;
         gy_init = y;
         gX = x;
         gY = y;
         gDirectionAng = directionAng;
-
-
-        // gX +=  arm_width * cos(gDirectionAng * M_PI / 180);
-        // gY +=  arm_width * sin(gDirectionAng * M_PI / 180);
-        
         gVel = 2;
+        gDirection = direction; // 1 para frente -1 para traz
     };
     ~Shot();
     void draw() { drawShot(gX, gY); };

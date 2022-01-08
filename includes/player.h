@@ -12,13 +12,13 @@
 #define INITIAL_X 0.0
 #define INITIAL_Y 0.0
 #define INITIAL_ANGLE 0.0
-#define body_height 80.0
-#define body_width 45.0
-#define radius_header 30.0
-#define arm_width 50.0
-#define arm_height 10.0
+#define body_height 40.0
+#define body_width 25.0
+#define radius_header 20.0
+#define arm_width 30.0
+#define arm_height 5.0
 #define legs_width 10.0
-#define legs_height 50.0
+#define legs_height 30.0
 
 
 #define MOVE_UNIT 1
@@ -30,6 +30,7 @@ class Player {
     GLfloat gAngleArm;
     GLfloat yCenter;
     GLfloat xCenter;
+    int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
 
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
@@ -42,14 +43,16 @@ class Player {
     void drawLegs(GLint x, GLint y);
     void drawPlayer(GLint x, GLint y, GLint angle);
 
+    void drawRef(GLint x, GLint y);
+
   public:
     Player() {
-        gX = body_width + arm_width;
-        gY =( arm_height + body_height) / 2;
+        gX = body_width + arm_width + 10;
+        gY = ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
-
+        gFacing = 1;
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;
         timerJump = 0;

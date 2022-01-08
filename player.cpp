@@ -24,6 +24,8 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glTranslatef(x,  0 , 0);
     glTranslatef(0 , y + (body_height /2), 0);
     glRotatef(angle, 0, 0, 1);
+    glRotatef(90 + (90 * -gFacing), 0, 1, 0);
+
     glTranslatef(body_width / 2.0, 0,0);
 
     rectangle(arm_height, arm_width, 0.0, 0.0, 1.0);
@@ -31,24 +33,28 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glPopMatrix();
 }
 
-    void Player::drawLegs(GLint x, GLint y){
+void Player::drawLegs(GLint x, GLint y){
+    glPushMatrix();
+    glTranslatef(x, y, 0);
+    glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
+    rectangle(legs_height, legs_width, 1.0, 0, 0);
+    glPopMatrix();
+}
+
+void Player::drawRef(GLint x, GLint y){
         glPushMatrix();
         glTranslatef(x, y, 0);
-        glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
-        rectangle(legs_height, legs_width, 1.0, 0, 0);
+        circle(10, 0.5, 0.5, 0.5);
         glPopMatrix();
-    }
-
+}
 
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
     Player::drawLegs(x,y);
-
     glPopMatrix();
 
 }
@@ -66,50 +72,43 @@ void Player::moveArm(GLfloat dy){
 }
 
 
+
 Shot *Player::shootGun(){
     
     //Calcular onde esta a ponta da arma para indicar de onde o diro sairá
-    double positionX = gX + (arm_width * cos(gAngleArm * M_PI / 180));
-    double positionY = gY + (body_height /2) + arm_height / 2 +  (arm_width * sin(gAngleArm * M_PI / 180));
+    //Multiplicando pela direção (gFacing) para corigir o sentindo  p onde o personagem esta aponado
+    double positionX = gX + (gFacing * arm_width * cos(gAngleArm * M_PI / 180));
+    double positionY = gY + (body_height /2) + arm_height / 2 +  (gFacing * arm_width * sin(gAngleArm * M_PI / 180));
     
-    return new Shot(positionX, positionY, gAngleArm);
+    return new Shot(positionX, positionY, gAngleArm, gFacing);
 }
 
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
+    
+    if(dx < gX)gFacing  = -1;
+    else gFacing  = 1;
+    // printf("gX= %f \t dX %f \t gFacing %d\n", gX, dx, gFacing);
     float y =  dy - yCenter;
     float x =  dx - xCenter;
 
+
     float theta = atan (y/x) * 180 / M_PI;
     if(theta < 45  && theta > -45 ){
-        gAngleArm = theta;
+        gAngleArm = theta * gFacing;
     }
 }
 
 void Player::jump(GLdouble clock){
     
-
-
-    int total_body_height = body_height  + legs_height + (radius_header * 2);
     float dy = -(timerJump * timerJump) + 2*timerJump ;
-
-    float vel = 1/clock;
-    timerJump += 0.05 ;
+    timerJump += (1 / clock );
     junping = 1;
-
-    
-    gY = (dy *  gY) + yInitJump;
-
-    // gY = yInitJump +  clock*timerJump - ((timerJump * timerJump) / 2);
-
-    printf("dy => %f \t gY %f \n", dy, gY);
-
+    gY = (dy *  gY ) + yInitJump;
 
     if(timerJump > 2.0){
         junping = 0;
         timerJump = 0;
-
-        printf("Acabo o pulo\n");
     }
 
 }
