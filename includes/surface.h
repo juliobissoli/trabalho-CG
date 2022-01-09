@@ -35,9 +35,9 @@ class Surface {
      void draw() {
          drowSurface();
          desenhaRef(0);
-         desenhaRef(1);
+        //  desenhaRef(1);
          desenhaRef(2);
-         desenhaRef(4);
+        //  desenhaRef(4);
      };
     void resetX(GLfloat dx){_x = dx;};
     void resetY(GLfloat dy){_y = dy;};

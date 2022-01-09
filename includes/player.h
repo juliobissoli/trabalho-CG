@@ -54,8 +54,8 @@ class Player {
 
   public:
     Player() {
-        gX = body_width + arm_width + 10;
-        gY =   ( arm_height  + body_height) / 2;
+        gX = body_width + arm_width + 10 + 200;
+        gY =  ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
@@ -77,6 +77,8 @@ class Player {
     void jump(GLdouble clock);
     int hasJumping();
 
+    Surface* getSurface(){return _surface;}
+    
     float getRigth(){return gX + (body_width / 2);}
     float getBooton(){return gY - (arm_height);}
     Shot* shootGun();

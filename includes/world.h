@@ -24,7 +24,7 @@ class World {
 
     public:
       World(){
-          gX = 250;
+          gX = 50;
           gY = 0; 
           surface =  new Surface( gX, gY, size_bloc, size_bloc);
       }
@@ -32,6 +32,10 @@ class World {
         //  drawObstacles(gX, gY);
         surface->draw();
      };
+
+    Surface* getSurface(){return surface;}
+
+
     void moveInX(GLfloat dx);
     float getTop(){return gY + (size_bloc / 2);}
     float getLeft(){return gX - (size_bloc / 2);}

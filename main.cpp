@@ -5,6 +5,7 @@
 
 #include "./includes/world.h"
 #include "./includes/player.h"
+#include "./includes/surface.h"
 
 #define WINDOW_SIZE 500
 
@@ -20,6 +21,27 @@ int keyStatus[256];
 
 static GLdouble framerate = 0;
 
+int detectCollision(Surface* s1, Surface* s2){
+      // printf("x %d \t y %d \n", s1->getRight() == s2->getLeft(), s1->getBooton() > s2->getTop());
+      //  return s1->getRight() >= s2->getLeft() || s1->getBooton() > s2->getTop();
+      printf("esq(s1) >= dir(s2)= %d \t  dir(s1) <= esq(s2)= %d \n", s1->getLeft() >= s2->getRight() , s1->getRight() <= s2->getLeft());
+      return   s1->getLeft() >=  s2->getRight()
+            && s1->getRight() <= s2->getLeft()
+            // || s2->getTop() <= s1->getBooton()
+            ;
+}
+
+// Superficie ques esta se movendo (s1) colide de "frente" (direita)
+// com a "traseira" (direita) de s2
+int frontalCollision(Surface* s1, Surface* s2){
+ return s1->getRight() >= s2->getLeft() &&
+      s1->getRight() <= s2->getRight();
+}
+
+int rearCollision(Surface* s1, Surface* s2){
+ return s1->getLeft() <= s2->getRight() &&
+        s1->getLeft() >= s2->getLeft();
+}
 
 
 void display(void){
@@ -49,14 +71,14 @@ void idle(void){
     framerate = 1.0 / deltaTime * 1000;
 
     if (keyStatus['a'] == 1){
-      //  if(player.getRigth() > world.getLeft() || player.getBooton() > world.getTop()){
+       if(!rearCollision(player.getSurface(), world.getSurface()) ||  player.hasJumping()){
         world.moveInX(0.5 * deltaTime);
         player.moveInX(-0.5 * 0.3 * deltaTime);
-      //  }
+       }
    }
     if(keyStatus['d'] == 1){
-       if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
-
+      //  if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
+      if(!frontalCollision(player.getSurface(), world.getSurface()) || player.hasJumping()){
          world.moveInX(-0.5 * deltaTime);
          player.moveInX(0.5 * 0.3 * deltaTime);
        }
@@ -154,6 +176,8 @@ void click(int button, int state, int x, int y){
    printf("Atirou \n");
     shot = player.shootGun();     
 }
+
+
 
 int main(int argc, char** argv)
 {

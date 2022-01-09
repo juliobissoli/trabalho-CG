@@ -11,10 +11,10 @@ void Surface::drowSurface(){
 
 void Surface::desenhaRef(int position){
     glPushMatrix();
-    if(position == 0) glTranslatef(getLeft(), _y, 0.0);
-    if(position == 1) glTranslatef(_x, getTop(), 0.0);
-    if(position == 2) glTranslatef(getRight(), _y, 0.0);
-    if(position == 4) glTranslatef(_x, getBooton(), 0.0);
+    if(position == 0) glTranslatef(getLeft(), _y, 0.0);     //ponto da esquerda
+    if(position == 1) glTranslatef(_x, getTop(), 0.0);      //ponto de cima
+    if(position == 2) glTranslatef(getRight(), _y, 0.0);    //ponto da direita
+    if(position == 4) glTranslatef(_x, getBooton(), 0.0);   //ponto da baixo
     circle(3, 0.5, 0.5, 0.5);
     glPopMatrix();
 }
