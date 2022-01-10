@@ -35,12 +35,21 @@ int detectCollision(Surface* s1, Surface* s2){
 // com a "traseira" (direita) de s2
 int frontalCollision(Surface* s1, Surface* s2){
  return s1->getRight() >= s2->getLeft() &&
-      s1->getRight() <= s2->getRight();
+        s1->getRight() <= s2->getRight();
 }
 
 int rearCollision(Surface* s1, Surface* s2){
  return s1->getLeft() <= s2->getRight() &&
         s1->getLeft() >= s2->getLeft();
+}
+
+int above(Surface* s1, Surface* s2){
+    return s1->getBooton() > s2->getTop();
+}
+
+int below(Surface* s1, Surface* s2){
+   printf("booton %f \t top %f \n ",s1->getBooton(), s2->getTop());
+   return s1->getBooton() <= s2->getTop();
 }
 
 
@@ -71,19 +80,18 @@ void idle(void){
     framerate = 1.0 / deltaTime * 1000;
 
     if (keyStatus['a'] == 1){
-       if(!rearCollision(player.getSurface(), world.getSurface()) ||  player.hasJumping()){
+       if(!rearCollision(player.getSurface(), world.getSurface()) ||
+          above(player.getSurface(), world.getSurface())){
         world.moveInX(0.5 * deltaTime);
-        player.moveInX(-0.5 * 0.3 * deltaTime);
+      //   player.moveInX(-0.5 * 0.3 * deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
       //  if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
-      if(!frontalCollision(player.getSurface(), world.getSurface()) || player.hasJumping()){
+      if(!frontalCollision(player.getSurface(), world.getSurface()) ||
+          above(player.getSurface(), world.getSurface())){
          world.moveInX(-0.5 * deltaTime);
-         player.moveInX(0.5 * 0.3 * deltaTime);
-       }
-       else {
-          printf("n se meche x_player %f x_obj %f\n",player.getRigth(), world.getLeft());
+         // player.moveInX(0.5 * 0.3 * deltaTime);
        }
    }
     if (keyStatus['w'] == 1){
@@ -99,6 +107,13 @@ void idle(void){
 
    if(player.hasJumping()){
       player.jump(deltaTime);  
+      if(
+         
+         below(player.getSurface(), world.getSurface())
+         && rearCollision(player.getSurface(), world.getSurface())
+         && frontalCollision(player.getSurface(), world.getSurface())
+      )
+       player.stopJump();
    }
 
    if(shot){

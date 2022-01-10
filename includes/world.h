@@ -24,7 +24,7 @@ class World {
 
     public:
       World(){
-          gX = 50;
+          gX = 250;
           gY = 0; 
           surface =  new Surface( gX, gY, size_bloc, size_bloc);
       }

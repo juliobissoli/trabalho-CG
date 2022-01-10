@@ -43,7 +43,7 @@ void Player::drawLegs(GLint x, GLint y){
 
 void Player::drawRef(GLint x, GLint y){
         glPushMatrix();
-        glTranslatef(x, y + (radius_header*2) + body_height, 0);
+        glTranslatef(x, _surface->getBooton(), 0);
         circle(4, 0.5, 0.5, 0.5);
         glPopMatrix();
 }
@@ -126,5 +126,15 @@ void Player::jump(GLdouble clock){
     }
 
 }
+
+void Player::stopJump(){
+    if(timerJump > 0){
+        junping = 0;
+        timerJump = -1;
+        yInitJump = _surface->getBooton() - (legs_width / 2);
+        // gY - (legs_width + yInitJump);
+    }
+};
+
 
 int Player::hasJumping() {return junping;}
