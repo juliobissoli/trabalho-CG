@@ -7,7 +7,12 @@
 #include "./includes/player.h"
 #include "./includes/surface.h"
 
+#include <iostream>
+
 #define WINDOW_SIZE 500
+
+using namespace std;
+
 
 World world;
 Player player;  
@@ -34,6 +39,7 @@ int detectCollision(Surface* s1, Surface* s2){
 // Superficie ques esta se movendo (s1) colide de "frente" (direita)
 // com a "traseira" (direita) de s2
 int frontalCollision(Surface* s1, Surface* s2){
+    cout << "Colisao " << s1->getRight() << "\t" << s2->getLeft() << "\n";
  return s1->getRight() >= s2->getLeft() &&
         s1->getRight() <= s2->getRight();
 }
