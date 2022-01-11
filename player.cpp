@@ -2,6 +2,11 @@
 #include <string>
 #include <cmath>
 
+
+using namespace std;
+
+
+
 void Player::drawBody(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
@@ -56,7 +61,7 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
     Player::drawLegs(x,y);
-    Player::drawRef(x,y);
+    // Player::drawRef(x,y);
     glPopMatrix();
 
 }
@@ -105,10 +110,14 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock){
-    
-    float dy = -(timerJump * timerJump) + 2*timerJump ;
-    timerJump += (1 / clock );
+    if(clock <= 0){
 
+    float dy = -(timerJump * timerJump) + 2*timerJump ;
+
+    if(clock <= 10) clock = 970;
+
+    timerJump += (1 / clock );
+   
     float max_jupm = (body_height + arm_height + legs_height) * 2;
 
     junping = 1;
@@ -118,11 +127,14 @@ void Player::jump(GLdouble clock){
     _surface->resetY(gY - (legs_width + yInitJump));
 
 
-    printf("dy = %f \t gY %f  \t size %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
+    printf("dy = %f \t gY %f  \t time %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
 
     if(timerJump > 1.0){
+
+        printf("era p acaber \n");
         junping = 0;
         timerJump = -1;
+    }
     }
 
 }

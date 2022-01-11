@@ -7,7 +7,7 @@
 
 
 
-void World::drawObstacles(GLint x, GLint y){
+void World::drawObstacles(GLfloat x, GLfloat y){
   glPushMatrix();
   glTranslatef(x, y, 0);
   rectangle(size_bloc, size_bloc ,0, 0.2,0);

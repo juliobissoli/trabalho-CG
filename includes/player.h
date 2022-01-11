@@ -24,6 +24,8 @@
 
 #define MOVE_UNIT 1
 
+using namespace std;
+
 
 class Player {
     GLfloat gX;

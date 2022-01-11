@@ -84,7 +84,6 @@ void idle(void){
     deltaTime = curTime - prevTime;
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
-
     if (keyStatus['a'] == 1){
        if(!rearCollision(player.getSurface(), world.getSurface()) ||
           above(player.getSurface(), world.getSurface())){
