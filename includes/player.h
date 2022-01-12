@@ -58,7 +58,7 @@ class Player {
 
   public:
     Player() {
-        gX = 250;
+        gX = 30;
         gY =  ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE + 2;
         yCenter =  gY + (body_height / 2);

@@ -68,9 +68,9 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 
 void Player::moveInX(GLfloat dx){
     int unit = MOVE_UNIT;
-    gX += (dx * unit);
-    _surface->resetX(gX);
-    printf("Move player x =>\t %f \n", gX);
+    // gX += (dx * unit);
+    _surface->traslateX(dx * unit);
+    // printf("Move player x =>\t %f \n", gX);
 
 }
 
@@ -110,7 +110,7 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock){
-    cout << "Cloc " << clock << "\n";
+    // cout << "Cloc " << clock << "\n";
 
     if(clock >= 0){
 
@@ -129,7 +129,7 @@ void Player::jump(GLdouble clock){
     _surface->resetY(gY - (legs_width + yInitJump));
 
 
-    printf("dy = %f \t gY %f  \t time %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
+    // printf("dy = %f \t gY %f  \t time %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
 
     if(timerJump > 1.0){
         junping = 0;

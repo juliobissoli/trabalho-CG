@@ -32,10 +32,12 @@ class Surface {
 
         printf("Crioo ==> x_size %f,  y_size %f \n",  x_size,  y_size );
       }
+
      void draw() {
          drowSurface();
-        //  desenhaRef(0);
-        //  desenhaRef(1);
+         desenhaRef(-1);
+         desenhaRef(0);
+         desenhaRef(1);
         //  desenhaRef(2);
         //  desenhaRef(4);
      };
@@ -48,6 +50,7 @@ class Surface {
     float getBooton(){return  _y;}
     float getLeft(){return _x - (_xSize / 2);}
     float getRight(){return _x + (_xSize / 2);}
+    float getTopCenter(){return _y + (_ySize / 2);}
 
 
 };

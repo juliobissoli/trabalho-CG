@@ -15,6 +15,8 @@ using namespace std;
 
 
 World world;
+Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
+
 Player player;  
 Shot* shot;
 
@@ -53,7 +55,6 @@ int above(Surface* s1, Surface* s2){
 }
 
 int below(Surface* s1, Surface* s2){
-   printf("booton %f \t top %f \n ",s1->getBooton(), s2->getTop());
    return s1->getBooton() <= s2->getTop();
 }
 
@@ -88,15 +89,16 @@ void idle(void){
        if(!rearCollision(player.getSurface(), world.getSurface()) ||
           above(player.getSurface(), world.getSurface())){
         world.moveInX(0.5 * deltaTime);
-      //   player.moveInX(-0.5 * 0.3 * deltaTime);
+        player.moveInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
+       world.detectCollisionLeft(mat_colision, player.getSurface());
       //  if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
-      if(!frontalCollision(player.getSurface(), world.getSurface()) ||
-          above(player.getSurface(), world.getSurface())){
+      // if(!frontalCollision(player.getSurface(), world.getSurface()) || above(player.getSurface(), world.getSurface())){
+      if(world.detectCollisionLeft(mat_colision, player.getSurface()) == NULL){
          world.moveInX(-0.5 * deltaTime);
-         // player.moveInX(0.5 * 0.3 * deltaTime);
+         player.moveInX(0.5 * deltaTime);
        }
    }
     if (keyStatus['w'] == 1){
@@ -113,7 +115,6 @@ void idle(void){
    if(player.hasJumping()){
       player.jump(deltaTime);  
       if(
-         
          below(player.getSurface(), world.getSurface())
          && rearCollision(player.getSurface(), world.getSurface())
          && frontalCollision(player.getSurface(), world.getSurface())
@@ -209,9 +210,10 @@ int main(int argc, char** argv)
 
    
    // Receber da função que le o SVG uma matris d n linha e 4 colunas
-   float _test[2][4] = {{50 *2, 50.0, size_bloc*0.5, size_bloc}, {300, 100, size_bloc*2, size_bloc}};
+   float _test[2][4] = {{50 *2, 30.0, size_bloc*0.5, size_bloc}, {300, 100, size_bloc*2, size_bloc}};
 
-    world.build(_test); 
+    world.build(_test, mat_colision); 
+   //  world.printMat(mat_colision);
 
     glutDisplayFunc(display); 
    

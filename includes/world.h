@@ -10,12 +10,14 @@
 #include "polygon.h"
 #include "surface.h"
 
-#define size_bloc 50.0
 
 #include <iostream>
 #include <vector>
 #include <set>
 
+#define size_bloc 50.0 //remover tamanho so para teste
+#define MAX_VIEW_X 1500
+#define MAX_VIEW_Y 500
   
 using namespace std;
 
@@ -30,28 +32,32 @@ class World {
     
 
     private:
-      void drawObstacles(GLfloat x, GLfloat y);
+      void drawCircle(GLfloat x, GLfloat y);
       void desenhaRef();
+      void setSurfaceInMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface *s);
 
     public:
       World(){
-          gX = 50;
+          gX = 0;
           gY = 0; 
           surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }
 
       // Monta o array de superficies (obstáculos); 
-     void build(float _test[2][4]);
+     void build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
 
-     void draw();
+    void draw();
+    void printMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
 
     Surface* getSurface(){return surface;}
 
 
     void moveInX(GLfloat dx);
-    float getTop(){return gY + (size_bloc / 2);}
-    float getLeft(){return gX - (size_bloc / 2);}
+
+    Surface* detectCollisionLeft(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface* s);
+    // float getTop(){return gY + (size_bloc / 2);}
+    // float getLeft(){return gX - (size_bloc / 2);}
 
 
 };
