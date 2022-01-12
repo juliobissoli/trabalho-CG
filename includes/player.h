@@ -8,6 +8,8 @@
 #include "shot.h"
 #include "polygon.h"
 #include "surface.h"
+#include <iostream>
+
 
 
 #define INITIAL_X 0.0

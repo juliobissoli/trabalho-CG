@@ -39,7 +39,6 @@ int detectCollision(Surface* s1, Surface* s2){
 // Superficie ques esta se movendo (s1) colide de "frente" (direita)
 // com a "traseira" (direita) de s2
 int frontalCollision(Surface* s1, Surface* s2){
-    cout << "Colisao " << s1->getRight() << "\t" << s2->getLeft() << "\n";
  return s1->getRight() >= s2->getLeft() &&
         s1->getRight() <= s2->getRight();
 }
@@ -63,8 +62,9 @@ void display(void){
    /* Limpar todos os pixels  */
    glClear (GL_COLOR_BUFFER_BIT);
    
-   world.build(); 
+   world.draw();
    player.Desenha();
+   
 
    if (shot){
          shot->draw();
@@ -198,7 +198,6 @@ void click(int button, int state, int x, int y){
 }
 
 
-
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -208,8 +207,14 @@ int main(int argc, char** argv)
     glutCreateWindow ("Trabalho-CG");
     init ();
 
-    glutDisplayFunc(display); 
+   
+   // Receber da função que le o SVG uma matris d n linha e 4 colunas
+   float _test[2][4] = {{50 *2, 50.0, size_bloc*0.5, size_bloc}, {300, 100, size_bloc*2, size_bloc}};
 
+    world.build(_test); 
+
+    glutDisplayFunc(display); 
+   
     glutKeyboardFunc(keyPress);
     glutKeyboardUpFunc(keyUp);    
     glutIdleFunc(idle);

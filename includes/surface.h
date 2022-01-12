@@ -41,6 +41,8 @@ class Surface {
      };
     void resetX(GLfloat dx){_x = dx;};
     void resetY(GLfloat dy){_y = dy;};
+
+    void traslateX(GLfloat dx){_x += dx;};
     
     float getTop(){return  _y + _ySize;}
     float getBooton(){return  _y;}

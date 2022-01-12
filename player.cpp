@@ -110,7 +110,9 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock){
-    if(clock <= 0){
+    cout << "Cloc " << clock << "\n";
+
+    if(clock >= 0){
 
     float dy = -(timerJump * timerJump) + 2*timerJump ;
 
@@ -130,8 +132,6 @@ void Player::jump(GLdouble clock){
     printf("dy = %f \t gY %f  \t time %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
 
     if(timerJump > 1.0){
-
-        printf("era p acaber \n");
         junping = 0;
         timerJump = -1;
     }

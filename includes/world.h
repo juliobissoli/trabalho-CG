@@ -23,8 +23,8 @@ class World {
 
     GLfloat gX;
     GLfloat gY;
-    Surface *surface;
-    vector<vector<float>> matrix(float, vector<float>);
+    Surface *surface; //remover isso apos resolver colizões
+    // vector<vector<float>> matrix(float, vector<float>);
     // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
     
@@ -33,12 +33,6 @@ class World {
       void drawObstacles(GLfloat x, GLfloat y);
       void desenhaRef();
 
-      // GLfloat _test = {{gX, gY, size_bloc, size_bloc}, {gX*2, gY*2, size_bloc, size_bloc}};
-      std::vector<std::vector<int>> _test = { {0,1,2,3},
-                                           {4,5,6,7}, 
-                                           {8,9,10,11}
-                                         };
-
     public:
       World(){
           gX = 50;
@@ -46,15 +40,11 @@ class World {
           surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }
-     void build() {
-         drawObstacles(gX, gY);
-        // for(int i = 0; i < 2; i++ ){
-        //   Surface *s =  new Surface( _test[i][0], _test[i][1], _test[i][2], _test[i][3]);
-        //   s->draw();
 
-        // }
-        surface->draw();
-     };
+      // Monta o array de superficies (obstáculos); 
+     void build(float _test[2][4]);
+
+     void draw();
 
     Surface* getSurface(){return surface;}
 
