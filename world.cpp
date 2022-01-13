@@ -18,98 +18,110 @@ void World::build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_
   cout << "=======Build do mundo======= \n";
 
   // inicializa o matriz de objetos
-  for (size_t i = 0; i < MAX_VIEW_Y; i++){
-    for (size_t j = 0; j < MAX_VIEW_X; j++){
-      /* code */
-      mat_colision[i][j] = NULL;
-    }
-  }
+  // for (size_t i = 0; i < MAX_VIEW_Y; i++){
+  //   for (size_t j = 0; j < MAX_VIEW_X; j++){
+  //     /* code */
+  //     mat_colision[i][j] = NULL;
+  //   }
+  // }
   
   // Iniciliaza as superficies
   for (int i = 0; i < 2; i++){
     Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);
     _surfaces.push_back(s);
 
-    setSurfaceInMat(mat_colision, s);
+    // setSurfaceInMat(mat_colision, s);
   }
 
   // printMat(mat_colision);
 };
 
-void World::setSurfaceInMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface *s){
-  int x_init = (int)s->getLeft();
-  int x_end = (int)s->getRight();
+// void World::setSurfaceInMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface *s){
+//   int x_init = (int)s->getLeft();
+//   int x_end = (int)s->getRight();
 
-  int y_init = (int)s->getBooton();
-  int y_end = (int)s->getTop();
+//   int y_init = (int)s->getBooton();
+//   int y_end = (int)s->getTop();
 
-  if(x_init < 0) x_init = 0;
-  if(x_end > MAX_VIEW_X) x_end = MAX_VIEW_X;
+//   if(x_init < 0) x_init = 0;
+//   if(x_end > MAX_VIEW_X) x_end = MAX_VIEW_X;
 
-  if(y_init < 0) x_init = 0;
-  if(y_end > MAX_VIEW_Y) y_end = MAX_VIEW_Y;
+//   if(y_init < 0) x_init = 0;
+//   if(y_end > MAX_VIEW_Y) y_end = MAX_VIEW_Y;
 
-  cout << "==== Range block ====== \n";
-  cout << "[" << x_init << ", " << y_init << "]\n";
-  cout << "[" << x_end  << ", " << y_end << "]\n";
-  cout << "x_init - x_end = " <<  x_init - x_end << "\n";
-  cout << "y_init - y_end = " <<  y_init - y_end << "\n";
-  for (size_t i = y_init; i < y_end; i++){
-    for (size_t j = x_init; j < x_end; j++){
-        if(x_init == j || x_end == j)  cout << "insere [" << j  << ", " << i << "]\n";
-        if(y_init == i || y_end == i)  cout << "insere [" << j  << ", " << i << "]\n";
-        mat_colision[j][i] = s;
-    }
-  }
+//   cout << "==== Range block ====== \n";
+//   cout << "[" << x_init << ", " << y_init << "]\n";
+//   cout << "[" << x_end  << ", " << y_end << "]\n";
+//   cout << "x_init - x_end = " <<  x_init - x_end << "\n";
+//   cout << "y_init - y_end = " <<  y_init - y_end << "\n";
+//   for (size_t i = y_init; i < y_end; i++){
+//     for (size_t j = x_init; j < x_end; j++){
+//         if(x_init == j || x_end == j)  cout << "insere [" << j  << ", " << i << "]\n";
+//         if(y_init == i || y_end == i)  cout << "insere [" << j  << ", " << i << "]\n";
+//         mat_colision[j][i] = s;
+//     }
+//   }
 
-}
+// }
 
-void World::printMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]){
-  for (size_t i = 0; i < MAX_VIEW_Y; i++){
-    for (size_t j = 0; j < MAX_VIEW_X; j++){
-      /* code */
-      // if( mat_colision[i][j] == NULL) cout << "_";
-      // else cout << "[" << i << ", " << j<< "]\n";
+// void World::printMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]){
+//   for (size_t i = 0; i < MAX_VIEW_Y; i++){
+//     for (size_t j = 0; j < MAX_VIEW_X; j++){
+//       /* code */
+//       // if( mat_colision[i][j] == NULL) cout << "_";
+//       // else cout << "[" << i << ", " << j<< "]\n";
 
-       if( mat_colision[i][j] != NULL) cout << "[" << i << ", " << j<< "] \t";
+//        if( mat_colision[i][j] != NULL) cout << "[" << i << ", " << j<< "] \t";
        
-    }
-    // cout << "\n";
-  }
-  cout << "\n";
-}
+//     }
+//     // cout << "\n";
+//   }
+//   cout << "\n";
+// }
 
-Surface* World::detectCollisionLeft(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface* s){
-  int x = (int)s->getRight();
-  int y = (int)s->getTopCenter();
+// Surface* World::detectCollision(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface* s, string direction){
+
+//   tuple <int, int> pointer;
   
-  if(x < 0) x = 0;
-  if(x > MAX_VIEW_X) x = MAX_VIEW_X;
+//   if(direction == "left" || direction == "right") pointer = handleeGetPointer(s, direction, "center");
+//   if(direction == "top" || direction == "booton") pointer = handleeGetPointer(s, "center", direction);
 
-  if(y < 0) y = 0;
-  if(y > MAX_VIEW_X) y = MAX_VIEW_X;
+//   int x = get<0>(pointer);
+//   int y = get<1>(pointer);
 
 
-  Surface* item = mat_colision[x][y];
+//   Surface* item = mat_colision[x][y];
   
-  cout << "Colisao em [" << x << "," << y  << "]\n";
-  if(item != NULL) cout << "********** ACHOOOOO00 \n";
+//   cout << "Colisao em: |"<< direction << " center| -[" <<   x << "," << y  << "]\n";
+//   if(item != NULL) cout << "********** ACHOOOOO00 \n";
   
-  Surface* teste = mat_colision[87][30];
-  if(teste != NULL) cout << "acho um item \n";
-  else cout << "ta muito doido \n"; 
   
-  return item;
-}
+//   return item;
+// }
 
+//  tuple<int, int> World::handleeGetPointer(Surface* s, string x_direction, string y_direction ){
+   
+//   int x; 
+//   int y; 
 
-void World::draw(){
-  surface->draw();
-  for (auto s : _surfaces) {
-    s->draw();
-    // drawCircle(s->getTop(), s->getTop());
-  }
-}
+//   if(x_direction == "right") x = (int)s->getRight();
+//   if(x_direction == "left") x = (int)s->getLeft();
+//   if(x_direction == "center") x = (int)s->getXCenter();
+
+//   if(y_direction == "top") y = (int)s->getTop();
+//   if(y_direction == "booton") y = (int)s->getBooton();
+//   if(y_direction == "center") y = (int)s->getYCenter();
+  
+//   if(x < 0) x = 0;
+//   if(x > MAX_VIEW_X) x = MAX_VIEW_X;
+
+//   if(y < 0) y = 0;
+//   if(y > MAX_VIEW_X) y = MAX_VIEW_X;
+
+//   tuple <int, int> pointer = make_tuple(x,y);
+
+//   return pointer;
+// }
 
 // void World::desenhaRef(){
 //   glPushMatrix();
@@ -118,13 +130,20 @@ void World::draw(){
 //   glPopMatrix();
 // }
 
-void World::moveInX(GLfloat dx)
-{
+void World::draw(){
+  // surface->draw();
+  for (auto s : _surfaces) {
+    s->draw();
+    // drawCircle(s->getTop(), s->getTop());
+  }
+}
+
+
+void World::moveInX(GLfloat dx){
   int unit = MOVE_UNIT;
   gX += (dx * unit);
-  surface->resetX(gX);
-  for (auto s : _surfaces)
-  {
+  // surface->resetX(gX);
+  for (auto s : _surfaces){
     s->traslateX(dx * unit);
   }
 }

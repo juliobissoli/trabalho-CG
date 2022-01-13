@@ -6,6 +6,7 @@
 #include "./includes/world.h"
 #include "./includes/player.h"
 #include "./includes/surface.h"
+#include "./includes/collision.h"
 
 #include <iostream>
 
@@ -16,6 +17,7 @@ using namespace std;
 
 World world;
 Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
+Collision collision;
 
 Player player;  
 Shot* shot;
@@ -86,17 +88,17 @@ void idle(void){
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
     if (keyStatus['a'] == 1){
-       if(!rearCollision(player.getSurface(), world.getSurface()) ||
-          above(player.getSurface(), world.getSurface())){
+      //  if(!rearCollision(player.getSurface(), world.getSurface()) || above(player.getSurface(), world.getSurface())){
+      if(collision.detectCollision(player.getSurface(), "left") == NULL){
         world.moveInX(0.5 * deltaTime);
         player.moveInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
-       world.detectCollisionLeft(mat_colision, player.getSurface());
+      //  world.detectCollisionLeft(mat_colision, player.getSurface());
       //  if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
       // if(!frontalCollision(player.getSurface(), world.getSurface()) || above(player.getSurface(), world.getSurface())){
-      if(world.detectCollisionLeft(mat_colision, player.getSurface()) == NULL){
+      if(collision.detectCollision(player.getSurface(), "right") == NULL){
          world.moveInX(-0.5 * deltaTime);
          player.moveInX(0.5 * deltaTime);
        }
@@ -114,12 +116,19 @@ void idle(void){
 
    if(player.hasJumping()){
       player.jump(deltaTime);  
-      if(
-         below(player.getSurface(), world.getSurface())
-         && rearCollision(player.getSurface(), world.getSurface())
-         && frontalCollision(player.getSurface(), world.getSurface())
-      )
+      // if(
+      //    below(player.getSurface(), world.getSurface())
+      //    && rearCollision(player.getSurface(), world.getSurface())
+      //    && frontalCollision(player.getSurface(), world.getSurface())
+      // )
+      if(collision.detectCollision(player.getSurface(), "booton") != NULL)
        player.stopJump();
+   }
+   // se não esta pulando aplica gravidade;
+   else{
+      if(collision.hasFloor(player.getSurface()) == NULL){
+         player.moveInY(-0.5 * deltaTime);
+      }
    }
 
    if(shot){
@@ -213,7 +222,8 @@ int main(int argc, char** argv)
    float _test[2][4] = {{50 *2, 30.0, size_bloc*0.5, size_bloc}, {300, 100, size_bloc*2, size_bloc}};
 
     world.build(_test, mat_colision); 
-   //  world.printMat(mat_colision);
+    collision.build(world.getSurfaces());
+   //  collision.printMat();
 
     glutDisplayFunc(display); 
    

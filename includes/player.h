@@ -58,7 +58,7 @@ class Player {
 
   public:
     Player() {
-        gX = 30;
+        gX = 250;
         gY =  ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE + 2;
         yCenter =  gY + (body_height / 2);
@@ -81,6 +81,7 @@ class Player {
     void jump(GLdouble clock);
     int hasJumping();
     void stopJump();
+    void moveInY(GLfloat dy);
 
     Surface* getSurface(){return _surface;}
 

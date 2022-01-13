@@ -110,31 +110,28 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock){
-    // cout << "Cloc " << clock << "\n";
+    cout << "Jump " << _surface->getBooton() << "\n";
 
     if(clock >= 0){
 
-    float dy = -(timerJump * timerJump) + 2*timerJump ;
+        // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
-    if(clock <= 10) clock = 970;
+        if(clock <= 10) clock = 970;
 
-    timerJump += (1 / clock );
-   
-    float max_jupm = (body_height + arm_height + legs_height) * 2;
+        timerJump += (1 / clock );
+    
+        float max_jupm = (body_height + arm_height + legs_height) * 2;
 
-    junping = 1;
-    // gY = (dy *  gY ) + yInitJump;
-    gY = -(timerJump * timerJump * max_jupm ) + max_jupm ;
-    gY += yInitJump + (legs_width );
-    _surface->resetY(gY - (legs_width + yInitJump));
+        junping = 1;
+        // gY = (dy *  gY ) + yInitJump;
+        gY = -(timerJump * timerJump * max_jupm ) + max_jupm ;
+        gY += yInitJump + (legs_width );
+        _surface->resetY(gY - (legs_width + yInitJump));
 
-
-    // printf("dy = %f \t gY %f  \t time %f  init %f\t \n", dy, gY ,timerJump , yInitJump );
-
-    if(timerJump > 1.0){
-        junping = 0;
-        timerJump = -1;
-    }
+        if(timerJump > 1.0){
+            junping = 0;
+            timerJump = -1;
+        }
     }
 
 }
@@ -150,3 +147,10 @@ void Player::stopJump(){
 
 
 int Player::hasJumping() {return junping;}
+
+void Player::moveInY(GLfloat dy){
+     int unit = MOVE_UNIT;
+    gY += (dy * unit);
+    _surface->resetY(gY - legs_height);
+}
+
