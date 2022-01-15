@@ -35,9 +35,9 @@ class Surface {
 
      void draw() {
          drowSurface();
-         desenhaRef(-1);
-         desenhaRef(0);
-         desenhaRef(1);
+        //  desenhaRef(-1);
+        //  desenhaRef(0);
+        //  desenhaRef(1);
         //  desenhaRef(2);
         //  desenhaRef(4);
      };

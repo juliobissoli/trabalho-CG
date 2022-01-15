@@ -56,7 +56,7 @@ void Player::drawRef(GLint x, GLint y){
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-    _surface->draw();
+    // _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
@@ -109,10 +109,10 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
     }
 }
 
-void Player::jump(GLdouble clock){
+void Player::jump(GLdouble clock, Collision* collision){
     cout << "Jump " << _surface->getBooton() << "\n";
 
-    if(clock >= 0){
+    if(clock >= 0 && collision->detectCollision(_surface, "top") == NULL){
 
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
@@ -123,14 +123,23 @@ void Player::jump(GLdouble clock){
         float max_jupm = (body_height + arm_height + legs_height) * 2;
 
         junping = 1;
+        
         // gY = (dy *  gY ) + yInitJump;
-        gY = -(timerJump * timerJump * max_jupm ) + max_jupm ;
-        gY += yInitJump + (legs_width );
-        _surface->resetY(gY - (legs_width + yInitJump));
 
-        if(timerJump > 1.0){
+        float aux = -(timerJump * timerJump * max_jupm ) + max_jupm ;
+        aux += yInitJump ;
+        _surface->resetY(aux);
+        gY = _surface->getBooton() + (legs_height );
+
+        
+        Surface* floor = collision->hasFloor(_surface);
+        if(timerJump > 0.0 && floor != NULL){
             junping = 0;
             timerJump = -1;
+            yInitJump = floor->getBooton();
+
+             _surface->resetY(floor->getBooton());
+            gY = floor->getTop() + legs_height;
         }
     }
 
@@ -140,7 +149,7 @@ void Player::stopJump(){
     if(timerJump > 0){
         junping = 0;
         timerJump = -1;
-        yInitJump = _surface->getBooton() - (legs_width / 2);
+        yInitJump = _surface->getBooton() + (legs_height);
         // gY - (legs_width + yInitJump);
     }
 };

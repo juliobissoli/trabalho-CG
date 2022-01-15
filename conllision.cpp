@@ -69,8 +69,8 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
   Surface* item = _objStatics[x][y];
   
-  cout << "Colisao em: |"<< direction << " center| -[" <<   x << "," << y  << "]\n";
-  if(item != NULL) cout << "********** ACHOOOOO00 \n";
+  // cout << "Colisao em: |"<< direction << " center| -[" <<   x << "," << y  << "]\n";
+  // if(item != NULL) cout << "********** ACHOOOOO00 \n";
   
   
   return item;

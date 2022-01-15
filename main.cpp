@@ -110,19 +110,19 @@ void idle(void){
       player.moveArm(-1);
    }
    if(keyStatus[' '] ==  1){
-     player.jump(deltaTime);      
+     player.jump(deltaTime, &collision);      
 
    }
 
    if(player.hasJumping()){
-      player.jump(deltaTime);  
+      player.jump(deltaTime, &collision);  
       // if(
       //    below(player.getSurface(), world.getSurface())
       //    && rearCollision(player.getSurface(), world.getSurface())
-      //    && frontalCollision(player.getSurface(), world.getSurface())
+      //    && frontal  Collision(player.getSurface(), world.getSurface())
       // )
-      if(collision.detectCollision(player.getSurface(), "booton") != NULL)
-       player.stopJump();
+      // if(collision.detectCollision(player.getSurface(), "booton") != NULL)
+      //  player.stopJump();
    }
    // se não esta pulando aplica gravidade;
    else{

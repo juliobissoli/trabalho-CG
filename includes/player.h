@@ -7,7 +7,9 @@
 
 #include "shot.h"
 #include "polygon.h"
+#include "collision.h"
 #include "surface.h"
+
 #include <iostream>
 
 
@@ -78,7 +80,7 @@ class Player {
     void moveInX(GLfloat dx);
     void moveArm(GLfloat dy);
     void moveArm2(GLfloat dy, GLfloat dx);
-    void jump(GLdouble clock);
+    void jump(GLdouble clock, Collision* collision);
     int hasJumping();
     void stopJump();
     void moveInY(GLfloat dy);
