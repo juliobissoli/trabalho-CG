@@ -190,7 +190,7 @@ void init(void) {
    //          100);                 // Z coordinate of the “far” plane
     
    glMatrixMode(GL_PROJECTION);  
-    glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
+   glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
 
 
     glMatrixMode(GL_MODELVIEW);  
@@ -219,7 +219,7 @@ int main(int argc, char** argv)
 
    
    // Receber da função que le o SVG uma matris d n linha e 4 colunas
-   float _test[2][4] = {{50 *2, 30.0, size_bloc*0.5, size_bloc}, {300, 100, size_bloc*2, size_bloc}};
+   float _test[2][4] = {{50 *2, 30.0, size_bloc, size_bloc}, {300, 150, size_bloc*2, size_bloc}};
 
     world.build(_test, mat_colision); 
     collision.build(world.getSurfaces());

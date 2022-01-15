@@ -112,8 +112,15 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 void Player::jump(GLdouble clock, Collision* collision){
     cout << "Jump " << _surface->getBooton() << "\n";
 
-    if(clock >= 0 && collision->detectCollision(_surface, "top") == NULL){
+    if(clock <= 0) return;
 
+
+    Surface* top_collision = collision->detectCollision(_surface, "top");
+    if(top_collision != NULL){
+        cout << "ta aaqui\n";
+        junping = 0;
+        return;
+    }
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
         if(clock <= 10) clock = 970;
@@ -141,7 +148,7 @@ void Player::jump(GLdouble clock, Collision* collision){
              _surface->resetY(floor->getBooton());
             gY = floor->getTop() + legs_height;
         }
-    }
+    
 
 }
 
