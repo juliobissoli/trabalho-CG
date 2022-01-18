@@ -19,11 +19,11 @@ World world;
 Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
 Collision collision;
 
-Player player;  
+Player* player; 
 Shot* shot;
 
-const GLint ViewingWidth =  WINDOW_SIZE;
-const GLint ViewingHeight = WINDOW_SIZE;
+const GLint ViewingWidth =  WINDOW_SIZE + 300;
+const GLint ViewingHeight = WINDOW_SIZE + 300;
 
 int keyStatus[256];
 
@@ -66,8 +66,7 @@ void display(void){
    glClear (GL_COLOR_BUFFER_BIT);
    
    world.draw();
-   player.Desenha();
-   
+   player->Desenha();
 
    if (shot){
          shot->draw();
@@ -88,46 +87,36 @@ void idle(void){
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
     if (keyStatus['a'] == 1){
-      //  if(!rearCollision(player.getSurface(), world.getSurface()) || above(player.getSurface(), world.getSurface())){
-      if(collision.detectCollision(player.getSurface(), "left") == NULL){
+      if(collision.detectCollision(player->getSurface(), "left") == NULL){
         world.moveInX(0.5 * deltaTime);
-        player.moveInX(-0.5 *  deltaTime);
+        player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
-      //  world.detectCollisionLeft(mat_colision, player.getSurface());
-      //  if(player.getRigth() < world.getLeft() || player.getBooton() > world.getTop()){
-      // if(!frontalCollision(player.getSurface(), world.getSurface()) || above(player.getSurface(), world.getSurface())){
-      if(collision.detectCollision(player.getSurface(), "right") == NULL){
+      if(collision.detectCollision(player->getSurface(), "right") == NULL){
          world.moveInX(-0.5 * deltaTime);
-         player.moveInX(0.5 * deltaTime);
+         player->moveSurfaceInX(0.5 * deltaTime);
        }
    }
     if (keyStatus['w'] == 1){
-        player.moveArm(1);
+        player->moveArm(1);
    }
     if(keyStatus['s'] == 1){
-      player.moveArm(-1);
+      player->moveArm(-1);
    }
    if(keyStatus[' '] ==  1){
-     player.jump(deltaTime, &collision);      
+      if(!player->hasJumping()){   
+       player->jump(deltaTime, &collision);      
+      }
 
    }
-
-   if(player.hasJumping()){
-      player.jump(deltaTime, &collision);  
-      // if(
-      //    below(player.getSurface(), world.getSurface())
-      //    && rearCollision(player.getSurface(), world.getSurface())
-      //    && frontal  Collision(player.getSurface(), world.getSurface())
-      // )
-      // if(collision.detectCollision(player.getSurface(), "booton") != NULL)
-      //  player.stopJump();
+   if(player->hasJumping()){
+      player->jump(deltaTime, &collision);  
    }
    // se não esta pulando aplica gravidade;
    else{
-      if(collision.hasFloor(player.getSurface()) == NULL){
-         player.moveInY(-0.5 * deltaTime);
+      if(collision.hasFloor(player->getSurface()) == NULL){
+         player->moveInY(-0.5 * deltaTime);
       }
    }
 
@@ -158,7 +147,7 @@ void keyPress(unsigned char key, int x, int y){
       keyStatus['s'] = 1;      
    } 
    if(key == 't'){
-     shot = player.shootGun();      
+     shot = player->shootGun();      
    } 
    if(key == ' '){
       keyStatus[' '] = 1;   
@@ -179,7 +168,7 @@ void keyUp(unsigned char key, int x, int y) {
 void init(void) {
    //  ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
+    glClearColor(0.0f, 0.0f, 1.0f, 0.0f); // Black, no opacity(alpha).
 
    //  glMatrixMode(GL_PROJECTION);  // Select the projection matrix
    //  glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
@@ -199,17 +188,18 @@ void init(void) {
 
 void mira(int x, int y){
    y = WINDOW_SIZE  - y;
-   player.moveArm2(y, x);
+   player->moveArm2(y, x);
 }
 
 void click(int button, int state, int x, int y){
    printf("Atirou \n");
-    shot = player.shootGun();     
+    shot = player->shootGun();     
 }
 
 
 int main(int argc, char** argv)
 {
+   player = new Player(150.0, 100.0, "green");
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
@@ -217,7 +207,6 @@ int main(int argc, char** argv)
     glutCreateWindow ("Trabalho-CG");
     init ();
 
-   
    // Receber da função que le o SVG uma matris d n linha e 4 colunas
    float _test[2][4] = {{50 *2, 30.0, size_bloc, size_bloc}, {300, 150, size_bloc*2, size_bloc}};
 

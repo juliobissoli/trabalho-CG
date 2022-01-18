@@ -11,6 +11,7 @@
 #include "surface.h"
 
 #include <iostream>
+#include <tuple>
 
 
 
@@ -46,6 +47,8 @@ class Player {
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
     float timerJump;
+    tuple <float, float, float> _body_color;
+    tuple <float, float, float> _shot_color;
 
     
   
@@ -59,9 +62,9 @@ class Player {
     void drawRef(GLint x, GLint y);
 
   public:
-    Player() {
-        gX = 250;
-        gY =  ( arm_height  + body_height) / 2;
+    Player(float x_init, float y_init,string color) {
+        gX =  x_init;//250;
+        gY =  y_init + ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE + 2;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
@@ -69,6 +72,8 @@ class Player {
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;
         timerJump = -1;
+        if(color == "green") _body_color = {0.0, 0.5, 0.0};
+        else _body_color = {1.0, 0.0, 0.0};
 
         _surface = new Surface(gX, gY - (legs_height) , body_width, body_height + (radius_header * 2) + legs_height);
     };
@@ -78,6 +83,7 @@ class Player {
     };
 
     void moveInX(GLfloat dx);
+    void moveSurfaceInX(GLfloat dx);
     void moveArm(GLfloat dy);
     void moveArm2(GLfloat dy, GLfloat dx);
     void jump(GLdouble clock, Collision* collision);

@@ -7,7 +7,7 @@
 
 #include "polygon.h"
 #include <stdio.h>
-#define radiusBullet 2
+#define radiusBullet 5
 
 class Shot {
     GLfloat gx_init;

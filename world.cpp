@@ -134,8 +134,9 @@ void World::draw(){
   // surface->draw();
   for (auto s : _surfaces) {
     s->draw();
-    // drawCircle(s->getTop(), s->getTop());
   }
+
+  oponente->Desenha();
 }
 
 
@@ -146,6 +147,8 @@ void World::moveInX(GLfloat dx){
   for (auto s : _surfaces){
     s->traslateX(dx * unit);
   }
+  oponente->moveInX(dx);
+  oponente->moveSurfaceInX(dx);
 }
 
 // float World::getLeft(){

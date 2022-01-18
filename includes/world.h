@@ -9,6 +9,7 @@
 #include "world.h"
 #include "polygon.h"
 #include "surface.h"
+#include "player.h"
 
 
 #include <iostream>
@@ -30,6 +31,7 @@ class World {
     // vector<vector<float>> matrix(float, vector<float>);
     // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
+    Player* oponente;
     
 
     private:
@@ -42,6 +44,7 @@ class World {
       World(){
           gX = 0;
           gY = 0; 
+          oponente = new Player(300.0, 0.0, "red");
           // surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }

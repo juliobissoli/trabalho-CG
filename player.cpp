@@ -10,7 +10,7 @@ using namespace std;
 void Player::drawBody(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
-    rectangle(body_height, body_width, 0.0, 1.0, 0.0);
+    rectangle(body_height, body_width,  get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
@@ -19,7 +19,7 @@ void Player::drawHeader(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
     glTranslatef(0,  (body_height + radius_header), 0);
-    circle(radius_header, 0.0, 1.0, 0.0);
+    circle(radius_header,get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
@@ -33,7 +33,7 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
 
     glTranslatef(body_width / 2.0, 0,0);
 
-    rectangle(arm_height, arm_width, 0.0, 0.0, 1.0);
+    rectangle(arm_height, arm_width, 1.0, 1.0, 0.0);
 
     glPopMatrix();
 }
@@ -42,7 +42,7 @@ void Player::drawLegs(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
     glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
-    rectangle(legs_height, legs_width, 1.0, 0, 0);
+    rectangle(legs_height, legs_width, get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
@@ -68,10 +68,13 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 
 void Player::moveInX(GLfloat dx){
     int unit = MOVE_UNIT;
-    // gX += (dx * unit);
+    gX += (dx * unit);
+    // printf("Move player x =>\t %f \n", gX);
+}
+void Player::moveSurfaceInX(GLfloat dx){
+    int unit = MOVE_UNIT;
     _surface->traslateX(dx * unit);
     // printf("Move player x =>\t %f \n", gX);
-
 }
 
 void Player::moveArm(GLfloat dy){
