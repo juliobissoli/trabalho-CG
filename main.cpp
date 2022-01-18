@@ -121,11 +121,17 @@ void idle(void){
    }
 
    if(shot){
-       shot->move(deltaTime);    
-    if (!shot->valid()) {
+       shot->move(deltaTime);
+       Player* b =  world.checkBotsCollision(shot->getPos());
+    if (!shot->valid() || b  != NULL) {
             delete shot;
             shot = NULL;
+
+            if(b != NULL){
+               b->decrementLive();
+            }
         }
+      // delete b; b = NULL;
    }
 
     glutPostRedisplay();

@@ -53,6 +53,8 @@ class Surface {
     float getYCenter(){return _y + (_ySize / 2);}
     float getXCenter(){return _x;}
 
+    bool isInternal(GLfloat x, GLfloat y);
+
 
 };
 

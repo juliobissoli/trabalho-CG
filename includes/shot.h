@@ -6,14 +6,23 @@
 
 
 #include "polygon.h"
+// #include "world.h"
+
+#include <iostream>
+#include <vector>
 #include <stdio.h>
+#include <tuple>
+
 #define radiusBullet 5
 
+using namespace std;
+
+
 class Shot {
-    GLfloat gx_init;
-    GLfloat gy_init;
-    GLfloat gX;
-    GLfloat gY;
+    GLfloat _x_init;
+    GLfloat _y_init;
+    GLfloat _x;
+    GLfloat _y;
     GLfloat gDirectionAng;
     GLfloat gVel;
     GLint gDirection;
@@ -23,22 +32,24 @@ class Shot {
 
   public:
     Shot(GLfloat x, GLfloat y, GLfloat directionAng, GLint direction) {
-        gx_init = x;
-        gy_init = y;
-        gX = x;
-        gY = y;
+        _x_init = x;
+        _y_init = y;
+        _x = x;
+        _y = y;
         gDirectionAng = directionAng;
-        gVel = 2;
+        gVel = 1;
         gDirection = direction; // 1 para frente -1 para traz
     };
     ~Shot();
-    void draw() { drawShot(gX, gY); };
+    void draw() { drawShot(_x, _y); };
     void move(GLdouble deltaTime);
     bool valid();
-    void getPos(GLfloat& xOut, GLfloat& yOut) {
-        xOut = gX;
-        yOut = gY;
+
+    tuple<GLfloat, GLfloat> getPos(){
+       tuple<GLfloat, GLfloat> pos = {_x, _y};
+       return pos;
     };
+
     void getVel(GLfloat& velOut) { velOut = gVel; };
     void getDirectionAng(GLfloat& directionAngOut) {
         directionAngOut = gDirectionAng;

@@ -14,10 +14,18 @@ void Shot::drawShot(GLfloat x, GLfloat y) {
 }
 
 void Shot::move(GLdouble deltaTime) {
-    gX += gVel * cos(-gDirectionAng * M_PI / 180) * deltaTime * gDirection;
-    gY += gVel * sin(gDirectionAng * M_PI / 180) * deltaTime  * gDirection;
+    _x += gVel * cos(-gDirectionAng * M_PI / 180) * deltaTime * gDirection;
+    _y += gVel * sin(gDirectionAng * M_PI / 180) * deltaTime  * gDirection;
 }
 
 Shot::~Shot() {}
 
-bool Shot::valid() { return DISTANCIA_MAX > sqrt(pow(gX, 2) + pow(gY, 2)); }
+bool Shot::valid() {
+
+    // if(world->botCollision(_x, _y) != NULL){
+    //     cout << "ACERTO UMA PLAYER \n";
+    //     return false;
+    // }
+
+     return DISTANCIA_MAX > sqrt(pow(_x, 2) + pow(_y, 2));
+}

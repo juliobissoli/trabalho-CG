@@ -20,3 +20,8 @@ void Surface::desenhaRef(int position){
     glPopMatrix();
 }
 
+
+bool Surface::isInternal(GLfloat x, GLfloat y){
+
+   return x <= getRight() && x >= getLeft() && y <= getTop() && y >= getBooton();
+}

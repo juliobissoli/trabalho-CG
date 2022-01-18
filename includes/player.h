@@ -33,6 +33,7 @@ using namespace std;
 
 
 class Player {
+    int _live;
     GLfloat gX;
     GLfloat gY;
     GLfloat gAngleArm;
@@ -63,6 +64,7 @@ class Player {
 
   public:
     Player(float x_init, float y_init,string color) {
+        _live = 1;
         gX =  x_init;//250;
         gY =  y_init + ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE + 2;
@@ -78,7 +80,13 @@ class Player {
         _surface = new Surface(gX, gY - (legs_height) , body_width, body_height + (radius_header * 2) + legs_height);
     };
     void Desenha() {
+        if(_live > 0){
+
         drawPlayer(gX, gY, gAngleArm);
+        }
+        else {
+          cout << "++ TA MORTO ++\n";
+        }
         // printf(" Bateu aqui ==> %f \n", gX);
     };
 
@@ -91,9 +99,14 @@ class Player {
     void stopJump();
     void moveInY(GLfloat dy);
 
-    Surface* getSurface(){return _surface;}
 
     Shot* shootGun();
+
+    bool playerCollision(GLfloat x, GLfloat y);
+    void decrementLive(){_live -= 1;}
+
+    Surface* getSurface(){return _surface;}
+    int live(){return _live;}
  
 };
 

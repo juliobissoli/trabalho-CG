@@ -5,17 +5,17 @@
 #include <GL/glu.h>
 
 #include <string>
+#include <iostream>
+#include <vector>
+#include <set>
+#include <tuple>
 
 #include "world.h"
 #include "polygon.h"
 #include "surface.h"
 #include "player.h"
+#include "bot.h"
 
-
-#include <iostream>
-#include <vector>
-#include <set>
-#include<tuple>
 
 #define size_bloc 50.0 //remover tamanho so para teste
 #define MAX_VIEW_X 1500
@@ -32,6 +32,8 @@ class World {
     // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
     Player* oponente;
+    vector<Bot*> _bots;
+
     
 
     private:
@@ -45,6 +47,14 @@ class World {
           gX = 0;
           gY = 0; 
           oponente = new Player(300.0, 0.0, "red");
+
+          Bot* b1 = new Bot(500.0, 0);
+          Bot* b2 = new Bot(700.0, 0);
+
+          _bots.push_back(b1);
+          _bots.push_back(b2);
+
+
           // surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }
@@ -52,16 +62,10 @@ class World {
       // Monta o array de superficies (obstáculos); 
     void build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
     void draw();
-    // Surface* getSurface(){return surface;}
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
-    
-    // Prarte de colisões vai sair
-    // void printMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
-    // Surface* detectCollision(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface* s, string direction);
-    
-    // float getTop(){return gY + (size_bloc / 2);}
-    // float getLeft(){return gX - (size_bloc / 2);}
+    Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
+
 
 
 };

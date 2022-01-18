@@ -173,3 +173,8 @@ void Player::moveInY(GLfloat dy){
     _surface->resetY(gY - legs_height);
 }
 
+
+
+bool Player::playerCollision(GLfloat x, GLfloat y){
+    return _surface->isInternal(x,y);
+}
