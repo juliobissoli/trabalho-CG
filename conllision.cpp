@@ -58,23 +58,40 @@ void Collision::printMat(){
 
 Surface* Collision::detectCollision(Surface* s, string direction){
 
-  tuple <int, int> pointer;
+  Surface* item;
   
-  if(direction == "left" || direction == "right") pointer = handleeGetPointer(s, direction, "center");
-  if(direction == "top" || direction == "booton") pointer = handleeGetPointer(s, "center", direction);
+  if(direction == "left" || direction == "right") {
+    vector<string> other_axis = {"top", "center"};
+    for(auto dir : other_axis ){
+      item = handleAvaliatePointer(s, direction, dir);
+      if(item != NULL) return item;
+    }
+  }
+  if(direction == "top" || direction == "booton"){
+    vector<string> other_axis = {"center"};
+    for(auto dir : other_axis ){
+      item = handleAvaliatePointer(s, dir, direction);
+      if(item != NULL) return item;
+    }
+    // item = handleAvaliatePointer(s, "center", direction);
 
-  int x = get<0>(pointer);
-  int y = get<1>(pointer);
+    // if(item != NULL) return item;
 
-
-  Surface* item = _objStatics[x][y];
-  
-  // cout << "Colisao em: |"<< direction << " center| -[" <<   x << "," << y  << "]\n";
-  // if(item != NULL) cout << "********** ACHOOOOO00 \n";
-  
-  
-  return item;
+  } 
+  return NULL;
 }
+
+  Surface* Collision::handleAvaliatePointer(Surface* s, string x_direction, string y_direction){
+    
+    tuple<int, int> pointer = handleeGetPointer(s, x_direction, y_direction);
+
+    int x = get<0>(pointer);
+    int y = get<1>(pointer);
+    Surface* item = _objStatics[x][y];
+
+    return item;
+  }
+
 
  tuple<int, int> Collision::handleeGetPointer(Surface* s, string x_direction, string y_direction ){
    
@@ -106,6 +123,17 @@ Surface* Collision::hasFloor(Surface* s){
 
     else return detectCollision(s, "booton");
 }
+
+bool Collision::inpactPointer(tuple<int, int> pointer){
+  
+  int x = get<0>(pointer);
+  int y = get<1>(pointer);
+  Surface* item = _objStatics[x][y];
+  
+  if(item != NULL) return true;
+  else return false;
+}
+
 
 // float World::getLeft(){
 //     return gX - size_bloc/2;

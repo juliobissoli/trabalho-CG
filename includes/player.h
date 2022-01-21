@@ -39,12 +39,9 @@ class Player {
     GLfloat gAngleArm;
     GLfloat yCenter;
     GLfloat xCenter;
-
     Surface* _surface;
-
-
+    Shot* _shot;
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
-
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
     float timerJump;
@@ -101,6 +98,7 @@ class Player {
 
 
     Shot* shootGun();
+    void moveShot(float deltaTime, Collision* obstacles);
 
     bool playerCollision(GLfloat x, GLfloat y);
     void decrementLive(){_live -= 1;}

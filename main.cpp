@@ -17,7 +17,7 @@ using namespace std;
 
 World world;
 Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
-Collision collision;
+// Collision collision;
 
 Player* player; 
 Shot* shot;
@@ -30,35 +30,6 @@ int keyStatus[256];
 
 static GLdouble framerate = 0;
 
-int detectCollision(Surface* s1, Surface* s2){
-      // printf("x %d \t y %d \n", s1->getRight() == s2->getLeft(), s1->getBooton() > s2->getTop());
-      //  return s1->getRight() >= s2->getLeft() || s1->getBooton() > s2->getTop();
-      printf("esq(s1) >= dir(s2)= %d \t  dir(s1) <= esq(s2)= %d \n", s1->getLeft() >= s2->getRight() , s1->getRight() <= s2->getLeft());
-      return   s1->getLeft() >=  s2->getRight()
-            && s1->getRight() <= s2->getLeft()
-            // || s2->getTop() <= s1->getBooton()
-            ;
-}
-
-// Superficie ques esta se movendo (s1) colide de "frente" (direita)
-// com a "traseira" (direita) de s2
-int frontalCollision(Surface* s1, Surface* s2){
- return s1->getRight() >= s2->getLeft() &&
-        s1->getRight() <= s2->getRight();
-}
-
-int rearCollision(Surface* s1, Surface* s2){
- return s1->getLeft() <= s2->getRight() &&
-        s1->getLeft() >= s2->getLeft();
-}
-
-int above(Surface* s1, Surface* s2){
-    return s1->getBooton() > s2->getTop();
-}
-
-int below(Surface* s1, Surface* s2){
-   return s1->getBooton() <= s2->getTop();
-}
 
 
 void display(void){
@@ -68,9 +39,9 @@ void display(void){
    world.draw();
    player->Desenha();
 
-   if (shot){
-         shot->draw();
-      }
+   // if (shot){
+   //       shot->draw();
+   //    }
   
    glEnd();
    /* Desenhar no frame buffer! */
@@ -86,14 +57,17 @@ void idle(void){
     deltaTime = curTime - prevTime;
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
+
+    player->moveShot(deltaTime, world.getObstacles());
+
     if (keyStatus['a'] == 1){
-      if(collision.detectCollision(player->getSurface(), "left") == NULL){
+      if(world.obstacleCollision(player->getSurface(), "left") == NULL){
         world.moveInX(0.5 * deltaTime);
         player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
-      if(collision.detectCollision(player->getSurface(), "right") == NULL){
+      if(world.obstacleCollision(player->getSurface(), "right") == NULL){
          world.moveInX(-0.5 * deltaTime);
          player->moveSurfaceInX(0.5 * deltaTime);
        }
@@ -106,33 +80,33 @@ void idle(void){
    }
    if(keyStatus[' '] ==  1){
       if(!player->hasJumping()){   
-       player->jump(deltaTime, &collision);      
+       player->jump(deltaTime, world.getObstacles());      
       }
 
    }
    if(player->hasJumping()){
-      player->jump(deltaTime, &collision);  
+      player->jump(deltaTime, world.getObstacles());  
    }
    // se não esta pulando aplica gravidade;
    else{
-      if(collision.hasFloor(player->getSurface()) == NULL){
+      if(world.hasFloor(player->getSurface()) == NULL){
          player->moveInY(-0.5 * deltaTime);
       }
    }
 
-   if(shot){
-       shot->move(deltaTime);
-       Player* b =  world.checkBotsCollision(shot->getPos());
-    if (!shot->valid() || b  != NULL) {
-            delete shot;
-            shot = NULL;
+   // if(shot){
+   //     shot->move(deltaTime);
+   //     Player* b =  world.checkBotsCollision(shot->getPos());
+   //  if (!shot->valid() || b  != NULL) {
+   //          delete shot;
+   //          shot = NULL;
 
-            if(b != NULL){
-               b->decrementLive();
-            }
-        }
-      // delete b; b = NULL;
-   }
+   //          if(b != NULL){
+   //             b->decrementLive();
+   //          }
+   //      }
+   //    // delete b; b = NULL;
+   // }
 
     glutPostRedisplay();
 }
@@ -214,10 +188,16 @@ int main(int argc, char** argv)
     init ();
 
    // Receber da função que le o SVG uma matris d n linha e 4 colunas
-   float _test[2][4] = {{50 *2, 30.0, size_bloc, size_bloc}, {300, 150, size_bloc*2, size_bloc}};
+   float _test[4][4] = {
+         {50 *2, 30.0, size_bloc, size_bloc},
+         {300, 150, size_bloc*5, size_bloc / 3},
+         {600, 0, size_bloc, 2*size_bloc},
+         {900, 0, size_bloc, 2.3*size_bloc},
+         
+         };
 
     world.build(_test, mat_colision); 
-    collision.build(world.getSurfaces());
+   //  collision.build(world.getSurfaces());
    //  collision.printMat();
 
     glutDisplayFunc(display); 

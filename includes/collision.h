@@ -15,7 +15,7 @@
 #include<tuple>
 
 #define MAX_VIEW_X 1500
-#define MAX_VIEW_Y 500
+#define MAX_VIEW_Y 800
   
 using namespace std;
 
@@ -32,7 +32,7 @@ class Collision {
 
     private:
       tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
-    
+      Surface* handleAvaliatePointer(Surface* s, string x_direction, string y_direction);
     public:
       Collision(){
         _floor = new Surface(0,0, MAX_VIEW_X, 2);
@@ -42,6 +42,7 @@ class Collision {
     void build(vector<Surface*> surfaces);
     void printMat();
     Surface* detectCollision(Surface* s, string direction);
+    bool inpactPointer(tuple<int, int> point);
     
     Surface* hasFloor(Surface* s);
 

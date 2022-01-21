@@ -15,11 +15,12 @@
 #include "surface.h"
 #include "player.h"
 #include "bot.h"
+#include "collision.h"
 
 
 #define size_bloc 50.0 //remover tamanho so para teste
 #define MAX_VIEW_X 1500
-#define MAX_VIEW_Y 500
+#define MAX_VIEW_Y 800
   
 using namespace std;
 
@@ -27,12 +28,15 @@ class World {
 
     GLfloat gX;
     GLfloat gY;
+
+    Collision* _obstacles;
     // Surface *surface; //remover isso apos resolver colizões
     // vector<vector<float>> matrix(float, vector<float>);
     // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
-    Player* oponente;
     vector<Bot*> _bots;
+    
+
 
     
 
@@ -46,8 +50,8 @@ class World {
       World(){
           gX = 0;
           gY = 0; 
-          oponente = new Player(300.0, 0.0, "red");
-
+          // oponente = new Player(300.0, 0.0, "red");
+          _obstacles = new Collision();
           Bot* b1 = new Bot(500.0, 0);
           Bot* b2 = new Bot(700.0, 0);
 
@@ -60,11 +64,15 @@ class World {
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
+    void build(float _test[4][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
     void draw();
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
     Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
+
+    Surface* obstacleCollision(Surface* s, string direction){return _obstacles->detectCollision(s, direction);};
+    Collision* getObstacles(){return _obstacles;}
+    Surface* hasFloor(Surface* s){return _obstacles->hasFloor(s);}
 
 
 

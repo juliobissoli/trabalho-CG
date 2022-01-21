@@ -64,6 +64,10 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     // Player::drawRef(x,y);
     glPopMatrix();
 
+    if (_shot){
+         _shot->draw();
+      }
+
 }
 
 void Player::moveInX(GLfloat dx){
@@ -87,15 +91,33 @@ void Player::moveArm(GLfloat dy){
 
 
 Shot *Player::shootGun(){
-    
     //Calcular onde esta a ponta da arma para indicar de onde o diro sairá
     //Multiplicando pela direção (gFacing) para corigir o sentindo  p onde o personagem esta aponado
     double positionX = gX + (gFacing * arm_width * cos(gAngleArm * M_PI / 180));
     double positionY = gY + (body_height /2) + arm_height / 2 +  (gFacing * arm_width * sin(gAngleArm * M_PI / 180));
     
-    return new Shot(positionX, positionY, gAngleArm, gFacing);
+     _shot = new Shot(positionX, positionY, gAngleArm, gFacing);
+    return _shot;
 }
 
+
+void Player::moveShot(float deltaTime, Collision* obstacles){
+     if(_shot){
+       _shot->move(deltaTime);
+    //    Player* b =  world.checkBotsCollision(_shot->getPos());
+    if ( !_shot->valid() || obstacles->inpactPointer(_shot->getPosInt()) ){
+    // || b  != NULL) {
+        cout << "ta move shot \n";
+            delete _shot;
+            _shot = NULL;
+
+            // if(b != NULL){
+            //    b->decrementLive();
+            // }
+        }
+      // delete b; b = NULL;
+   }
+}
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
     
@@ -113,10 +135,13 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock, Collision* collision){
-    cout << "Jump " << _surface->getBooton() << "\n";
+    cout << "Jump " << clock << "\n";
 
     if(clock <= 0) return;
-
+    
+    //Verica se o personagem caiu de uma plataforma sem pular
+    if(_surface->getBooton() <= 0)yInitJump = 0;
+    
 
     Surface* top_collision = collision->detectCollision(_surface, "top");
     if(top_collision != NULL){
@@ -129,6 +154,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         if(clock <= 10) clock = 970;
 
         timerJump += (1 / clock );
+
     
         float max_jupm = (body_height + arm_height + legs_height) * 2;
 
@@ -139,17 +165,17 @@ void Player::jump(GLdouble clock, Collision* collision){
         float aux = -(timerJump * timerJump * max_jupm ) + max_jupm ;
         aux += yInitJump ;
         _surface->resetY(aux);
-        gY = _surface->getBooton() + (legs_height );
+        gY = _surface->getTop() + (legs_height);
 
         
         Surface* floor = collision->hasFloor(_surface);
         if(timerJump > 0.0 && floor != NULL){
             junping = 0;
             timerJump = -1;
-            yInitJump = floor->getBooton();
+            yInitJump = floor->getTop();
 
-             _surface->resetY(floor->getBooton());
-            gY = floor->getTop() + legs_height;
+             _surface->resetY(floor->getTop());
+            gY = floor->getTop() + legs_height + 30;
         }
     
 

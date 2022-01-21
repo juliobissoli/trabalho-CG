@@ -26,7 +26,7 @@ public:
 
     void draw(){_bot->Desenha();}
     Player* player(){return _bot;}
-    int live(){_bot->live();}
+    int live(){return _bot->live();}
     void moveInX(GLfloat dx){
         _bot->moveInX(dx);
         _bot->moveSurfaceInX(dx);

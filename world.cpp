@@ -17,13 +17,13 @@ void World::build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_
   //  drawObstacles(gX, gY);
   cout << "=======Build do mundo======= \n";
 
-  
   // Iniciliaza as superficies
-  for (int i = 0; i < 2; i++){
+  for (int i = 0; i < 4; i++){
     Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);
     _surfaces.push_back(s);
-
   }
+
+  _obstacles->build(_surfaces);
 
 };
 
@@ -37,19 +37,6 @@ void World::draw(){
   for(auto b : _bots){
     if(b->live() > 0) b->draw();
   }
-
-
-  // if(oponente != NULL){
-
-  //   if(oponente->live() > 0){
-  //     oponente->Desenha();
-  //     // cout << "DESENHA OPONENTE \n";
-  //   }
-  //   else {
-  //     delete oponente;
-  //     oponente = NULL;
-  //   }
-  // }
 }
 
 
@@ -63,8 +50,7 @@ void World::moveInX(GLfloat dx){
   for(auto b : _bots){
     b->moveInX(dx * unit);
   }
-  // oponente->moveInX(dx);
-  // oponente->moveSurfaceInX(dx);
+
 }
 
 Player* World::checkBotsCollision(tuple<GLfloat, GLfloat> position){
