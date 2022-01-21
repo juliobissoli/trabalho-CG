@@ -42,7 +42,7 @@ class Collision {
     void build(vector<Surface*> surfaces);
     void printMat();
     Surface* detectCollision(Surface* s, string direction);
-    bool inpactPointer(tuple<int, int> point);
+    bool inpactPointer(tuple<GLfloat, GLfloat> point);
     
     Surface* hasFloor(Surface* s);
 

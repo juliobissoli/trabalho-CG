@@ -56,7 +56,7 @@ void Player::drawRef(GLint x, GLint y){
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-    // _surface->draw();
+    _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
@@ -64,9 +64,9 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     // Player::drawRef(x,y);
     glPopMatrix();
 
-    if (_shot){
-         _shot->draw();
-      }
+    // if (_shot){
+    //      _shot->draw();
+    //   }
 
 }
 
@@ -105,7 +105,12 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
      if(_shot){
        _shot->move(deltaTime);
     //    Player* b =  world.checkBotsCollision(_shot->getPos());
-    if ( !_shot->valid() || obstacles->inpactPointer(_shot->getPosInt()) ){
+    tuple<float, float> pointer = _shot->getPos();
+    float x = get<0>(pointer);
+    float y = get<1>(pointer);
+    cout << "Poistion shot [" << x << ", " << y << "]\n"; 
+    
+    if (obstacles->inpactPointer(_shot->getPos()) ){
     // || b  != NULL) {
         cout << "ta move shot \n";
             delete _shot;

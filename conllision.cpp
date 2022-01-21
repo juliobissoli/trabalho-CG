@@ -60,6 +60,12 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
   Surface* item;
   
+  if(direction == "center"){
+  cout << "verifica centro| " << direction << "\n";
+    item = handleAvaliatePointer(s, "center", "center");
+      if(item != NULL) return item;
+  }
+
   if(direction == "left" || direction == "right") {
     vector<string> other_axis = {"top", "center"};
     for(auto dir : other_axis ){
@@ -73,6 +79,8 @@ Surface* Collision::detectCollision(Surface* s, string direction){
       item = handleAvaliatePointer(s, dir, direction);
       if(item != NULL) return item;
     }
+
+
     // item = handleAvaliatePointer(s, "center", direction);
 
     // if(item != NULL) return item;
@@ -87,6 +95,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
     int x = get<0>(pointer);
     int y = get<1>(pointer);
+    cout << "pointer " << x << ", "<< y<< "\n";
     Surface* item = _objStatics[x][y];
 
     return item;
@@ -124,14 +133,24 @@ Surface* Collision::hasFloor(Surface* s){
     else return detectCollision(s, "booton");
 }
 
-bool Collision::inpactPointer(tuple<int, int> pointer){
+bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){
   
-  int x = get<0>(pointer);
-  int y = get<1>(pointer);
+  int x = (int)get<0>(pointer);
+  int y = (int)get<1>(pointer);
+
+  if(x < 0 || y < 0 || x > MAX_VIEW_X || y > MAX_VIEW_X ) return true;
+  
+
   Surface* item = _objStatics[x][y];
   
-  if(item != NULL) return true;
-  else return false;
+  cout << "Verifica ponto x = "<< x << ", y = " << y <<"\n";
+
+  if(item != NULL) {
+    cout << "Acho alguma coisa em x [ "<< item->getLeft() << ", " << item->getRight() << "]\n";
+    cout << "Acho alguma coisa em y [ "<< item->getTop() << ", " << item->getBooton() << "]\n";
+    return true;}
+  else 
+  return false;
 }
 
 

@@ -16,6 +16,9 @@ void Shot::drawShot(GLfloat x, GLfloat y) {
 void Shot::move(GLdouble deltaTime) {
     _x += gVel * cos(-gDirectionAng * M_PI / 180) * deltaTime * gDirection;
     _y += gVel * sin(gDirectionAng * M_PI / 180) * deltaTime  * gDirection;
+
+    _surface->resetX(_x);
+    _surface->resetY(_y);
 }
 
 Shot::~Shot() {}

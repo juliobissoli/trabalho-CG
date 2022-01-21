@@ -69,6 +69,8 @@ class World {
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
     Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
+    bool checkObstacleCollision(Surface* s);
+    bool finishWord(Surface* s);
 
     Surface* obstacleCollision(Surface* s, string direction){return _obstacles->detectCollision(s, direction);};
     Collision* getObstacles(){return _obstacles;}

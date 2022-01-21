@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include "polygon.h"
+#include "surface.h"
 // #include "world.h"
 
 #include <iostream>
@@ -26,6 +27,7 @@ class Shot
   GLfloat gDirectionAng;
   GLfloat gVel;
   GLint gDirection;
+  Surface* _surface;
 
 private:
   void drawShot(GLfloat x, GLfloat y);
@@ -40,6 +42,7 @@ public:
     gDirectionAng = directionAng;
     gVel = 1;
     gDirection = direction; // 1 para frente -1 para traz
+    _surface = new Surface(x, y,  radiusBullet * 2, radiusBullet * 2);
   };
   ~Shot();
   void draw() { drawShot(_x, _y); };
@@ -53,15 +56,8 @@ public:
   };
 
   void getVel(GLfloat &velOut) { velOut = gVel; };
-  void getDirectionAng(GLfloat &directionAngOut)
-  {
-    directionAngOut = gDirectionAng;
-  };
-  tuple<int, int> getPosInt()
-  {
-    tuple<int, int> pointer = {(int)_x, (int)_y};
-    return pointer;
-  }
+  void getDirectionAng(GLfloat &directionAngOut){  directionAngOut = gDirectionAng;};
+  Surface* getSurface(){return _surface;} 
 };
 
 #endif /* SHOT_H */

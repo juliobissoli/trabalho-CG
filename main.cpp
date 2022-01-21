@@ -39,9 +39,9 @@ void display(void){
    world.draw();
    player->Desenha();
 
-   // if (shot){
-   //       shot->draw();
-   //    }
+   if (shot){
+         shot->draw();
+      }
   
    glEnd();
    /* Desenhar no frame buffer! */
@@ -58,7 +58,7 @@ void idle(void){
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
 
-    player->moveShot(deltaTime, world.getObstacles());
+   //  player->moveShot(deltaTime, world.getObstacles());
 
     if (keyStatus['a'] == 1){
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
@@ -94,19 +94,22 @@ void idle(void){
       }
    }
 
-   // if(shot){
-   //     shot->move(deltaTime);
-   //     Player* b =  world.checkBotsCollision(shot->getPos());
-   //  if (!shot->valid() || b  != NULL) {
-   //          delete shot;
-   //          shot = NULL;
+   if(shot){
+       Player* b =  world.checkBotsCollision(shot->getPos());
 
-   //          if(b != NULL){
-   //             b->decrementLive();
-   //          }
-   //      }
-   //    // delete b; b = NULL;
-   // }
+    if (world.finishWord(shot->getSurface()) || world.checkObstacleCollision(shot->getSurface()) || b  != NULL) {
+            delete shot;
+            shot = NULL;
+
+            if(b != NULL){
+               b->decrementLive();
+            }
+        }
+      else {
+       shot->move(deltaTime);
+      }
+      // delete b; b = NULL;
+   }
 
     glutPostRedisplay();
 }
@@ -179,7 +182,7 @@ void click(int button, int state, int x, int y){
 
 int main(int argc, char** argv)
 {
-   player = new Player(150.0, 100.0, "green");
+   player = new Player(400, 0.0, "green");
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 

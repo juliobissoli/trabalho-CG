@@ -67,6 +67,24 @@ Player* World::checkBotsCollision(tuple<GLfloat, GLfloat> position){
     return NULL;
 }
 
+bool World::checkObstacleCollision(Surface* s){
+  
+  Surface* item = _obstacles->detectCollision(s, "center");
+  cout << "obstackes word\n";
+  // _obstacles->inpactPointer(position);
+  if(item != NULL) return true;
+  return false;
+}
+
+bool World::finishWord(Surface* s){
+  int x = s->getXCenter();
+  int y = s->getYCenter();
+
+  if(x > MAX_VIEW_X || x < 0 || y > MAX_VIEW_Y || y < 0) return true;
+  else return false;
+}
+
+
 
 // float World::getLeft(){
 //     return gX - size_bloc/2;
