@@ -28,3 +28,7 @@ void Bot::rotine(Collision *obstacles)
 
   }
 }
+
+void checkKiledPlayer(Player* p){
+  
+}

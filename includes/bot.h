@@ -35,6 +35,7 @@ public:
 
     Player* botCollision(tuple<GLfloat, GLfloat> position);
     void rotine(Collision* obstacles);
+    void checkKiledPlayer(Player* p);
 };
 
 
