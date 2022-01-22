@@ -5,7 +5,7 @@ void Surface::drowSurface(){
     // printf("Ta batendo auqui _x %f, _y %f _ySize %f _xSize %f\n", _x, _y, _ySize, _xSize);
     glPushMatrix();
     glTranslatef(_x, _y, 0);
-    rectangle(_ySize, _xSize, 0.0, 0.0, 0.0);
+    rectangle(_ySize, _xSize, get<0>(_color), get<1>(_color), get<2>(_color));
     glPopMatrix();
 }
 

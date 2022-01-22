@@ -95,8 +95,9 @@ class Player {
     int hasJumping();
     void stopJump();
     void moveInY(GLfloat dy);
-
-
+    void invertFacing(){gFacing = gFacing * -1;}
+    int getFacing(){return gFacing;}
+    tuple<GLfloat, GLfloat>getPos(){return make_tuple(gX, gY);}
     Shot* shootGun();
     void moveShot(float deltaTime, Collision* obstacles);
 

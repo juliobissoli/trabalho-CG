@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "player.h"
+#include "collision.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ public:
     }
 
     Player* botCollision(tuple<GLfloat, GLfloat> position);
+    void rotine(Collision* obstacles);
 };
 
 

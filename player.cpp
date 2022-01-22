@@ -140,27 +140,30 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
 }
 
 void Player::jump(GLdouble clock, Collision* collision){
-    cout << "Jump " << clock << "\n";
 
     if(clock <= 0) return;
     
     //Verica se o personagem caiu de uma plataforma sem pular
-    if(_surface->getBooton() <= 0)yInitJump = 0;
-    
+    // if(_surface->getBooton() <= 0 && junping == 0)yInitJump = 0;
 
     Surface* top_collision = collision->detectCollision(_surface, "top");
+    // Surface* center_collision = collision->detectCollision(_surface, "center");
+    
+
     if(top_collision != NULL){
         cout << "ta aaqui\n";
+        top_collision->changeColor();
         junping = 0;
         return;
     }
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
         if(clock <= 10) clock = 970;
+        cout << "Jump " << clock << "\n";
 
-        timerJump += (1 / clock );
+        timerJump += (1 / clock);
 
-    
+
         float max_jupm = (body_height + arm_height + legs_height) * 2;
 
         junping = 1;

@@ -6,7 +6,6 @@
 
 
 void World::drawCircle(GLfloat x, GLfloat y){
-  cout << "desenha ref [x " << x << ", y" << y << "]\n";
   glPushMatrix();
   glTranslatef(x, y, 0);
   circle(3, 0.115, 0.30, 0.103);
@@ -35,7 +34,10 @@ void World::draw(){
   }
 
   for(auto b : _bots){
-    if(b->live() > 0) b->draw();
+    if(b->live() > 0) {
+      b->rotine(_obstacles);
+      b->draw();
+    }
   }
 }
 
@@ -43,6 +45,7 @@ void World::draw(){
 void World::moveInX(GLfloat dx){
   int unit = MOVE_UNIT;
   gX += (dx * unit);
+  _obstacles->resetXRef(gX);
   // surface->resetX(gX);
   for (auto s : _surfaces){
     s->traslateX(dx * unit);
@@ -70,7 +73,6 @@ Player* World::checkBotsCollision(tuple<GLfloat, GLfloat> position){
 bool World::checkObstacleCollision(Surface* s){
   
   Surface* item = _obstacles->detectCollision(s, "center");
-  cout << "obstackes word\n";
   // _obstacles->inpactPointer(position);
   if(item != NULL) return true;
   return false;

@@ -18,7 +18,7 @@ void Collision::build(vector<Surface*> surfaces){
 
 void Collision::setSurfaceInMat(Surface *s){
   int x_init = (int)s->getLeft();
-  int x_end = (int)s->getRight();
+  int x_end =  (int)s->getRight();
 
   int y_init = (int)s->getBooton();
   int y_end = (int)s->getTop();
@@ -61,7 +61,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
   Surface* item;
   
   if(direction == "center"){
-  cout << "verifica centro| " << direction << "\n";
+  // cout << "verifica centro| " << direction << "\n";
     item = handleAvaliatePointer(s, "center", "center");
       if(item != NULL) return item;
   }
@@ -95,7 +95,8 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
     int x = get<0>(pointer);
     int y = get<1>(pointer);
-    cout << "pointer " << x << ", "<< y<< "\n";
+
+
     Surface* item = _objStatics[x][y];
 
     return item;
@@ -104,7 +105,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
  tuple<int, int> Collision::handleeGetPointer(Surface* s, string x_direction, string y_direction ){
    
-  int x; 
+  int x = 0; 
   int y; 
 
   if(x_direction == "right") x = (int)s->getRight();
@@ -115,6 +116,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
   if(y_direction == "booton") y = (int)s->getBooton();
   if(y_direction == "center") y = (int)s->getYCenter();
   
+  x = x- (int)_x_ref;
   if(x < 0) x = 0;
   if(x > MAX_VIEW_X) x = MAX_VIEW_X;
 
@@ -141,7 +143,7 @@ bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){
   if(x < 0 || y < 0 || x > MAX_VIEW_X || y > MAX_VIEW_X ) return true;
   
 
-  Surface* item = _objStatics[x][y];
+  Surface* item = _objStatics[(x - (int)_x_ref)][y];
   
   cout << "Verifica ponto x = "<< x << ", y = " << y <<"\n";
 

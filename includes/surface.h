@@ -5,8 +5,11 @@
 #include <GL/glu.h>
 
 #include <string>
+#include <tuple>
 
 #include "polygon.h"
+
+using namespace std;
 
 
 class Surface {
@@ -16,6 +19,7 @@ class Surface {
 
     GLfloat _ySize;
     GLfloat _xSize;
+    tuple<float, float, float> _color;
 
 
     private:
@@ -29,8 +33,8 @@ class Surface {
         _y = y; 
         _ySize = y_size ;
         _xSize = x_size ;
+        _color = {0.0, 0.0, 0.0};
 
-        printf("Crioo ==> x_size %f,  y_size %f \n",  x_size,  y_size );
       }
 
      void draw() {
@@ -52,8 +56,11 @@ class Surface {
     float getRight(){return _x + (_xSize / 2);}
     float getYCenter(){return _y + (_ySize / 2);}
     float getXCenter(){return _x;}
+    void changeColor(){_color = {0.0, 1.0, 0.5};}
 
     bool isInternal(GLfloat x, GLfloat y);
+
+    float getWidth(){return _xSize;}
 
 
 };

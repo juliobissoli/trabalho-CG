@@ -63,13 +63,18 @@ void idle(void){
     if (keyStatus['a'] == 1){
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
         world.moveInX(0.5 * deltaTime);
-        player->moveSurfaceInX(-0.5 *  deltaTime);
+          Player* b =  world.checkBotsCollision(player->getPos());
+         if(b != NULL) cout << "==GAME OVER====\n";
+      //   player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
+       
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
          world.moveInX(-0.5 * deltaTime);
-         player->moveSurfaceInX(0.5 * deltaTime);
+         Player* b =  world.checkBotsCollision(player->getPos());
+         if(b != NULL) cout << "==GAME OVER====\n";
+         // player->moveSurfaceInX(0.5 * deltaTime);
        }
    }
     if (keyStatus['w'] == 1){
@@ -182,7 +187,7 @@ void click(int button, int state, int x, int y){
 
 int main(int argc, char** argv)
 {
-   player = new Player(400, 0.0, "green");
+   player = new Player(400.0, 0.0, "green");
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
@@ -193,7 +198,7 @@ int main(int argc, char** argv)
    // Receber da função que le o SVG uma matris d n linha e 4 colunas
    float _test[4][4] = {
          {50 *2, 30.0, size_bloc, size_bloc},
-         {300, 150, size_bloc*5, size_bloc / 3},
+         {300, 150, size_bloc*5, size_bloc},
          {600, 0, size_bloc, 2*size_bloc},
          {900, 0, size_bloc, 2.3*size_bloc},
          

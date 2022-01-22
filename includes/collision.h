@@ -24,6 +24,8 @@ class Collision {
     Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
     void setSurfaceInMat( Surface *s);
     Surface* _floor;
+
+    GLfloat _x_ref;
     // GLfloat gX;
     // GLfloat gY;
     // vector<vector<float>> matrix(float, vector<float>);
@@ -36,6 +38,8 @@ class Collision {
     public:
       Collision(){
         _floor = new Surface(0,0, MAX_VIEW_X, 2);
+        _x_ref = 0;
+
       }
 
       // Monta o array de superficies (obstáculos); 
@@ -43,7 +47,7 @@ class Collision {
     void printMat();
     Surface* detectCollision(Surface* s, string direction);
     bool inpactPointer(tuple<GLfloat, GLfloat> point);
-    
+    void resetXRef(GLfloat dx){_x_ref = dx;}
     Surface* hasFloor(Surface* s);
 
 };

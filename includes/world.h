@@ -52,7 +52,7 @@ class World {
           gY = 0; 
           // oponente = new Player(300.0, 0.0, "red");
           _obstacles = new Collision();
-          Bot* b1 = new Bot(500.0, 0);
+          Bot* b1 = new Bot(300.0, 0);
           Bot* b2 = new Bot(700.0, 0);
 
           _bots.push_back(b1);
