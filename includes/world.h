@@ -35,6 +35,7 @@ class World {
     // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
     vector<Bot*> _bots;
+    Player* _player_ref;
     
 
 
@@ -59,12 +60,13 @@ class World {
           _bots.push_back(b2);
 
 
+
           // surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(float _test[4][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]);
+    void build(float _test[4][4], Player* p);
     void draw();
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);

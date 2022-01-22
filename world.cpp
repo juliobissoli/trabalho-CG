@@ -12,10 +12,11 @@ void World::drawCircle(GLfloat x, GLfloat y){
   glPopMatrix();
 }
 
-void World::build(float _test[2][4], Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y]){
+void World::build(float _test[2][4], Player* p){
   //  drawObstacles(gX, gY);
   cout << "=======Build do mundo======= \n";
 
+  _player_ref = p;
   // Iniciliaza as superficies
   for (int i = 0; i < 4; i++){
     Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);

@@ -204,7 +204,7 @@ int main(int argc, char** argv)
          
          };
 
-    world.build(_test, mat_colision); 
+    world.build(_test, player); 
    //  collision.build(world.getSurfaces());
    //  collision.printMat();
 
