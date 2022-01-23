@@ -64,9 +64,9 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     // Player::drawRef(x,y);
     glPopMatrix();
 
-    // if (_shot){
-    //      _shot->draw();
-    //   }
+    if (_shot){
+         _shot->draw();
+      }
 
 }
 
@@ -102,17 +102,16 @@ Shot *Player::shootGun(){
 
 
 void Player::moveShot(float deltaTime, Collision* obstacles){
-     if(_shot){
-       _shot->move(deltaTime);
+    if(_shot){
     //    Player* b =  world.checkBotsCollision(_shot->getPos());
-    tuple<float, float> pointer = _shot->getPos();
-    float x = get<0>(pointer);
-    float y = get<1>(pointer);
-    cout << "Poistion shot [" << x << ", " << y << "]\n"; 
-    
-    if (obstacles->inpactPointer(_shot->getPos()) ){
-    // || b  != NULL) {
-        cout << "ta move shot \n";
+    Surface* obstacle = obstacles->detectCollision(_shot->getSurface(), "center");
+
+
+    if (
+        obstacle != NULL ||
+        obstacles->finishWord(_shot->getSurface())
+        //  || world.checkObstacleCollision(shot->getSurface()) || b  != NULL
+        ) {
             delete _shot;
             _shot = NULL;
 
@@ -120,8 +119,33 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
             //    b->decrementLive();
             // }
         }
+      else {
+       _shot->move(deltaTime);
+      }
       // delete b; b = NULL;
    }
+     
+     
+//      if(_shot){
+//        _shot->move(deltaTime);
+//     //    Player* b =  world.checkBotsCollision(_shot->getPos());
+//     tuple<float, float> pointer = _shot->getPos();
+//     float x = get<0>(pointer);
+//     float y = get<1>(pointer);
+//     cout << "Poistion shot [" << x << ", " << y << "]\n"; 
+    
+//     if (obstacles->inpactPointer(_shot->getPos()) ){
+//     // || b  != NULL) {
+//         cout << "ta move shot \n";
+//             delete _shot;
+//             _shot = NULL;
+
+//             // if(b != NULL){
+//             //    b->decrementLive();
+//             // }
+//         }
+//       // delete b; b = NULL;
+//    }
 }
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 

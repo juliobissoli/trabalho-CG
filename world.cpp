@@ -30,13 +30,21 @@ void World::build(float _test[2][4], Player* p){
 
 void World::draw(){
   // surface->draw();
+    static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
+    GLdouble curTime, deltaTime;
+    curTime = glutGet(GLUT_ELAPSED_TIME);
+    deltaTime = curTime - prevTime;
+    prevTime = curTime;
+  //  cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t curTime: "<< curTime << "\n"; 
+    
+
   for (auto s : _surfaces) {
     s->draw();
   }
 
   for(auto b : _bots){
     if(b->live() > 0) {
-      b->rotine(_obstacles, _player_ref);
+      b->rotine(_obstacles, _player_ref, deltaTime);
       b->checkKiledPlayer(_player_ref);
       b->draw();
     }

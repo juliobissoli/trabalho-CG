@@ -16,8 +16,9 @@ using namespace std;
 
 
 World world;
-Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
+// Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
 // Collision collision;
+vector<Bot*> bots;
 
 Player* player; 
 Shot* shot;
@@ -40,7 +41,11 @@ void display(void){
    player->Desenha();
 
    if (shot){
-         shot->draw();
+        Player* bot = world.checkBotsCollision(shot->getPos());
+         // shot->draw();
+         if(bot != NULL){
+            bot->decrementLive();
+         }
       }
   
    glEnd();
@@ -63,7 +68,8 @@ void idle(void){
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
    // cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t framerate: " << framerate << "\t curTime: "<< curTime << "\n"; 
-   //  player->moveShot(deltaTime, world.getObstacles());
+   //  world.setDeltaTime(deltaTime);
+    player->moveShot(deltaTime, world.getObstacles());
 
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
@@ -101,22 +107,22 @@ void idle(void){
       }
    }
 
-   if(shot){
-       Player* b =  world.checkBotsCollision(shot->getPos());
+   // if(shot){
+   //     Player* b =  world.checkBotsCollision(shot->getPos());
 
-    if (world.finishWord(shot->getSurface()) || world.checkObstacleCollision(shot->getSurface()) || b  != NULL) {
-            delete shot;
-            shot = NULL;
+   //  if (world.finishWord(shot->getSurface()) || world.checkObstacleCollision(shot->getSurface()) || b  != NULL) {
+   //          delete shot;
+   //          shot = NULL;
 
-            if(b != NULL){
-               b->decrementLive();
-            }
-        }
-      else {
-       shot->move(deltaTime);
-      }
-      // delete b; b = NULL;
-   }
+   //          if(b != NULL){
+   //             b->decrementLive();
+   //          }
+   //      }
+   //    else {
+   //     shot->move(deltaTime);
+   //    }
+   //    // delete b; b = NULL;
+   // }
 
     glutPostRedisplay();
 }
@@ -207,6 +213,7 @@ int main(int argc, char** argv)
          };
 
     world.build(_test, player); 
+   //  bots = world.getBots();
    //  collision.build(world.getSurfaces());
    //  collision.printMat();
 

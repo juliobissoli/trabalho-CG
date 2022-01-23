@@ -49,7 +49,7 @@ class Collision {
       bool inpactPointer(tuple<GLfloat, GLfloat> point);
       void resetXRef(GLfloat dx){_x_ref = dx;}
       Surface* hasFloor(Surface* s);
-
+      bool finishWord(Surface* s);
 };
 
 bool collisionS2S(Surface* s1, Surface* s2);

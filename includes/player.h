@@ -106,6 +106,7 @@ class Player {
 
     Surface* getSurface(){return _surface;}
     int live(){return _live;}
+    Shot* getShot(){return _shot;}
  
 };
 

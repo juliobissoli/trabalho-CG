@@ -10,12 +10,15 @@
 #include "player.h"
 #include "collision.h"
 
+#define MAX_TIME_SHOT 10
+
+
 using namespace std;
 
 class Bot{
     Player* _bot;
     string rotina; //definir com montar a rotina de o bot
-
+    float time_shot;
 private:
     /* data */
 public:
@@ -30,10 +33,11 @@ public:
     void moveInX(GLfloat dx){
         _bot->moveInX(dx);
         _bot->moveSurfaceInX(dx);
+        time_shot = 0;
     }
 
     Player* botCollision(tuple<GLfloat, GLfloat> position);
-    void rotine(Collision* obstacles, Player* p);
+    void rotine(Collision* obstacles, Player* p, GLdouble curTime);
     void checkKiledPlayer(Player* p);
 };
 

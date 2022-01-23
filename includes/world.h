@@ -3,6 +3,8 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
+
 
 #include <string>
 #include <iostream>
@@ -36,6 +38,7 @@ class World {
     vector<Surface*> _surfaces;
     vector<Bot*> _bots;
     Player* _player_ref;
+    GLdouble _deltaTime;
     
 
 
@@ -58,6 +61,7 @@ class World {
 
           _bots.push_back(b1);
           _bots.push_back(b2);
+          _deltaTime = 0.0;
 
 
           // surface =  new Surface( gX, gY, size_bloc, size_bloc);
@@ -76,6 +80,9 @@ class World {
     Surface* obstacleCollision(Surface* s, string direction){return _obstacles->detectCollision(s, direction);};
     Collision* getObstacles(){return _obstacles;}
     Surface* hasFloor(Surface* s){return _obstacles->hasFloor(s);}
+    vector<Bot*>getBots();
+
+    void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
 
 
 

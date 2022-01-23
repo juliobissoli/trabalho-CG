@@ -1,13 +1,12 @@
 #include "includes/bot.h"
 
-Player *Bot::botCollision(tuple<GLfloat, GLfloat> position)
-{
+Player *Bot::botCollision(tuple<GLfloat, GLfloat> position){
   if (_bot->live() > 0 && _bot->playerCollision(get<0>(position), get<1>(position))){
     return _bot;
   }
 }
 
-void Bot::rotine(Collision *obstacles, Player* p){
+void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
 
   string direction = "right";
 
@@ -25,8 +24,22 @@ void Bot::rotine(Collision *obstacles, Player* p){
   _bot->moveSurfaceInX((_bot->getSurface()->getWidth()) * _bot->getFacing());
 
   }
+
+  // Posiciona a arma do bot para o personagem
   tuple<GLfloat, GLfloat> pointer = p->getPos();
   _bot->moveArm2(get<1>(pointer), get<0>(pointer));
+
+  time_shot += 1/deltaTime;
+  if(time_shot > MAX_TIME_SHOT){
+      cout << "atira \n";
+      _bot->shootGun();
+      time_shot = 0;
+    }
+  if(_bot->getShot() != NULL) {
+    _bot->getShot()->move(deltaTime);
+    _bot->getShot()->draw();
+  }
+
 }
 
 void Bot::checkKiledPlayer(Player* p){

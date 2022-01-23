@@ -16,6 +16,15 @@ void Collision::build(vector<Surface*> surfaces){
   // printMat(mat_colision);
 };
 
+bool Collision::finishWord(Surface* s){
+  int x = s->getXCenter();
+  int y = s->getYCenter();
+
+  if(x > MAX_VIEW_X || x < 0 || y > MAX_VIEW_Y || y < 0) return true;
+  else return false;
+}
+
+
 void Collision::setSurfaceInMat(Surface *s){
   int x_init = (int)s->getLeft();
   int x_end =  (int)s->getRight();
