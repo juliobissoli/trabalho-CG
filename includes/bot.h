@@ -16,7 +16,6 @@ class Bot{
     Player* _bot;
     string rotina; //definir com montar a rotina de o bot
 
-
 private:
     /* data */
 public:
@@ -34,7 +33,7 @@ public:
     }
 
     Player* botCollision(tuple<GLfloat, GLfloat> position);
-    void rotine(Collision* obstacles);
+    void rotine(Collision* obstacles, Player* p);
     void checkKiledPlayer(Player* p);
 };
 

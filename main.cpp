@@ -50,30 +50,32 @@ void display(void){
 
 
 void idle(void){
+   if(player->live() < 0){
+      cout << "=========================\n";
+      cout << "====== GAME OVER ========\n";
+      cout << "=========================\n\n";
 
+   }
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble curTime, deltaTime;
     curTime = glutGet(GLUT_ELAPSED_TIME);
     deltaTime = curTime - prevTime;
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
-
+   // cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t framerate: " << framerate << "\t curTime: "<< curTime << "\n"; 
    //  player->moveShot(deltaTime, world.getObstacles());
 
     if (keyStatus['a'] == 1){
+      if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
         world.moveInX(0.5 * deltaTime);
-          Player* b =  world.checkBotsCollision(player->getPos());
-         if(b != NULL) cout << "==GAME OVER====\n";
       //   player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
-       
+      if(player->getFacing() == -1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
          world.moveInX(-0.5 * deltaTime);
-         Player* b =  world.checkBotsCollision(player->getPos());
-         if(b != NULL) cout << "==GAME OVER====\n";
          // player->moveSurfaceInX(0.5 * deltaTime);
        }
    }

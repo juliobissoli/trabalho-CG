@@ -36,7 +36,8 @@ void World::draw(){
 
   for(auto b : _bots){
     if(b->live() > 0) {
-      b->rotine(_obstacles);
+      b->rotine(_obstacles, _player_ref);
+      b->checkKiledPlayer(_player_ref);
       b->draw();
     }
   }

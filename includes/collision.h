@@ -33,8 +33,8 @@ class Collision {
     
 
     private:
-      tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
       Surface* handleAvaliatePointer(Surface* s, string x_direction, string y_direction);
+      tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
     public:
       Collision(){
         _floor = new Surface(0,0, MAX_VIEW_X, 2);
@@ -43,13 +43,15 @@ class Collision {
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(vector<Surface*> surfaces);
-    void printMat();
-    Surface* detectCollision(Surface* s, string direction);
-    bool inpactPointer(tuple<GLfloat, GLfloat> point);
-    void resetXRef(GLfloat dx){_x_ref = dx;}
-    Surface* hasFloor(Surface* s);
+      void build(vector<Surface*> surfaces);
+      void printMat();
+      Surface* detectCollision(Surface* s, string direction);
+      bool inpactPointer(tuple<GLfloat, GLfloat> point);
+      void resetXRef(GLfloat dx){_x_ref = dx;}
+      Surface* hasFloor(Surface* s);
 
 };
+
+bool collisionS2S(Surface* s1, Surface* s2);
 
 #endif /*COLLISION_H*/

@@ -2,14 +2,12 @@
 
 Player *Bot::botCollision(tuple<GLfloat, GLfloat> position)
 {
-  if (_bot->live() > 0 && _bot->playerCollision(get<0>(position), get<1>(position)))
-  {
+  if (_bot->live() > 0 && _bot->playerCollision(get<0>(position), get<1>(position))){
     return _bot;
   }
 }
 
-void Bot::rotine(Collision *obstacles)
-{
+void Bot::rotine(Collision *obstacles, Player* p){
 
   string direction = "right";
 
@@ -27,8 +25,13 @@ void Bot::rotine(Collision *obstacles)
   _bot->moveSurfaceInX((_bot->getSurface()->getWidth()) * _bot->getFacing());
 
   }
+  tuple<GLfloat, GLfloat> pointer = p->getPos();
+  _bot->moveArm2(get<1>(pointer), get<0>(pointer));
 }
 
-void checkKiledPlayer(Player* p){
-  
+void Bot::checkKiledPlayer(Player* p){
+  if(collisionS2S(_bot->getSurface(), p->getSurface())){
+    cout << "+++Passoooo  Mata personagem++++\n";
+    p->decrementLive();
+  }
 }

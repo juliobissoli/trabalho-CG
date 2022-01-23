@@ -60,7 +60,6 @@ class World {
           _bots.push_back(b2);
 
 
-
           // surface =  new Surface( gX, gY, size_bloc, size_bloc);
 
       }

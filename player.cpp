@@ -56,7 +56,7 @@ void Player::drawRef(GLint x, GLint y){
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-    _surface->draw();
+    // _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
@@ -126,8 +126,8 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
     
-    if(dx < gX)gFacing  = -1;
-    else gFacing  = 1;
+    // if(dx < gX)gFacing  = -1;
+    // else  gFacing  = 1;
     // printf("gX= %f \t dX %f \t gFacing %d\n", gX, dx, gFacing);
     float y =  dy - yCenter;
     float x =  dx - xCenter;

@@ -156,6 +156,49 @@ bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){
 }
 
 
+bool collisionS2S(Surface* s1, Surface* s2){
+
+  // GLfloat x1_center = s1->getXCenter();
+  // GLfloat y1_center = s1->getYCenter();
+
+  //Se o centro da superficie s1 estiver interno a superficie s2 returna true
+  if(  s1->getXCenter() <= s2->getRight() 
+    && s1->getXCenter() >= s2->getLeft() 
+    && s1->getYCenter() <= s2->getTop() 
+    && s1->getYCenter() >= s2->getBooton())
+    return true;
+
+  //Se o ponto central mais a esquerda da superficie s1 estiver interno a superficie s2 returna true
+  if(  s1->getLeft() <= s2->getRight() 
+    && s1->getLeft() >= s2->getLeft() 
+    && s1->getYCenter() <= s2->getTop() 
+    && s1->getYCenter() >= s2->getBooton())
+    return true;
+
+  //Se o ponto central mais a direita da superficie s1 estiver interno a superficie s2 returna true
+  if(  s1->getRight() <= s2->getRight() 
+    && s1->getRight() >= s2->getLeft() 
+    && s1->getYCenter() <= s2->getTop() 
+    && s1->getYCenter() >= s2->getBooton())
+    return true;
+
+    //Se o ponto central mais a cima da superficie s1 estiver interno a superficie s2 returna true
+  if(  s1->getXCenter() <= s2->getRight() 
+    && s1->getXCenter() >= s2->getLeft() 
+    && s1->getTop() <= s2->getTop() 
+    && s1->getTop() >= s2->getBooton())
+    return true;
+  
+      //Se o ponto central mais a baixo da superficie s1 estiver interno a superficie s2 returna true
+  if(  s1->getXCenter() <= s2->getRight() 
+    && s1->getXCenter() >= s2->getLeft() 
+    && s1->getBooton() <= s2->getTop() 
+    && s1->getBooton() >= s2->getBooton())
+    return true;
+  return false;
+}
+
+
 // float World::getLeft(){
 //     return gX - size_bloc/2;
 // };
