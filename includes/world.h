@@ -58,6 +58,7 @@ class World {
           _obstacles = new Collision();
           Bot* b1 = new Bot(300.0, 0);
           Bot* b2 = new Bot(700.0, 0);
+          _player_ref = new Player(400.0, 400.0, "green");
 
           _bots.push_back(b1);
           _bots.push_back(b2);
@@ -69,7 +70,7 @@ class World {
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(float _test[4][4], Player* p);
+    void build(float _test[4][4]);
     void draw();
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
@@ -83,7 +84,7 @@ class World {
     vector<Bot*>getBots();
 
     void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
-
+    Player* getPlayer(){return _player_ref;}
 
 
 };

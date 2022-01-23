@@ -12,11 +12,11 @@ void World::drawCircle(GLfloat x, GLfloat y){
   glPopMatrix();
 }
 
-void World::build(float _test[2][4], Player* p){
+void World::build(float _test[2][4]){
   //  drawObstacles(gX, gY);
   cout << "=======Build do mundo======= \n";
 
-  _player_ref = p;
+  // _player_ref = p;
   // Iniciliaza as superficies
   for (int i = 0; i < 4; i++){
     Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);
@@ -56,7 +56,6 @@ void World::moveInX(GLfloat dx){
   int unit = MOVE_UNIT;
   gX += (dx * unit);
   _obstacles->resetXRef(gX);
-  // surface->resetX(gX);
   for (auto s : _surfaces){
     s->traslateX(dx * unit);
   }
@@ -69,13 +68,10 @@ void World::moveInX(GLfloat dx){
 Player* World::checkBotsCollision(tuple<GLfloat, GLfloat> position){
   
   for (auto b : _bots){
-    Player* p = b->botCollision(position);
-    if(b->live() > 0 && p != NULL){
-      return p;
-    }
-    // if(b == NULL) return NULL;
-    // if(b->player()->playerCollision(get<0>(position), get<1>(position)))
-    //   return b->player();
+      Player* p = b->botCollision(position);
+      if(b->live() > 0 && p != NULL){
+        return p;
+      }
     }
     return NULL;
 }

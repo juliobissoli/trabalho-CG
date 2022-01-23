@@ -195,7 +195,7 @@ void click(int button, int state, int x, int y){
 
 int main(int argc, char** argv)
 {
-   player = new Player(400.0, 400.0, "green");
+   // player = new Player(400.0, 400.0, "green");
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
@@ -212,7 +212,10 @@ int main(int argc, char** argv)
          
          };
 
-    world.build(_test, player); 
+    world.build(_test); 
+    player = world.getPlayer();
+
+
    //  bots = world.getBots();
    //  collision.build(world.getSurfaces());
    //  collision.printMat();
