@@ -1,7 +1,7 @@
 #include "includes/bot.h"
 
 Player *Bot::botCollision(tuple<GLfloat, GLfloat> position){
-  if (_bot->live() > 0 && _bot->playerCollision(get<0>(position), get<1>(position))){
+  if (_bot->live() > 0 && _bot->playerCollision(position)){
     return _bot;
   }
 }
@@ -36,8 +36,16 @@ void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
       time_shot = 0;
     }
   if(_bot->getShot() != NULL) {
-    _bot->getShot()->move(deltaTime);
-    _bot->getShot()->draw();
+    Shot* shot = _bot->getShot();
+    shot->draw();
+    _bot->moveShot(deltaTime, obstacles);
+    // shot->move(deltaTime);
+
+    // Player* bot = world.checkBotsCollision(shot->getPos());
+      // shot->draw();
+      if(p->playerCollision(shot->getPos())){
+         p->decrementLive();
+      }
   }
 
 }

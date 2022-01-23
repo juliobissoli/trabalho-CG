@@ -101,7 +101,9 @@ class Player {
     Shot* shootGun();
     void moveShot(float deltaTime, Collision* obstacles);
 
-    bool playerCollision(GLfloat x, GLfloat y);
+    // bool playerCollision(GLfloat x, GLfloat y);
+    bool playerCollision(tuple<GLfloat, GLfloat> pointer);
+
     void decrementLive(){_live -= 1;}
 
     Surface* getSurface(){return _surface;}

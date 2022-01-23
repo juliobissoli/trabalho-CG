@@ -233,6 +233,6 @@ void Player::moveInY(GLfloat dy){
 
 
 
-bool Player::playerCollision(GLfloat x, GLfloat y){
-    return _surface->isInternal(x,y);
+bool Player::playerCollision(tuple<GLfloat, GLfloat> pointer){
+    return _surface->isInternal(get<0>(pointer),get<1>(pointer));
 }
