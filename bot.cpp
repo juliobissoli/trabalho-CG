@@ -13,15 +13,15 @@ void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
   if (_bot->getFacing() == -1)direction = "left";
  
   Surface *collision = obstacles->detectCollision(_bot->getSurface(), direction);
-  _bot->moveInX(0.5 * _bot->getFacing());
-  _bot->moveSurfaceInX(0.5 * _bot->getFacing());
+  _bot->moveInX(0.1 * _bot->getFacing() * deltaTime);
+  _bot->moveSurfaceInX(0.1 * _bot->getFacing() * deltaTime);
 
   if (collision != NULL){
   _bot->invertFacing();
   collision->changeColor();
-  _bot->moveInX((_bot->getSurface()->getWidth())  * _bot->getFacing());
+  _bot->moveInX((_bot->getSurface()->getWidth())  * _bot->getFacing() * deltaTime);
 
-  _bot->moveSurfaceInX((_bot->getSurface()->getWidth()) * _bot->getFacing());
+  _bot->moveSurfaceInX((_bot->getSurface()->getWidth()) * _bot->getFacing() * deltaTime);
 
   }
 
@@ -29,9 +29,10 @@ void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
   tuple<GLfloat, GLfloat> pointer = p->getPos();
   _bot->moveArm2(get<1>(pointer), get<0>(pointer));
 
-  time_shot += 1/deltaTime;
-  if(time_shot > MAX_TIME_SHOT){
-      cout << "atira \n";
+  float clock = deltaTime;
+  if(deltaTime < 10) clock = 1000;
+  time_shot += 1/clock;
+  if(time_shot > MAX_TIME_SHOT){    
       _bot->shootGun();
       time_shot = 0;
     }

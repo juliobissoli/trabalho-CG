@@ -126,26 +126,6 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
    }
      
      
-//      if(_shot){
-//        _shot->move(deltaTime);
-//     //    Player* b =  world.checkBotsCollision(_shot->getPos());
-//     tuple<float, float> pointer = _shot->getPos();
-//     float x = get<0>(pointer);
-//     float y = get<1>(pointer);
-//     cout << "Poistion shot [" << x << ", " << y << "]\n"; 
-    
-//     if (obstacles->inpactPointer(_shot->getPos()) ){
-//     // || b  != NULL) {
-//         cout << "ta move shot \n";
-//             delete _shot;
-//             _shot = NULL;
-
-//             // if(b != NULL){
-//             //    b->decrementLive();
-//             // }
-//         }
-//       // delete b; b = NULL;
-//    }
 }
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
@@ -182,7 +162,7 @@ void Player::jump(GLdouble clock, Collision* collision){
     }
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
-        if(clock <= 10) clock = 970;
+        if(clock <= 10) clock = 300;
         cout << "Jump " << clock << "\n";
 
         timerJump += (1 / clock);

@@ -35,7 +35,6 @@ void World::draw(){
     curTime = glutGet(GLUT_ELAPSED_TIME);
     deltaTime = curTime - prevTime;
     prevTime = curTime;
-  //  cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t curTime: "<< curTime << "\n"; 
     
 
   for (auto s : _surfaces) {
