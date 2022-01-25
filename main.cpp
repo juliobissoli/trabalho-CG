@@ -107,22 +107,6 @@ void idle(void){
       }
    }
 
-   // if(shot){
-   //     Player* b =  world.checkBotsCollision(shot->getPos());
-
-   //  if (world.finishWord(shot->getSurface()) || world.checkObstacleCollision(shot->getSurface()) || b  != NULL) {
-   //          delete shot;
-   //          shot = NULL;
-
-   //          if(b != NULL){
-   //             b->decrementLive();
-   //          }
-   //      }
-   //    else {
-   //     shot->move(deltaTime);
-   //    }
-   //    // delete b; b = NULL;
-   // }
 
     glutPostRedisplay();
 }
@@ -203,7 +187,8 @@ int main(int argc, char** argv)
     glutCreateWindow ("Trabalho-CG");
     init ();
 
-   // Receber da função que le o SVG uma matris d n linha e 4 colunas
+   // Receber da função que le o SVG uma matriz d n linha e 4 colunas
+   float size_bloc = 50.0;
    float _test[4][4] = {
          {50 *2, 30.0, size_bloc, size_bloc},
          {300, 150, size_bloc*5, size_bloc},

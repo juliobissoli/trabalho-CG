@@ -19,7 +19,6 @@ void Collision::build(vector<Surface*> surfaces){
 bool Collision::finishWord(Surface* s){
   int x = s->getXCenter();
   int y = s->getYCenter();
-
   if(x > MAX_VIEW_X || x < 0 || y > MAX_VIEW_Y || y < 0) return true;
   else return false;
 }
@@ -38,16 +37,16 @@ void Collision::setSurfaceInMat(Surface *s){
   if(y_init < 0) x_init = 0;
   if(y_end > MAX_VIEW_Y) y_end = MAX_VIEW_Y;
 
-  cout << "==== Range block ====== \n";
-  cout << "[" << x_init << ", " << y_init << "]\n";
-  cout << "[" << x_end  << ", " << y_end << "]\n";
-  cout << "x_init - x_end = " <<  x_init - x_end << "\n";
-  cout << "y_init - y_end = " <<  y_init - y_end << "\n";
+  // cout << "==== Range block ====== \n";
+  // cout << "[" << x_init << ", " << y_init << "]\n";
+  // cout << "[" << x_end  << ", " << y_end << "]\n";
+  // cout << "x_init - x_end = " <<  x_init - x_end << "\n";
+  // cout << "y_init - y_end = " <<  y_init - y_end << "\n";
 
   for (int i = y_init; i < y_end; i++){
     for (int j = x_init; j < x_end; j++){
-        if(x_init == j || x_end == j)  cout << "insere [" << j  << ", " << i << "]\n";
-        if(y_init == i || y_end == i)  cout << "insere [" << j  << ", " << i << "]\n";
+        // if(x_init == j || x_end == j)  cout << "insere [" << j  << ", " << i << "]\n";
+        // if(y_init == i || y_end == i)  cout << "insere [" << j  << ", " << i << "]\n";
         _objStatics[j][i] = s;
     }
   }
@@ -67,8 +66,9 @@ void Collision::printMat(){
 
 Surface* Collision::detectCollision(Surface* s, string direction){
 
-  Surface* item;
   
+
+  Surface* item;
   if(direction == "center"){
   // cout << "verifica centro| " << direction << "\n";
     item = handleAvaliatePointer(s, "center", "center");
@@ -205,6 +205,14 @@ bool collisionS2S(Surface* s1, Surface* s2){
     && s1->getBooton() >= s2->getBooton())
     return true;
   return false;
+}
+
+bool Collision::finishWordPlayer(float facing, float x_gab_start){
+  // cout << "ta aqui " << _x_ref <<" f " << facing << "\n";
+  if(facing < 0 && _x_ref < -MAX_VIEW_X - x_gab_start) return true;
+  if(facing > 0 && _x_ref > 0 + x_gab_start) return true;
+  return false;
+  // return _x_ref < 0 || _x_ref > MAX_VIEW_X;
 }
 
 

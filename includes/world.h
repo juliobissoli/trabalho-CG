@@ -20,7 +20,7 @@
 #include "collision.h"
 
 
-#define size_bloc 50.0 //remover tamanho so para teste
+// #define size_bloc 50.0 //remover tamanho so para teste
 #define MAX_VIEW_X 1500
 #define MAX_VIEW_Y 800
   
@@ -56,9 +56,9 @@ class World {
           gY = 0; 
           // oponente = new Player(300.0, 0.0, "red");
           _obstacles = new Collision();
-          Bot* b1 = new Bot(300.0, 0);
+          Bot* b1 = new Bot(300.0, 200.0);
           Bot* b2 = new Bot(700.0, 0);
-          _player_ref = new Player(400.0, 400.0, "green");
+          _player_ref = new Player(400.0, 0.0, "green");
 
           _bots.push_back(b1);
           _bots.push_back(b2);

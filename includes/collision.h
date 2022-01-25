@@ -24,8 +24,10 @@ class Collision {
     Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
     void setSurfaceInMat( Surface *s);
     Surface* _floor;
+    Surface* _roof;
 
     GLfloat _x_ref;
+
     // GLfloat gX;
     // GLfloat gY;
     // vector<vector<float>> matrix(float, vector<float>);
@@ -50,6 +52,7 @@ class Collision {
       void resetXRef(GLfloat dx){_x_ref = dx;}
       Surface* hasFloor(Surface* s);
       bool finishWord(Surface* s);
+      bool finishWordPlayer(float facing, float x_gab_start);
 };
 
 bool collisionS2S(Surface* s1, Surface* s2);
