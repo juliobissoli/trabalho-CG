@@ -32,10 +32,10 @@ void Collision::setSurfaceInMat(Surface *s){
   int y_end = (int)s->getTop();
 
   if(x_init < 0) x_init = 0;
-  if(x_end > _max_x) x_end = _max_x;
+  if(x_end > _max_x) x_end = _max_x -1;
 
   if(y_init < 0) x_init = 0;
-  if(y_end > _max_y) y_end = _max_y;
+  if(y_end > _max_y) y_end = _max_y -1 ;
 
   // cout << "==== Range block ====== \n";
   // cout << "[" << x_init << ", " << y_init << "]\n";
@@ -45,7 +45,7 @@ void Collision::setSurfaceInMat(Surface *s){
   cout << "set \n";
   for (int i = y_init; i < y_end; i++){
     for (int j = x_init; j < x_end; j++){
-      cout << "[" << j << ", " << i << "]\n";
+      // cout << "[" << j << ", " << i << "]\n";
         // if(x_init == j || x_end == j)  cout << "insere [" << j  << ", " << i << "]\n";
         // if(y_init == i || y_end == i)  cout << "insere [" << j  << ", " << i << "]\n";
         _objStatics[j][i] = s;

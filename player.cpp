@@ -155,7 +155,7 @@ void Player::jump(GLdouble clock, Collision* collision){
     
 
     if(top_collision != NULL){
-        cout << "ta aaqui\n";
+        // cout << "ta aaqui\n";
         top_collision->changeColor();
         junping = 0;
         return;
@@ -163,7 +163,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
         if(clock <= 10) clock = 300;
-        cout << "Jump " << clock << "\n";
+        // cout << "Jump " << clock << "\n";
 
         timerJump += (1 / clock);
 

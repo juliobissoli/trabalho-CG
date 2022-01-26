@@ -44,8 +44,8 @@ class Collision {
     public:
       Collision(int width, int height){
         _x_ref = 0;
-        _max_x = width;
-        _max_y = height; 
+        _max_x = width * 2;
+        _max_y = height * 2; 
         _floor = new Surface(0,0, _max_x, 2);
 
         cout << "monta x == " << _max_x << " y= " << _max_y << endl;

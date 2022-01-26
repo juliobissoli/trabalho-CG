@@ -61,22 +61,8 @@ void Read::loadinFile(string path){
         element->QueryDoubleAttribute("height", &height);
         element->QueryStringAttribute("fill",&fill);
         
-        cout << "loading \t x " << x << "\t y " << y << "\t width " << width << "\t height " << height <<  "\t r " << r <<"\t fill " << fill << endl;
-
-        // if(!strcmp("blue",fill)){
-        //     this -> centerX = cx;
-        //     this -> centerY = cy;
-        //     this -> width = width;
-        //     this -> height = height;
-        // } else if(!strcmp("black",fill)){
-        //     cy = cy - this->centerY - this->height/2;
-        //     cx = cx - this->centerX - this->width/2;
-        //     Obstacle ob(cx + width/2,-cy -height,width,height);
-        //     this->obstacles.push_back(ob);
-        // } else{
-        //     cout <<"Erro inesperado! " << endl;
-        // }        
-        element = element -> NextSiblingElement("rect");
+        cout << "loading \t x " << x << "\t y " << y << "\t width " << width << "\t height " << height <<  "\t r " << r <<"\t fill " << fill << endl;       
+        element = element -> NextSiblingElement("circle");
     }
 
   }
