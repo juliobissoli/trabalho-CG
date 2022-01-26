@@ -21,8 +21,8 @@
 
 
 // #define size_bloc 50.0 //remover tamanho so para teste
-#define MAX_VIEW_X 1500
-#define MAX_VIEW_Y 800
+#define MAX_VIEW_X 300
+#define MAX_VIEW_Y 100
   
 using namespace std;
 
@@ -30,6 +30,9 @@ class World {
 
     GLfloat gX;
     GLfloat gY;
+
+    GLfloat _max_x;
+    GLfloat _max_y;
 
     Collision* _obstacles;
     // Surface *surface; //remover isso apos resolver colizões
@@ -54,11 +57,13 @@ class World {
       World(){
           gX = 0;
           gY = 0; 
+          _max_x = MAX_VIEW_X;
+          _max_y = MAX_VIEW_Y;
           // oponente = new Player(300.0, 0.0, "red");
-          _obstacles = new Collision();
-          Bot* b1 = new Bot(300.0, 200.0);
-          Bot* b2 = new Bot(700.0, 0);
-          _player_ref = new Player(400.0, 0.0, "green");
+          _obstacles = new Collision((int)_max_x, (int)_max_y);
+          Bot* b1 = new Bot(110.0, 0.0);
+          Bot* b2 = new Bot(150.0, 0);
+          _player_ref = new Player(30.0, 0.0, "green");
 
           _bots.push_back(b1);
           _bots.push_back(b2);

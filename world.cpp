@@ -53,7 +53,7 @@ void World::draw(){
 
 void World::moveInX(GLfloat dx){
   if(_obstacles->finishWordPlayer(dx, 400.0)) return;
-  int unit = MOVE_UNIT;
+  int unit = _player_ref->getMoveUnit();
   gX += (dx * unit);
   _obstacles->resetXRef(gX);
   for (auto s : _surfaces){
@@ -88,7 +88,7 @@ bool World::finishWord(Surface* s){
   // int x = s->getXCenter();
   // int y = s->getYCenter();
 
-  // if(x > MAX_VIEW_X || x < 0 || y > MAX_VIEW_Y || y < 0) return true;
+  // if(x > _max_x || x < 0 || y > _max_Y || y < 0) return true;
   // else return false;
 
   return _obstacles->finishWord(s);

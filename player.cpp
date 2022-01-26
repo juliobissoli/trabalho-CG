@@ -56,7 +56,7 @@ void Player::drawRef(GLint x, GLint y){
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-    // _surface->draw();
+    _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
@@ -71,18 +71,18 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 }
 
 void Player::moveInX(GLfloat dx){
-    int unit = MOVE_UNIT;
+    int unit = move_init;
     gX += (dx * unit);
     // printf("Move player x =>\t %f \n", gX);
 }
 void Player::moveSurfaceInX(GLfloat dx){
-    int unit = MOVE_UNIT;
+    int unit = move_init;
     _surface->traslateX(dx * unit);
     // printf("Move player x =>\t %f \n", gX);
 }
 
 void Player::moveArm(GLfloat dy){
-    int unit = MOVE_UNIT;
+    int unit = move_init;
     if((gAngleArm < 45 && dy > 0) || (gAngleArm > -45 && dy < 0)){
         gAngleArm += (dy * unit);
     }
@@ -96,7 +96,7 @@ Shot *Player::shootGun(){
     double positionX = gX + (gFacing * arm_width * cos(gAngleArm * M_PI / 180));
     double positionY = gY + (body_height /2) + arm_height / 2 +  (gFacing * arm_width * sin(gAngleArm * M_PI / 180));
     
-     _shot = new Shot(positionX, positionY, gAngleArm, gFacing);
+     _shot = new Shot(positionX, positionY, gAngleArm, gFacing, arm_height);
     return _shot;
 }
 
@@ -133,8 +133,8 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
     // if(dx < gX)gFacing  = -1;
     // else  gFacing  = 1;
     // printf("gX= %f \t dX %f \t gFacing %d\n", gX, dx, gFacing);
-    float y =  dy - yCenter;
-    float x =  dx - xCenter;
+    float y =  dy - gY + (body_height / 2);
+    float x =  dx - (body_width / 2);
 
 
     float theta = atan (y/x) * 180 / M_PI;
@@ -206,7 +206,7 @@ void Player::stopJump(){
 int Player::hasJumping() {return junping;}
 
 void Player::moveInY(GLfloat dy){
-     int unit = MOVE_UNIT;
+     int unit = move_init;
     gY += (dy * unit);
     _surface->resetY(gY - legs_height);
 }

@@ -14,14 +14,18 @@
 #include <set>
 #include<tuple>
 
-#define MAX_VIEW_X 1500
-#define MAX_VIEW_Y 800
+#define MAX_VIEW_X 300
+#define MAX_VIEW_Y 100
   
 using namespace std;
 
 class Collision {
 
-    Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
+    GLfloat _max_x;
+    GLfloat _max_y;
+
+    // Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
+    Surface*** _objStatics;
     void setSurfaceInMat( Surface *s);
     Surface* _floor;
     Surface* _roof;
@@ -38,9 +42,18 @@ class Collision {
       Surface* handleAvaliatePointer(Surface* s, string x_direction, string y_direction);
       tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
     public:
-      Collision(){
-        _floor = new Surface(0,0, MAX_VIEW_X, 2);
+      Collision(int width, int height){
         _x_ref = 0;
+        _max_x = width;
+        _max_y = height; 
+        _floor = new Surface(0,0, _max_x, 2);
+
+        cout << "monta x == " << _max_x << " y= " << _max_y << endl;
+        _objStatics = (Surface***)malloc(_max_x * sizeof(Surface**));
+            for(int i = 0; i < _max_x + 1; i++) {
+              _objStatics[i] = (Surface**)malloc(_max_y * sizeof(Surface*));
+            }
+        // _objStatics = (Surface***)malloc(_max_x * _max_y * sizeof(Surface*));
 
       }
 

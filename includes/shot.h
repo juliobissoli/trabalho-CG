@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <tuple>
 
-#define radiusBullet 5
+// #define radiusBullet 5
 
 using namespace std;
 
@@ -28,20 +28,22 @@ class Shot
   GLfloat gVel;
   GLint gDirection;
   Surface* _surface;
+  float radiusBullet;
 
 private:
   void drawShot(GLfloat x, GLfloat y);
 
 public:
-  Shot(GLfloat x, GLfloat y, GLfloat directionAng, GLint direction)
+  Shot(GLfloat x, GLfloat y, GLfloat directionAng, GLint direction, float r_bullet)
   {
     _x_init = x;
     _y_init = y;
     _x = x;
     _y = y;
     gDirectionAng = directionAng;
-    gVel = 1;
+    gVel = 1/r_bullet;
     gDirection = direction; // 1 para frente -1 para traz
+    radiusBullet = r_bullet;
     _surface = new Surface(x, y,  radiusBullet * 2, radiusBullet * 2);
   };
   ~Shot();

@@ -7,6 +7,7 @@
 #include "./includes/player.h"
 #include "./includes/surface.h"
 #include "./includes/collision.h"
+#include "./includes/read_svg.h"
 
 #include <iostream>
 
@@ -16,15 +17,16 @@ using namespace std;
 
 
 World world;
+Read readeing;
 // Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
 // Collision collision;
-vector<Bot*> bots;
+// vector<Bot*> bots;
 
 Player* player; 
 Shot* shot;
 
-const GLint ViewingWidth =  WINDOW_SIZE + 300;
-const GLint ViewingHeight = WINDOW_SIZE + 300;
+const GLint ViewingWidth =  300;
+const GLint ViewingHeight = 300;
 
 int keyStatus[256];
 
@@ -74,14 +76,14 @@ void idle(void){
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
-        world.moveInX(0.5 * deltaTime);
+        world.moveInX(0.2 * deltaTime);
       //   player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
       if(player->getFacing() == -1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
-         world.moveInX(-0.5 * deltaTime);
+         world.moveInX(-0.2 * deltaTime);
          // player->moveSurfaceInX(0.5 * deltaTime);
        }
    }
@@ -103,7 +105,7 @@ void idle(void){
    // se não esta pulando aplica gravidade;
    else{
       if(world.hasFloor(player->getSurface()) == NULL){
-         player->moveInY(-0.5 * deltaTime);
+         player->moveInY(-0.3 * deltaTime);
       }
    }
 
@@ -180,6 +182,7 @@ void click(int button, int state, int x, int y){
 int main(int argc, char** argv)
 {
    // player = new Player(400.0, 400.0, "green");
+    readeing.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
@@ -188,15 +191,15 @@ int main(int argc, char** argv)
     init ();
 
    // Receber da função que le o SVG uma matriz d n linha e 4 colunas
-   float size_bloc = 50.0;
+   float size_bloc = 10.0;
    float _test[4][4] = {
-         {50 *2, 30.0, size_bloc, size_bloc},
-         {300, 150, size_bloc*5, size_bloc},
-         {600, 0, size_bloc, 2*size_bloc},
-         {900, 0, size_bloc, 2.3*size_bloc},
+         {70, 0.0, size_bloc,  2*size_bloc},
+         {100, 0.0, size_bloc, 2*size_bloc},
+         {200, 0.0, size_bloc,   2*size_bloc},
+         {90, 30.0, size_bloc,   2*size_bloc},
          
          };
-
+   
     world.build(_test); 
     player = world.getPlayer();
 
