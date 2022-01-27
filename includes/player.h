@@ -109,8 +109,8 @@ class Player {
     };
     void Desenha() {
         if(_live > 0){
-
-        drawPlayer(gX, gY, gAngleArm);
+          cout << "ta vai desenha \n";
+          drawPlayer(gX, gY, gAngleArm);
         }
         else {
           cout << "++ TA MORTO ++\n";

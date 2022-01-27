@@ -38,9 +38,14 @@ static GLdouble framerate = 0;
 void display(void){
    /* Limpar todos os pixels  */
    glClear (GL_COLOR_BUFFER_BIT);
-   
+   cout << "mundo " << player->getSurface()->getTop() << endl;
+
    world.draw();
+   cout << "fim mundo " << player->getSurface()->getTop() << endl;
+   cout << "play " << player->getSurface()->getTop() << endl;
    player->Desenha();
+
+
 
    if (shot){
         Player* bot = world.checkBotsCollision(shot->getPos());
@@ -57,12 +62,15 @@ void display(void){
 
 
 void idle(void){
+   cout << "idle\n";
    if(player->live() < 0){
       cout << "=========================\n";
       cout << "====== GAME OVER ========\n";
       cout << "=========================\n\n";
 
    }
+   cout << "live\n";
+
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble curTime, deltaTime;
     curTime = glutGet(GLUT_ELAPSED_TIME);
@@ -72,7 +80,6 @@ void idle(void){
    // cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t framerate: " << framerate << "\t curTime: "<< curTime << "\n"; 
    //  world.setDeltaTime(deltaTime);
     player->moveShot(deltaTime, world.getObstacles());
-
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
@@ -190,6 +197,9 @@ int main(int argc, char** argv)
    // cout << "Posicao player" << get<0>(teste) << ", " << get<1>(teste) << endl; 
    // readeing.printTeste();
 
+      //  world.build(_test); 
+    world.build(); 
+    player = world.getPlayer();
 
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
@@ -208,9 +218,7 @@ int main(int argc, char** argv)
          
          };
    
-   //  world.build(_test); 
-    world.build(); 
-    player = world.getPlayer();
+
 
 
    //  bots = world.getBots();

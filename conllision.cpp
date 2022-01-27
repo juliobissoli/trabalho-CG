@@ -71,7 +71,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
   Surface* item;
   if(direction == "center"){
-  // cout << "verifica centro| " << direction << "\n";
+  cout << "verifica centro| " << direction << "\n";
     item = handleAvaliatePointer(s, "center", "center");
       if(item != NULL) return item;
   }

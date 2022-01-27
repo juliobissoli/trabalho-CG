@@ -37,7 +37,9 @@ void World::drawSky(){
 
 void World::build(){
   //  drawObstacles(gX, gY);
-  read.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
+    read.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
+
+  // read.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
   read.printTeste();
 
   cout << "=======Build do mundo======= \n";
@@ -70,6 +72,8 @@ void World::build(){
   _obstacles = new Collision((int)_max_x, (int)_max_y);
 
   _obstacles->build(_surfaces);
+  _player_ref = new Player(30.0, 0.0, "green", _obstacles);
+
 
 };
 
@@ -94,6 +98,8 @@ void World::draw(){
       b->draw();
     }
   }
+
+  cout << "desenha mund\n";
 }
 
 

@@ -65,10 +65,15 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     glPopMatrix();
 
     // this->handleGravity();
+    cout << "antes do tiro\n";
 
-    if (_shot){
-         _shot->draw();
-      }
+    // if (_shot != NULL){
+    //     cout << "durante do tiro\n";
+    //      _shot->draw();
+    //     cout << "durante do tiro1\n";
+
+    //   }
+    cout << "depois do tiro\n";
 
 }
 
