@@ -7,7 +7,7 @@
 #include "./includes/player.h"
 #include "./includes/surface.h"
 #include "./includes/collision.h"
-#include "./includes/read_svg.h"
+// #include "./includes/read_svg.h"
 
 #include <iostream>
 
@@ -183,8 +183,13 @@ int main(int argc, char** argv)
 {
    // player = new Player(400.0, 400.0, "green");
    //  readeing.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
-    readeing.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
-    
+   //  readeing.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
+   // tuple<double,double,double> teste = readeing.getPlayer();
+
+   // cout << "Posicao player" << get<0>(teste) << ", " << get<1>(teste) << endl; 
+   // readeing.printTeste();
+
+
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
@@ -202,7 +207,8 @@ int main(int argc, char** argv)
          
          };
    
-    world.build(_test); 
+   //  world.build(_test); 
+    world.build(); 
     player = world.getPlayer();
 
 

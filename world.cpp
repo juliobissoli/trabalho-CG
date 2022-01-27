@@ -12,16 +12,43 @@ void World::drawCircle(GLfloat x, GLfloat y){
   glPopMatrix();
 }
 
-void World::build(float _test[2][4]){
-  //  drawObstacles(gX, gY);
-  cout << "=======Build do mundo======= \n";
+// void World::build(float _test[2][4]){
+//   //  drawObstacles(gX, gY);
+//   cout << "=======Build do mundo======= \n";
 
+//   // _player_ref = p;
+//   // Iniciliaza as superficies
+//   for (int i = 0; i < 4; i++){
+//     Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);
+//     _surfaces.push_back(s);
+//   }
+
+//   _obstacles->build(_surfaces);
+
+// };
+
+void World::build(){
+  //  drawObstacles(gX, gY);
+  read.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
+  read.printTeste();
+
+  cout << "=======Build do mundo======= \n";
+  vector<tuple<double,double,double,double>> recs = read.getRecs();
   // _player_ref = p;
   // Iniciliaza as superficies
-  for (int i = 0; i < 4; i++){
-    Surface *s = new Surface(_test[i][0], _test[i][1], _test[i][2], _test[i][3]);
-    _surfaces.push_back(s);
+  for (auto r : recs){
+    if((GLfloat)get<0>(r) > 0 && (GLfloat)get<1>(r) > 0){
+
+      Surface *s = new Surface((GLfloat)get<0>(r), (GLfloat)get<1>(r), (GLfloat)get<2>(r), (GLfloat)get<3>(r));
+      _surfaces.push_back(s);
+    }
   }
+
+
+  _max_x = read.getWidth();
+  _max_y = read.getHeight();
+    cout << "tamanho da matriz ["<< _max_x << ", " << _max_y << "]\n";
+  _obstacles = new Collision((int)_max_x, (int)_max_y);
 
   _obstacles->build(_surfaces);
 

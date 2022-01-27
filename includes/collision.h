@@ -14,8 +14,8 @@
 #include <set>
 #include<tuple>
 
-#define MAX_VIEW_X 300
-#define MAX_VIEW_Y 100
+// #define MAX_VIEW_X 300
+// #define MAX_VIEW_Y 100
   
 using namespace std;
 
@@ -44,14 +44,14 @@ class Collision {
     public:
       Collision(int width, int height){
         _x_ref = 0;
-        _max_x = width * 2;
-        _max_y = height * 2; 
+        _max_x = width;
+        _max_y = height; 
         _floor = new Surface(0,0, _max_x, 2);
 
         cout << "monta x == " << _max_x << " y= " << _max_y << endl;
-        _objStatics = (Surface***)malloc(_max_x * sizeof(Surface**));
-            for(int i = 0; i < _max_x + 1; i++) {
-              _objStatics[i] = (Surface**)malloc(_max_y * sizeof(Surface*));
+        _objStatics = (Surface***)malloc((_max_x + 1) * sizeof(Surface**));
+            for(int i = 0; i < (_max_x + 1); i++) {
+              _objStatics[i] = (Surface**)malloc((_max_y + 1)* sizeof(Surface*));
             }
         // _objStatics = (Surface***)malloc(_max_x * _max_y * sizeof(Surface*));
 

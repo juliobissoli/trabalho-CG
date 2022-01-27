@@ -18,6 +18,7 @@
 #include "player.h"
 #include "bot.h"
 #include "collision.h"
+#include "read_svg.h"
 
 
 // #define size_bloc 50.0 //remover tamanho so para teste
@@ -27,7 +28,7 @@
 using namespace std;
 
 class World {
-
+    Read read;
     GLfloat gX;
     GLfloat gY;
 
@@ -60,13 +61,13 @@ class World {
           _max_x = MAX_VIEW_X;
           _max_y = MAX_VIEW_Y;
           // oponente = new Player(300.0, 0.0, "red");
-          _obstacles = new Collision((int)_max_x, (int)_max_y);
+          // _obstacles = new Collision((int)_max_x, (int)_max_y);
           Bot* b1 = new Bot(110.0, 0.0);
           Bot* b2 = new Bot(150.0, 0);
           _player_ref = new Player(30.0, 0.0, "green");
 
-          _bots.push_back(b1);
-          _bots.push_back(b2);
+          // _bots.push_back(b1);
+          // _bots.push_back(b2);
           _deltaTime = 0.0;
 
 
@@ -75,7 +76,8 @@ class World {
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(float _test[4][4]);
+    // void build(float _test[4][4]);
+    void build();
     void draw();
     vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
