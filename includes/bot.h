@@ -22,8 +22,8 @@ class Bot{
 private:
     /* data */
 public:
-    Bot(GLfloat x_init, GLfloat y_init){
-         _bot = new Player(x_init, y_init, "red");
+    Bot(GLfloat x_init, GLfloat y_init, Collision* obstacles){
+         _bot = new Player(x_init, y_init, "red", obstacles);
     }
     ~Bot();
 

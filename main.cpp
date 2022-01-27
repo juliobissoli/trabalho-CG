@@ -83,7 +83,7 @@ void idle(void){
     if(keyStatus['d'] == 1){
       if(player->getFacing() == -1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
-         world.moveInX(-0.2 * deltaTime);
+         world.moveInX(-0.1 * deltaTime);
          // player->moveSurfaceInX(0.5 * deltaTime);
        }
    }
@@ -102,13 +102,13 @@ void idle(void){
    if(player->hasJumping()){
       player->jump(deltaTime, world.getObstacles());  
    }
-   // se não esta pulando aplica gravidade;
-   else{
-      if(world.hasFloor(player->getSurface()) == NULL){
-         cout << "gravidadeee\n";
-         player->moveInY(-0.3 * deltaTime);
-      }
-   }
+   // // se não esta pulando aplica gravidade;
+   // else{
+   //    if(world.hasFloor(player->getSurface()) == NULL){
+   //       cout << "gravidadeee\n";
+   //       player->moveInY(-0.1 * deltaTime);
+   //    }
+   // }
 
 
     glutPostRedisplay();

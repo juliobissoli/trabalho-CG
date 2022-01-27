@@ -64,6 +64,8 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     // Player::drawRef(x,y);
     glPopMatrix();
 
+    // this->handleGravity();
+
     if (_shot){
          _shot->draw();
       }
@@ -88,6 +90,17 @@ void Player::moveSurfaceInX(GLfloat dx){
     _surface->traslateX(dx * unit);
     // printf("Move player x =>\t %f \n", gX);
 }
+
+void Player::handleGravity(){
+ 
+   // se não esta pulando aplica gravidade;
+      if(_obstacle->hasFloor(this->getSurface()) == NULL){
+         cout << "gravidadeee\n";
+         this->moveInY(-0.1 * 17);
+      }
+   
+}
+
 
 void Player::moveArm(GLfloat dy){
     int unit = move_init;

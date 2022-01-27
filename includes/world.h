@@ -63,9 +63,9 @@ class World {
           _max_y = MAX_VIEW_Y;
           // oponente = new Player(300.0, 0.0, "red");
           // _obstacles = new Collision((int)_max_x, (int)_max_y);
-          Bot* b1 = new Bot(110.0, 0.0);
-          Bot* b2 = new Bot(150.0, 0);
-          _player_ref = new Player(30.0, 0.0, "green");
+          Bot* b1 = new Bot(110.0, 0.0, _obstacles);
+          Bot* b2 = new Bot(150.0, 0, _obstacles);
+          _player_ref = new Player(30.0, 0.0, "green", _obstacles);
 
           // _bots.push_back(b1);
           // _bots.push_back(b2);

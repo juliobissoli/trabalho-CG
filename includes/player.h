@@ -37,14 +37,15 @@ class Player {
     GLfloat gX;
     GLfloat gY;
     GLfloat gAngleArm;
-    // GLfloat yCenter;
-    // GLfloat xCenter;
     Surface* _surface;
     Shot* _shot;
+    Collision* _obstacle;
+
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
     float timerJump;
+
 
     tuple <float, float, float> _body_color;
     tuple <float, float, float> _shot_color;
@@ -69,28 +70,29 @@ class Player {
     void drawHeader(GLint x, GLint y);
     void drawLegs(GLint x, GLint y);
     void drawPlayer(GLint x, GLint y, GLint angle);
-
     void drawRef(GLint x, GLint y);
+    void handleGravity();
+
 
   public:
-    Player(float x_init, float y_init,string color) {
+    Player(float x_init, float y_init,string color, Collision* obstacle) {
 
-        height_player = 15;
+        height_player = 12;
 
         body_height  = height_player / 3; // 40.0;
         legs_height  = height_player / 3; //40.0 ;
         radius_header  = height_player / 3 / 2; //20.0;
         
-        arm_height  = height_player / 3 /5; // 5.0;
+        arm_height  = height_player /9; // 5.0;
 
-        body_width  = height_player / 5; // 25.0;
-        arm_width  = height_player / 4;  // 30.0;
-        legs_width  = height_player / 12; // 10.0;
-        move_init = body_width / 2;
+        body_width  = height_player / 3; // 25.0;
+        arm_width  = height_player / 3;  // 30.0;
+        legs_width  = height_player / 9; // 10.0;
+        move_init = body_width / 3;
 
         _live = 1;
         gX =  x_init;//250;
-        gY =  y_init + ( arm_height  + body_height) / 2;
+        gY =  y_init + body_height;
         gAngleArm = INITIAL_ANGLE;
         // yCenter =  gY + (body_height / 2);
         // xCenter =  (body_width / 2);
@@ -129,7 +131,6 @@ class Player {
     tuple<GLfloat, GLfloat>getPos(){return make_tuple(gX, gY);}
     Shot* shootGun();
     void moveShot(float deltaTime, Collision* obstacles);
-
     // bool playerCollision(GLfloat x, GLfloat y);
     bool playerCollision(tuple<GLfloat, GLfloat> pointer);
 
