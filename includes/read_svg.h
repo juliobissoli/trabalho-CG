@@ -14,6 +14,7 @@ class Read{
   double gHeight;
 
   vector<tuple<double,double,double,double>> _rec_list;
+  vector<tuple<double,double,double,double>> _rec_fake_list;
   vector<tuple<double,double, double>> _circ_list;
   tuple<double,double, double> _player_rec;
 
@@ -21,7 +22,7 @@ private:
   /* data */
   void _readingRectangle(tinyxml2::XMLElement *element);
   void _readingCircle(tinyxml2::XMLElement *element);
-
+  double _ajusteY(double dy, double height);
 public:
   Read(){
   gX = 0;
@@ -36,6 +37,7 @@ public:
   tuple<double,double, double> getPlayer(){return _player_rec;}
   // ~read_svg();
   vector<tuple<double,double,double,double>> getRecs(){return _rec_list;}
+  vector<tuple<double,double,double,double>> getRecFake(){return _rec_fake_list;}
   void printTeste();
 };
 

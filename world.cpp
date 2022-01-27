@@ -12,6 +12,14 @@ void World::drawCircle(GLfloat x, GLfloat y){
   glPopMatrix();
 }
 
+void World::drawSky(){
+  glPushMatrix();
+  glTranslatef(gX + (_max_x  / 2), gY, 0);
+  // circle(3, 0.115, 0.30, 0.103);
+  rectangle(_max_y, _max_x, 0.0, 0.0, 0.5);
+  glPopMatrix();
+}
+
 // void World::build(float _test[2][4]){
 //   //  drawObstacles(gX, gY);
 //   cout << "=======Build do mundo======= \n";
@@ -37,17 +45,28 @@ void World::build(){
   // _player_ref = p;
   // Iniciliaza as superficies
   for (auto r : recs){
-    if((GLfloat)get<0>(r) > 0 && (GLfloat)get<1>(r) > 0){
+    if((GLfloat)get<0>(r) > -1 && (GLfloat)get<1>(r) > -1){
 
       Surface *s = new Surface((GLfloat)get<0>(r), (GLfloat)get<1>(r), (GLfloat)get<2>(r), (GLfloat)get<3>(r));
       _surfaces.push_back(s);
     }
   }
 
+  //Remover esse teste
+  // recs = read.getRecFake();
+
+  //  for (auto r : recs){
+  //    if((GLfloat)get<0>(r) > -1 && (GLfloat)get<1>(r) > -1){
+
+  //      Surface *s = new Surface((GLfloat)get<0>(r), (GLfloat)get<1>(r), (GLfloat)get<2>(r), (GLfloat)get<3>(r));
+  //      s->changeColor();
+  //      _surfaces.push_back(s);
+  //    }
+  //  }
 
   _max_x = read.getWidth();
   _max_y = read.getHeight();
-    cout << "tamanho da matriz ["<< _max_x << ", " << _max_y << "]\n";
+    // cout << "tamanho da matriz ["<< _max_x << ", " << _max_y << "]\n";
   _obstacles = new Collision((int)_max_x, (int)_max_y);
 
   _obstacles->build(_surfaces);
@@ -63,7 +82,7 @@ void World::draw(){
     deltaTime = curTime - prevTime;
     prevTime = curTime;
     
-
+  drawSky();
   for (auto s : _surfaces) {
     s->draw();
   }
@@ -79,7 +98,7 @@ void World::draw(){
 
 
 void World::moveInX(GLfloat dx){
-  if(_obstacles->finishWordPlayer(dx, 400.0)) return;
+  if(_obstacles->finishWordPlayer(dx, 4.0)) return;
   int unit = _player_ref->getMoveUnit();
   gX += (dx * unit);
   _obstacles->resetXRef(gX);

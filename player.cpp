@@ -75,6 +75,14 @@ void Player::moveInX(GLfloat dx){
     gX += (dx * unit);
     // printf("Move player x =>\t %f \n", gX);
 }
+
+void Player::moveInY(GLfloat dy){
+     int unit = move_init;
+    gY += (dy * unit);
+    _surface->resetY(gY - (legs_height * 2));
+}
+
+
 void Player::moveSurfaceInX(GLfloat dx){
     int unit = move_init;
     _surface->traslateX(dx * unit);
@@ -148,7 +156,7 @@ void Player::jump(GLdouble clock, Collision* collision){
     if(clock <= 0) return;
     
     //Verica se o personagem caiu de uma plataforma sem pular
-    // if(_surface->getBooton() <= 0 && junping == 0)yInitJump = 0;
+    if(_surface->getBooton() <= 0 && junping == 0)yInitJump = 0;
 
     Surface* top_collision = collision->detectCollision(_surface, "top");
     // Surface* center_collision = collision->detectCollision(_surface, "center");
@@ -160,6 +168,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         junping = 0;
         return;
     }
+    cout << "apos cange\n";
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
         if(clock <= 10) clock = 300;
@@ -168,7 +177,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         timerJump += (1 / clock);
 
 
-        float max_jupm = (body_height + arm_height + legs_height) * 2;
+        float max_jupm = (height_player) * 2;
 
         junping = 1;
         
@@ -177,17 +186,23 @@ void Player::jump(GLdouble clock, Collision* collision){
         float aux = -(timerJump * timerJump * max_jupm ) + max_jupm ;
         aux += yInitJump ;
         _surface->resetY(aux);
-        gY = _surface->getTop() + (legs_height);
-
+        gY = aux + legs_height;
+        // _surface->getTop() + (legs_height);
+        cout << "pulo gY = " << gY << endl;
         
         Surface* floor = collision->hasFloor(_surface);
         if(timerJump > 0.0 && floor != NULL){
+
             junping = 0;
             timerJump = -1;
             yInitJump = floor->getTop();
 
-             _surface->resetY(floor->getTop());
-            gY = floor->getTop() + legs_height + 30;
+            
+            cout << "Flor "<< floor->getTop() << endl;
+            
+            gY = floor->getTop() + legs_height;
+            _surface->resetY(floor->getTop());
+            cout << "Acho o chao " << gY << endl;
         }
     
 
@@ -205,11 +220,6 @@ void Player::stopJump(){
 
 int Player::hasJumping() {return junping;}
 
-void Player::moveInY(GLfloat dy){
-     int unit = move_init;
-    gY += (dy * unit);
-    _surface->resetY(gY - legs_height);
-}
 
 
 

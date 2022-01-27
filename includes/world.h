@@ -22,8 +22,8 @@
 
 
 // #define size_bloc 50.0 //remover tamanho so para teste
-#define MAX_VIEW_X 300
-#define MAX_VIEW_Y 100
+// #define MAX_VIEW_X 300
+// #define MAX_VIEW_Y 100
   
 using namespace std;
 
@@ -52,7 +52,8 @@ class World {
       void drawCircle(GLfloat x, GLfloat y);
       void desenhaRef();
       void setSurfaceInMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface *s);
-
+      void drawSky();
+      
       tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
     public:
       World(){

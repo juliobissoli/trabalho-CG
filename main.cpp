@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#define WINDOW_SIZE 500
+#define WINDOW_SIZE 800
 
 using namespace std;
 
@@ -25,8 +25,8 @@ Read readeing;
 Player* player; 
 Shot* shot;
 
-const GLint ViewingWidth =  150;
-const GLint ViewingHeight = 150;
+const GLint ViewingWidth =  100;
+const GLint ViewingHeight = 100;
 
 int keyStatus[256];
 
@@ -105,6 +105,7 @@ void idle(void){
    // se não esta pulando aplica gravidade;
    else{
       if(world.hasFloor(player->getSurface()) == NULL){
+         cout << "gravidadeee\n";
          player->moveInY(-0.3 * deltaTime);
       }
    }

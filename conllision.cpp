@@ -90,11 +90,6 @@ Surface* Collision::detectCollision(Surface* s, string direction){
       if(item != NULL) return item;
     }
 
-
-    // item = handleAvaliatePointer(s, "center", direction);
-
-    // if(item != NULL) return item;
-
   } 
   return NULL;
 }
@@ -141,6 +136,7 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
 Surface* Collision::hasFloor(Surface* s){
     float min_y = s->getBooton();
+    // cout << "hasFloor == "<< min_y << endl;
     if(min_y < 0.0) return _floor;
 
     else return detectCollision(s, "booton");
@@ -168,9 +164,6 @@ bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){
 
 
 bool collisionS2S(Surface* s1, Surface* s2){
-
-  // GLfloat x1_center = s1->getXCenter();
-  // GLfloat y1_center = s1->getYCenter();
 
   //Se o centro da superficie s1 estiver interno a superficie s2 returna true
   if(  s1->getXCenter() <= s2->getRight() 
@@ -214,12 +207,4 @@ bool Collision::finishWordPlayer(float facing, float x_gab_start){
   if(facing < 0 && _x_ref < -_max_x - x_gab_start) return true;
   if(facing > 0 && _x_ref > 0 + x_gab_start) return true;
   return false;
-  // return _x_ref < 0 || _x_ref > _max_x;
 }
-
-
-// float World::getLeft(){
-//     return gX - size_bloc/2;
-// };
-
-// World::~World() {}

@@ -14,8 +14,8 @@
 #include <set>
 #include<tuple>
 
-// #define MAX_VIEW_X 300
-// #define MAX_VIEW_Y 100
+#define MAX_VIEW_X 700
+#define MAX_VIEW_Y 400
   
 using namespace std;
 
@@ -24,8 +24,8 @@ class Collision {
     GLfloat _max_x;
     GLfloat _max_y;
 
-    // Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
-    Surface*** _objStatics;
+    Surface* _objStatics[MAX_VIEW_X][MAX_VIEW_Y];
+    // Surface*** _objStatics;
     void setSurfaceInMat( Surface *s);
     Surface* _floor;
     Surface* _roof;
@@ -46,13 +46,14 @@ class Collision {
         _x_ref = 0;
         _max_x = width;
         _max_y = height; 
-        _floor = new Surface(0,0, _max_x, 2);
+        _floor = new Surface(0,0, MAX_VIEW_X, 0);
 
-        cout << "monta x == " << _max_x << " y= " << _max_y << endl;
-        _objStatics = (Surface***)malloc((_max_x + 1) * sizeof(Surface**));
-            for(int i = 0; i < (_max_x + 1); i++) {
-              _objStatics[i] = (Surface**)malloc((_max_y + 1)* sizeof(Surface*));
-            }
+        // cout << "monta x == " << _max_x << " y= " << _max_y << endl;
+        // _objStatics = (Surface***)malloc((_max_x + 1) * sizeof(Surface**));
+        //     for(int i = 0; i < (_max_x + 1); i++) {
+        //       _objStatics[i] = (Surface**)malloc((_max_y + 1)* sizeof(Surface*));
+        //     }
+
         // _objStatics = (Surface***)malloc(_max_x * _max_y * sizeof(Surface*));
 
       }

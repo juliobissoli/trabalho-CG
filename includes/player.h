@@ -75,7 +75,7 @@ class Player {
   public:
     Player(float x_init, float y_init,string color) {
 
-        height_player = 20;
+        height_player = 15;
 
         body_height  = height_player / 3; // 40.0;
         legs_height  = height_player / 3; //40.0 ;
@@ -91,7 +91,7 @@ class Player {
         _live = 1;
         gX =  x_init;//250;
         gY =  y_init + ( arm_height  + body_height) / 2;
-        gAngleArm = INITIAL_ANGLE + 2;
+        gAngleArm = INITIAL_ANGLE;
         // yCenter =  gY + (body_height / 2);
         // xCenter =  (body_width / 2);
         gFacing = 1;
