@@ -9,48 +9,44 @@ using namespace std;
 
 void Player::drawBody(GLint x, GLint y){
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    rectangle(body_height, body_width,  get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
+        glTranslatef(x, y, 0);
+        rectangle(body_height, body_width,  get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
 
 void Player::drawHeader(GLint x, GLint y){
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    glTranslatef(0,  (body_height + radius_header), 0);
-    circle(radius_header,get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
+        glTranslatef(x, y, 0);
+        glTranslatef(0,  (body_height + radius_header), 0);
+        circle(radius_header,get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
 void Player::drawArm(GLint x, GLint y, GLint angle){
     glPushMatrix();
-    
-    glTranslatef(x,  0 , 0);
-    glTranslatef(0 , y + (body_height /2), 0);
-    glRotatef(angle, 0, 0, 1);
-    glRotatef(90 + (90 * -gFacing), 0, 1, 0);
-
-    glTranslatef(body_width / 2.0, 0,0);
-
-    rectangle(arm_height, arm_width, 1.0, 1.0, 0.0);
-
+        glTranslatef(x,  0 , 0);
+        glTranslatef(0 , y + (body_height /2), 0);
+        glRotatef(angle, 0, 0, 1);
+        glRotatef(90 + (90 * -gFacing), 0, 1, 0);
+        glTranslatef(body_width / 2.0, 0,0);
+        rectangle(arm_height, arm_width, 1.0, 1.0, 0.0);
     glPopMatrix();
 }
 
 void Player::drawLegs(GLint x, GLint y){
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
-    rectangle(legs_height, legs_width, get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
+        glTranslatef(x, y, 0);
+        glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
+        rectangle(legs_height, legs_width, get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
 }
 
 void Player::drawRef(GLint x, GLint y){
-        glPushMatrix();
+    glPushMatrix();
         glTranslatef(x, _surface->getBooton(), 0);
         circle(4, 0.5, 0.5, 0.5);
-        glPopMatrix();
+    glPopMatrix();
 }
 
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
@@ -67,6 +63,17 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     if (this->_shot != NULL){
         this-> _shot->draw();
       }
+}
+
+void Player::handleAjusteSize(){
+        body_height  = height_player / 3; // 40.0;
+        legs_height  = height_player / 3; //40.0 ;
+        radius_header  = height_player / 3 / 2; //20.0;
+        arm_height  = height_player /9; // 5.0;
+        body_width  = height_player / 3; // 25.0;
+        arm_width  = height_player / 3;  // 30.0;
+        legs_width  = height_player / 9; // 10.0;
+        move_init = body_width / 3;
 }
 
 void Player::moveInX(GLfloat dx){
@@ -124,17 +131,12 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
     if (
         obstacle != NULL ||
         obstacles->finishWord(_shot->getSurface())
-        //  || world.checkObstacleCollision(shot->getSurface()) || b  != NULL
         ) {
             delete _shot;
             _shot = NULL;
-
-            // if(b != NULL){
-            //    b->decrementLive();
-            // }
         }
       else {
-       _shot->move(deltaTime);
+       _shot->move(deltaTime * 0.01);
       }
       // delete b; b = NULL;
    }

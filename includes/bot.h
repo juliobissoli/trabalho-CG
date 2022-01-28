@@ -27,7 +27,7 @@ public:
     }
     ~Bot();
 
-    void draw(){_bot->Desenha();}
+    void draw(){_bot->draw();}
     Player* player(){return _bot;}
     int live(){return _bot->live();}
     void moveInX(GLfloat dx){

@@ -36,9 +36,6 @@ class World {
     GLfloat _max_y;
 
     Collision* _obstacles;
-    // Surface *surface; //remover isso apos resolver colizões
-    // vector<vector<float>> matrix(float, vector<float>);
-    // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
     vector<Bot*> _bots;
     Player* _player_ref;
@@ -61,20 +58,7 @@ class World {
           gY = 0; 
           _max_x = MAX_VIEW_X;
           _max_y = MAX_VIEW_Y;
-          // oponente = new Player(300.0, 0.0, "red");
-          // _obstacles = new Collision((int)_max_x, (int)_max_y);
-          // Bot* b1 = new Bot(110.0, 0.0);
-          // Bot* b2 = new Bot(150.0, 0.0);
-
-          // _bots.push_back(b1);
-          // _bots.push_back(b2);
           _deltaTime = 0.0;
-
-          //  _player_ref = new Player(30.0, 0.0, "green");
-
-
-          // surface =  new Surface( gX, gY, size_bloc, size_bloc);
-
       }
 
       // Monta o array de superficies (obstáculos); 
@@ -84,21 +68,26 @@ class World {
                 float max_width,
                 float max_height
                 );
+
     void draw();
-    vector<Surface*> getSurfaces(){return _surfaces;};
     void moveInX(GLfloat dx);
-    Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
     bool checkObstacleCollision(Surface* s);
+    void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
+    void setPlayer(Player* p){_player_ref = p;}
     bool finishWord(Surface* s);
 
+    
+     GLfloat getWidth(){return  _max_x ;};
+     GLfloat getHeight(){return  _max_y;};
+
+    vector<Surface*> getSurfaces(){return _surfaces;};
+    Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
     Surface* obstacleCollision(Surface* s, string direction){return _obstacles->detectCollision(s, direction);};
     Collision* getObstacles(){return _obstacles;}
     Surface* hasFloor(Surface* s){return _obstacles->hasFloor(s);}
-    vector<Bot*>getBots();
-
-    void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
+    vector<Bot*> getBots();
     Player* getPlayer(Player* p){return _player_ref;}
-    Player* setPlayer(Player* p){_player_ref = p;}
+
 
 
 };

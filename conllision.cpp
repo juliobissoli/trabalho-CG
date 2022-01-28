@@ -203,7 +203,6 @@ bool collisionS2S(Surface* s1, Surface* s2){
 }
 
 bool Collision::finishWordPlayer(float facing, float x_gab_start){
-  // cout << "ta aqui " << _x_ref <<" f " << facing << "\n";
   if(facing < 0 && _x_ref < -_max_x - x_gab_start) return true;
   if(facing > 0 && _x_ref > 0 + x_gab_start) return true;
   return false;

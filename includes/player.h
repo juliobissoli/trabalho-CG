@@ -73,27 +73,17 @@ class Player {
     void drawLegs(GLint x, GLint y);
     void drawPlayer(GLint x, GLint y, GLint angle);
     void drawRef(GLint x, GLint y);
+    void handleAjusteSize();
 
 
   public:
     Player(float x_init, float y_init, float size, string color) {
 
+        _live = 1; // Inicia com uma vida;
         height_player = size;
-
-        body_height  = height_player / 3; // 40.0;
-        legs_height  = height_player / 3; //40.0 ;
-        radius_header  = height_player / 3 / 2; //20.0;
-        
-        arm_height  = height_player /9; // 5.0;
-
-        body_width  = height_player / 3; // 25.0;
-        arm_width  = height_player / 3;  // 30.0;
-        legs_width  = height_player / 9; // 10.0;
-        move_init = body_width / 3;
-
-        _live = 1;
-        gX =  x_init;//250;
+        gX =  x_init;
         gY =  y_init + body_height;
+        this->handleAjusteSize();
         gAngleArm = INITIAL_ANGLE;
         gFacing = 1;
         junping = 0; //Inicializa com o personagem estatico
@@ -101,14 +91,13 @@ class Player {
         timerJump = -1;
         _floor = NULL;
         _shot = NULL;
+        _surface = new Surface(gX, gY - (legs_height) , body_width, height_player);
         if(color == "green") _body_color = {0.0, 0.5, 0.0};
         else _body_color = {1.0, 0.0, 0.0};
-
-        _surface = new Surface(gX, gY - (legs_height) , body_width, height_player);
-
-    
     };
-    void Desenha() {
+
+
+    void draw() {
         if(_live > 0){
           drawPlayer(gX, gY, gAngleArm);
         }
@@ -129,6 +118,7 @@ class Player {
     void invertFacing(){gFacing = gFacing * -1;}
     int getFacing(){return gFacing;}
     tuple<GLfloat, GLfloat>getPos(){return make_tuple(gX, gY);}
+    GLfloat getX(){return gX;};
     Shot* shootGun();
     void moveShot(float deltaTime, Collision* obstacles);
     void handleGravity(float deltaTime, Collision* obstacles);
