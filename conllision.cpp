@@ -136,10 +136,10 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
 Surface* Collision::hasFloor(Surface* s){
     float min_y = s->getBooton();
-    // cout << "hasFloor == "<< min_y << endl;
     if(min_y < 0.0) return _floor;
 
     else return detectCollision(s, "booton");
+    
 }
 
 bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){
@@ -203,7 +203,6 @@ bool collisionS2S(Surface* s1, Surface* s2){
 }
 
 bool Collision::finishWordPlayer(float facing, float x_gab_start){
-  // cout << "ta aqui " << _x_ref <<" f " << facing << "\n";
   if(facing < 0 && _x_ref < -_max_x - x_gab_start) return true;
   if(facing > 0 && _x_ref > 0 + x_gab_start) return true;
   return false;

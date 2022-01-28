@@ -22,12 +22,12 @@ class Bot{
 private:
     /* data */
 public:
-    Bot(GLfloat x_init, GLfloat y_init, Collision* obstacles){
-         _bot = new Player(x_init, y_init, "red", obstacles);
+    Bot(GLfloat x_init, GLfloat y_init, float size){
+         _bot = new Player(x_init, y_init, size,"red");
     }
     ~Bot();
 
-    void draw(){_bot->Desenha();}
+    void draw(){_bot->draw();}
     Player* player(){return _bot;}
     int live(){return _bot->live();}
     void moveInX(GLfloat dx){
