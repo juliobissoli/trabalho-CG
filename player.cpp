@@ -94,9 +94,16 @@ void Player::moveSurfaceInX(GLfloat dx){
 }
 
 void Player::handleGravity(float deltaTime, Collision* obstacles){
-
-    if(obstacles->hasFloor(this->_surface) == NULL){
-        this->moveInY(-0.1 * deltaTime);
+       Surface* floor = obstacles->hasFloor(this->_surface);
+    
+    if(floor == NULL){
+        this->moveInY(-0.3 * deltaTime);
+    }
+    else {
+        if(this->_surface->getBooton() != floor->getTop() -1){
+            gY = floor->getTop() + legs_height;
+            _surface->resetY(floor->getTop() - 1);
+        }
     }
    
 }
@@ -124,35 +131,22 @@ Shot *Player::shootGun(){
 
 void Player::moveShot(float deltaTime, Collision* obstacles){
     if(_shot){
-    //    Player* b =  world.checkBotsCollision(_shot->getPos());
-    Surface* obstacle = obstacles->detectCollision(_shot->getSurface(), "center");
-
-
-    if (
-        obstacle != NULL ||
-        obstacles->finishWord(_shot->getSurface())
-        ) {
+     Surface* obstacle = obstacles->detectCollision(_shot->getSurface(), "center");
+     if ( obstacle != NULL || obstacles->finishWord(_shot->getSurface()) ) {
             delete _shot;
             _shot = NULL;
         }
       else {
-       _shot->move(deltaTime * 0.01);
+       _shot->move(deltaTime * 0.2);
       }
-      // delete b; b = NULL;
    }
      
      
 }
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
-    
-    // if(dx < gX)gFacing  = -1;
-    // else  gFacing  = 1;
-    // printf("gX= %f \t dX %f \t gFacing %d\n", gX, dx, gFacing);
     float y =  dy - gY + (body_height / 2);
     float x =  dx - gX + (body_width / 2);
-
-
     float theta = atan (y/x) * 180 / M_PI;
     if(theta < 45  && theta > -45 ){
         gAngleArm = theta * gFacing;
@@ -202,8 +196,8 @@ void Player::jump(GLdouble clock, Collision* collision){
             
             cout << "Flor "<< floor->getTop() << endl;
             
-            gY = floor->getTop() + legs_height;
-            _surface->resetY(floor->getTop());
+            gY = floor->getTop() + (legs_height* 4);
+            _surface->resetY(floor->getTop() + (legs_height * 3));
             // cout << "Acho o chao " << gY << endl;
         }
     

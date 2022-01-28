@@ -18,14 +18,11 @@ void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
   Surface *floor = obstacles->hasFloor(_bot->getSurface());
   if (collision != NULL || floor == NULL){
     _bot->invertFacing();
-    // collision->changeColor();
-    // _bot->moveInX((_bot->getSurface()->getWidth())  * _bot->getFacing() * deltaTime);
-    // _bot->moveSurfaceInX((_bot->getSurface()->getWidth()) * _bot->getFacing() * deltaTime);
   }
  
-  _bot->moveInX(0.1 * _bot->getFacing() * deltaTime);
-  _bot->moveSurfaceInX(0.1 * _bot->getFacing() * deltaTime);
-
+  _bot->moveInX(0.05 * _bot->getFacing() * deltaTime);
+  _bot->moveSurfaceInX(0.05 * _bot->getFacing() * deltaTime);
+  _bot->handleGravity(deltaTime, obstacles);
 
   // Posiciona a arma do bot para o personagem
   tuple<GLfloat, GLfloat> pointer = p->getPos();
@@ -41,13 +38,10 @@ void Bot::rotine(Collision *obstacles, Player* p, GLdouble deltaTime){
     Shot* shot = _bot->getShot();
     shot->draw();
     _bot->moveShot(deltaTime, obstacles);
-    // shot->move(deltaTime);
-
-    // Player* bot = world.checkBotsCollision(shot->getPos());
-      // shot->draw();
-      if(p->playerCollision(shot->getPos())){
-         p->decrementLive();
-      }
+ 
+    if(p->playerCollision(shot->getPos())){
+       p->decrementLive();
+    }
   }
 
 }

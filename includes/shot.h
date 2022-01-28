@@ -49,17 +49,17 @@ public:
   ~Shot();
   void draw() { drawShot(_x, _y); };
   void move(GLdouble deltaTime);
-  bool valid();
+  // bool valid();
 
   tuple<GLfloat, GLfloat> getPos()
   {
     tuple<GLfloat, GLfloat> pos = {_x, _y};
     return pos;
   };
-
-  void getVel(GLfloat &velOut) { velOut = gVel; };
-  void getDirectionAng(GLfloat &directionAngOut){  directionAngOut = gDirectionAng;};
   Surface* getSurface(){return _surface;} 
+
+  // void getVel(GLfloat &velOut) { velOut = gVel; };
+  // void getDirectionAng(GLfloat &directionAngOut){  directionAngOut = gDirectionAng;};
 };
 
 #endif /* SHOT_H */
