@@ -17,7 +17,7 @@ using namespace std;
 
 
 World world;
-Read reade_svg;
+Read read_svg;
 Player* player; 
 Shot* shot;
 static char str[999];
@@ -81,10 +81,15 @@ void idle(void){
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
     
-    glOrtho(player->getX() - world.getHeight()/2,
-            player->getX() + world.getHeight()/2,
-            -world.getHeight()/2, world.getHeight()/2,
-            -1,1);    
+   //  glOrtho(player->getX() - world.getHeight()/2,
+   //          player->getX() + world.getHeight()/2,
+   //          -world.getHeight()/2, world.getHeight()/2,
+   //          -1,1);    
+     glOrtho(player->getX() - world.getHeight()/2,
+             world.getHeight(),
+             0.0, 
+             world.getHeight(), 
+             -1, 1);
     glMatrixMode(GL_MODELVIEW); // Select the projection matrix
 
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
@@ -175,16 +180,16 @@ void init(void) {
     // The color the windows will redraw. Its done to erase the previous frame.
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black, no opacity(alpha).
 
-    glMatrixMode(GL_PROJECTION);  // Select the projection matrix
-    glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
-            (ViewingWidth / 2),   // X coordinate of right edge
-            -(ViewingHeight / 2), // Y coordinate of bottom edge
-            (ViewingHeight / 2),  // Y coordinate of top edge
-            -100,                 // Z coordinate of the “near” plane
-            100);                 // Z coordinate of the “far” plane
+   //  glMatrixMode(GL_PROJECTION);  // Select the projection matrix
+   //  glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
+   //          (ViewingWidth / 2),   // X coordinate of right edge
+   //          -(ViewingHeight / 2), // Y coordinate of bottom edge
+   //          (ViewingHeight / 2),  // Y coordinate of top edge
+   //          -100,                 // Z coordinate of the “near” plane
+   //          100);                 // Z coordinate of the “far” plane
     
-   // glMatrixMode(GL_PROJECTION);  
-   // glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
+   glMatrixMode(GL_PROJECTION);  
+   glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
 
 
     glMatrixMode(GL_MODELVIEW);  
@@ -219,14 +224,14 @@ void click(int button, int state, int x, int y){
 int main(int argc, char** argv)
 {
    //  readeing.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
-   //  readeing.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
-   reade_svg.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
-    world.build(reade_svg.getRecs(),
-                reade_svg.getCircles(),
-                reade_svg.getWidth(),
-                reade_svg.getHeight()
+    read_svg.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
+   // read_svg.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
+    world.build(read_svg.getRecs(),
+                read_svg.getCircles(),
+                read_svg.getWidth(),
+                read_svg.getHeight()
                 ); 
-    tuple<double, double, double> circ = reade_svg.getPlayer();
+    tuple<double, double, double> circ = read_svg.getPlayer();
     player = new Player(get<0>(circ), get<1>(circ),  ((float)get<2>(circ)) * 2.3, "green");
     world.setPlayer(player);
 
