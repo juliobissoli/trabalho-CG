@@ -136,10 +136,10 @@ Surface* Collision::detectCollision(Surface* s, string direction){
 
 Surface* Collision::hasFloor(Surface* s){
     float min_y = s->getBooton();
-    // cout << "hasFloor == "<< min_y << endl;
     if(min_y < 0.0) return _floor;
 
     else return detectCollision(s, "booton");
+    
 }
 
 bool Collision::inpactPointer(tuple<GLfloat, GLfloat> pointer){

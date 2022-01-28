@@ -25,10 +25,10 @@ private:
   double _ajusteY(double dy, double height);
 public:
   Read(){
-  gX = 0;
-  gY = 0;
-  gWidth = 100;
-  gHeight = 100;
+    gX = 0;
+    gY = 0;
+    gWidth = 100;
+    gHeight = 100;
 
   };
   void loadinFile(string path);
@@ -37,6 +37,7 @@ public:
   tuple<double,double, double> getPlayer(){return _player_rec;}
   // ~read_svg();
   vector<tuple<double,double,double,double>> getRecs(){return _rec_list;}
+  vector<tuple<double,double,double>> getCircles(){return _circ_list;}
   vector<tuple<double,double,double,double>> getRecFake(){return _rec_fake_list;}
   void printTeste();
 };

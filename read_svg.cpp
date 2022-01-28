@@ -54,15 +54,8 @@ void Read::loadinFile(string path){
         }
         // && width >= 10.0 && width < 11.0
          else if(!strcmp("black",fill)){
-          // cy = cy - gY - gHeight/2;
-          // cx = cx - gX - gWidth/2;
-        cout << "loading \t x " << cx << "\t y " << cy << "\tgX " << gX << "\t gY " << gY  << "\t width " << width << "\t height " << height << "\t fill" << fill << endl;
           tuple<double,double,double,double> rec = make_tuple((cx - gX) +(width/2)   , _ajusteY(cy, height), width, height);
             _rec_list.push_back(rec);
-            // cy = cy - this->centerY - this->height/2;
-            // cx = cx - this->centerX - this->width/2;
-            // Obstacle ob(cx + width/2,-cy -height,width,height);
-            // this->obstacles.push_back(ob);
         } 
         //else{
         //     cout <<"Erro inesperado! " << endl;
@@ -70,6 +63,7 @@ void Read::loadinFile(string path){
         element = element -> NextSiblingElement("rect");
     }
 
+    //  ======== Remover depois dos testes
     tuple<double,double,double,double> rec1 = make_tuple(0, 0, 10, 10);
     tuple<double,double,double,double> rec2 = make_tuple(0, gHeight, 10, 10);
     tuple<double,double,double,double> rec3 = make_tuple(gWidth/2, gHeight/2, 30, 3);
@@ -99,18 +93,16 @@ void Read::loadinFile(string path){
         // cout << "loading \t x " << x << "\t y " << y << "\t width " << width << "\t height " << height <<  "\t r " << r <<"\t fill " << fill << endl;       
         element = element -> NextSiblingElement("circle");
 
+      cout << "Ciculos \n";
       if(!strcmp("green", fill)){
-        // cout << "Acho playa \n";
-        // cout << "x= " << x <<  "\ty= " << y << "\tgx= " << gX << "\tgy= " << gY << endl; 
-        // cout << "width= " << width <<  "\theight= " << height << endl; 
-        // cout << "x- gX - width/2= " << x- gX - width/2 <<  "\ty - gY - height= " << y - gY - height << endl; 
-        
         
         _player_rec = make_tuple(x- gX, y - gY, r);
 
       }
       else if(!strcmp("red",fill)){
-        tuple<double,double,double> circ = make_tuple(x- gX , y - gY, r);
+
+        tuple<double,double,double> circ = make_tuple(x- gX, _ajusteY(y, 0), r);
+        cout << "circulo x "<< x - gX << " y = " << _ajusteY(y, r) << endl;
         _circ_list.push_back(circ);
       }
     }

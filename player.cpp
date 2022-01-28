@@ -64,18 +64,14 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     // Player::drawRef(x,y);
     glPopMatrix();
 
-    // this->handleGravity();
-
-    if (_shot){
-         _shot->draw();
+    if (this->_shot != NULL){
+        this-> _shot->draw();
       }
-
 }
 
 void Player::moveInX(GLfloat dx){
     int unit = move_init;
     gX += (dx * unit);
-    // printf("Move player x =>\t %f \n", gX);
 }
 
 void Player::moveInY(GLfloat dy){
@@ -88,16 +84,13 @@ void Player::moveInY(GLfloat dy){
 void Player::moveSurfaceInX(GLfloat dx){
     int unit = move_init;
     _surface->traslateX(dx * unit);
-    // printf("Move player x =>\t %f \n", gX);
 }
 
-void Player::handleGravity(){
- 
-   // se não esta pulando aplica gravidade;
-      if(_obstacle->hasFloor(this->getSurface()) == NULL){
-         cout << "gravidadeee\n";
-         this->moveInY(-0.1 * 17);
-      }
+void Player::handleGravity(float deltaTime, Collision* obstacles){
+
+    if(obstacles->hasFloor(this->_surface) == NULL){
+        this->moveInY(-0.1 * deltaTime);
+    }
    
 }
 
@@ -155,7 +148,7 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
     // else  gFacing  = 1;
     // printf("gX= %f \t dX %f \t gFacing %d\n", gX, dx, gFacing);
     float y =  dy - gY + (body_height / 2);
-    float x =  dx - (body_width / 2);
+    float x =  dx - gX + (body_width / 2);
 
 
     float theta = atan (y/x) * 180 / M_PI;
@@ -173,27 +166,21 @@ void Player::jump(GLdouble clock, Collision* collision){
 
     Surface* top_collision = collision->detectCollision(_surface, "top");
     // Surface* center_collision = collision->detectCollision(_surface, "center");
-    
-
     if(top_collision != NULL){
         // cout << "ta aaqui\n";
         top_collision->changeColor();
         junping = 0;
         return;
     }
-    cout << "apos cange\n";
         // float dy = -(timerJump * timerJump) + 2*timerJump ;
 
         if(clock <= 10) clock = 300;
         // cout << "Jump " << clock << "\n";
-
-        timerJump += (1 / clock);
-
-
-        float max_jupm = (height_player) * 2;
+        timerJump += 1 / ( clock);
+        float max_jupm = (height_player) * 3;
 
         junping = 1;
-        
+        _floor = NULL;
         // gY = (dy *  gY ) + yInitJump;
 
         float aux = -(timerJump * timerJump * max_jupm ) + max_jupm ;
@@ -209,13 +196,13 @@ void Player::jump(GLdouble clock, Collision* collision){
             junping = 0;
             timerJump = -1;
             yInitJump = floor->getTop();
-
+            _floor = floor;
             
             cout << "Flor "<< floor->getTop() << endl;
             
             gY = floor->getTop() + legs_height;
             _surface->resetY(floor->getTop());
-            cout << "Acho o chao " << gY << endl;
+            // cout << "Acho o chao " << gY << endl;
         }
     
 

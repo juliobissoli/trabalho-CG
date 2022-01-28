@@ -7,7 +7,7 @@
 #include "./includes/player.h"
 #include "./includes/surface.h"
 #include "./includes/collision.h"
-// #include "./includes/read_svg.h"
+#include "./includes/read_svg.h"
 
 #include <iostream>
 
@@ -17,7 +17,7 @@ using namespace std;
 
 
 World world;
-Read readeing;
+Read reade_svg;
 // Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y];
 // Collision collision;
 // vector<Bot*> bots;
@@ -40,8 +40,8 @@ void display(void){
    glClear (GL_COLOR_BUFFER_BIT);
    
    world.draw();
-   player->Desenha();
 
+   player->Desenha();
    if (shot){
         Player* bot = world.checkBotsCollision(shot->getPos());
          // shot->draw();
@@ -63,6 +63,7 @@ void idle(void){
       cout << "=========================\n\n";
 
    }
+   
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble curTime, deltaTime;
     curTime = glutGet(GLUT_ELAPSED_TIME);
@@ -70,9 +71,9 @@ void idle(void){
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
    // cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t framerate: " << framerate << "\t curTime: "<< curTime << "\n"; 
-   //  world.setDeltaTime(deltaTime);
-    player->moveShot(deltaTime, world.getObstacles());
 
+    player->moveShot(deltaTime, world.getObstacles());
+   
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
@@ -103,12 +104,14 @@ void idle(void){
       player->jump(deltaTime, world.getObstacles());  
    }
    // // se não esta pulando aplica gravidade;
-   // else{
-   //    if(world.hasFloor(player->getSurface()) == NULL){
-   //       cout << "gravidadeee\n";
-   //       player->moveInY(-0.1 * deltaTime);
-   //    }
-   // }
+   else{
+         // cout << "gravidadeee\n";
+      // if(world.hasFloor(player->getSurface()) == NULL){
+      //    player->moveInY(-0.1 * deltaTime);
+      // }
+       player->handleGravity(deltaTime, world.getObstacles());
+   }
+
 
 
     glutPostRedisplay();
@@ -189,6 +192,8 @@ int main(int argc, char** argv)
 
    // cout << "Posicao player" << get<0>(teste) << ", " << get<1>(teste) << endl; 
    // readeing.printTeste();
+   reade_svg.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
+   // reade_svg.printTeste();
 
 
     glutInit(&argc, argv);
@@ -199,18 +204,24 @@ int main(int argc, char** argv)
     init ();
 
    // Receber da função que le o SVG uma matriz d n linha e 4 colunas
-   float size_bloc = 10.0;
-   float _test[4][4] = {
-         {70, 0.0, size_bloc,  2*size_bloc},
-         {100, 0.0, size_bloc, 2*size_bloc},
-         {200, 0.0, size_bloc,   2*size_bloc},
-         {90, 30.0, size_bloc,   2*size_bloc},
+   // float size_bloc = 10.0;
+   // float _test[4][4] = {
+   //       {70, 0.0, size_bloc,  2*size_bloc},
+   //       {100, 0.0, size_bloc, 2*size_bloc},
+   //       {200, 0.0, size_bloc,   2*size_bloc},
+   //       {90, 30.0, size_bloc,   2*size_bloc},
          
-         };
+   //       };
    
    //  world.build(_test); 
-    world.build(); 
-    player = world.getPlayer();
+    world.build(reade_svg.getRecs(),
+                reade_svg.getCircles(),
+                reade_svg.getWidth(),
+                reade_svg.getHeight()
+                ); 
+      tuple<double, double, double> circ = reade_svg.getPlayer();
+      player = new Player(get<0>(circ), get<1>(circ),  ((float)get<2>(circ)) * 2.3, "green");
+      world.setPlayer(player);
 
 
    //  bots = world.getBots();

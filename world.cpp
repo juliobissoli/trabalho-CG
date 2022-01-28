@@ -35,14 +35,12 @@ void World::drawSky(){
 
 // };
 
-void World::build(){
-  //  drawObstacles(gX, gY);
-  read.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
-  read.printTeste();
-
+void World::build(  vector<tuple<double,double,double,double>> recs, 
+                    vector<tuple<double,double,double>> circles,
+                    float max_width,
+                    float max_height ){
   cout << "=======Build do mundo======= \n";
-  vector<tuple<double,double,double,double>> recs = read.getRecs();
-  // _player_ref = p;
+  
   // Iniciliaza as superficies
   for (auto r : recs){
     if((GLfloat)get<0>(r) > -1 && (GLfloat)get<1>(r) > -1){
@@ -52,24 +50,30 @@ void World::build(){
     }
   }
 
-  //Remover esse teste
-  // recs = read.getRecFake();
 
-  //  for (auto r : recs){
-  //    if((GLfloat)get<0>(r) > -1 && (GLfloat)get<1>(r) > -1){
-
-  //      Surface *s = new Surface((GLfloat)get<0>(r), (GLfloat)get<1>(r), (GLfloat)get<2>(r), (GLfloat)get<3>(r));
-  //      s->changeColor();
-  //      _surfaces.push_back(s);
-  //    }
-  //  }
-
-  _max_x = read.getWidth();
-  _max_y = read.getHeight();
+  _max_x = max_width;
+  _max_y = max_height;
     // cout << "tamanho da matriz ["<< _max_x << ", " << _max_y << "]\n";
   _obstacles = new Collision((int)_max_x, (int)_max_y);
 
   _obstacles->build(_surfaces);
+  
+   for (auto c : circles){
+    if((GLfloat)get<0>(c) > -1 && (GLfloat)get<1>(c) > -1){
+      
+      cout << "monto bot\n";
+      // Surface *s = new Surface((GLfloat)get<0>(r), (GLfloat)get<1>(r), (GLfloat)get<2>(r), (GLfloat)get<3>(r));
+        Bot* bot = new Bot((GLfloat)get<0>(c), (GLfloat)get<1>(c), ((float)get<2>(c) * 2.3));
+      _bots.push_back(bot);
+
+    }
+  }
+
+  
+  // _player_ref->moveSurfaceInY((GLfloat)get<1>(rec_player));
+  //  new Player(get<0>(rec_player), get<0>(rec_player), "green");
+
+
 
 };
 
@@ -88,9 +92,10 @@ void World::draw(){
   }
 
   for(auto b : _bots){
-    if(b->live() > 0) {
-      b->rotine(_obstacles, _player_ref, deltaTime);
-      b->checkKiledPlayer(_player_ref);
+    if(b != NULL && b->live() > 0) {
+      cout << "ta aqui\n";
+      // b->rotine(_obstacles, _player_ref, deltaTime);
+      // b->checkKiledPlayer(_player_ref);
       b->draw();
     }
   }
