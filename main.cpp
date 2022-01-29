@@ -9,8 +9,11 @@
 #include "./includes/collision.h"
 
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define WINDOW_SIZE 500
+
 
 using namespace std;
 
@@ -27,15 +30,38 @@ const GLint ViewingWidth =  WINDOW_SIZE + 300;
 const GLint ViewingHeight = WINDOW_SIZE + 300;
 
 int keyStatus[256];
+static char str[999];
 
 
 static GLdouble framerate = 0;
 
 
 
+void handleFinish(bool success){  
+    glClear (GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0f, 0.0f, 0.0f); 
+    glRasterPos2f(0.0, 400.0);
+    if(success)
+        sprintf(str, "VITORIA!");
+    else{
+        sprintf(str, "GAME OVER!");
+    }
+    char* text;    
+    text = str;
+    while (*text) {
+       cout << *text;
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *text);
+        text++;
+    }
+    cout << "\nMonto aviso \n";
+}
+
 void display(void){
    /* Limpar todos os pixels  */
-   glClear (GL_COLOR_BUFFER_BIT);
+   // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   // glClear (GL_COLOR_BUFFER_BIT);
+     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+     glClear(GL_COLOR_BUFFER_BIT); 
    
    world.draw();
    player->Desenha();
@@ -54,11 +80,47 @@ void display(void){
 }
 
 
+void init(void) {
+
+   // Receber da função que le o SVG uma matriz d n linha e 4 colunas
+   float size_bloc = 50.0;
+   float _test[4][4] = {
+         {50 *2, 30.0, size_bloc, size_bloc},
+         {300, 150, size_bloc*5, size_bloc},
+         {600, 0, size_bloc, 2*size_bloc},
+         {900, 0, size_bloc, 2.3*size_bloc},
+         
+         };
+
+    world.build(_test); 
+    player = world.getPlayer();
+   //  ResetKeyStatus();
+    // The color the windows will redraw. Its done to erase the previous frame.
+    glClearColor(0.0f, 0.0f, 1.0f, 0.0f); // Black, no opacity(alpha).
+
+   //  glMatrixMode(GL_PROJECTION);  // Select the projection matrix
+   //  glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
+   //          (ViewingWidth / 2),   // X coordinate of right edge
+   //          -(ViewingHeight / 2), // Y coordinate of bottom edge
+   //          (ViewingHeight / 2),  // Y coordinate of top edge
+   //          -100,                 // Z coordinate of the “near” plane
+   //          100);                 // Z coordinate of the “far” plane
+    
+   glMatrixMode(GL_PROJECTION);  
+   glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
+
+
+    glMatrixMode(GL_MODELVIEW);  
+    glLoadIdentity();
+}
+
 void idle(void){
    if(player->live() < 0){
+      handleFinish(false);
       cout << "=========================\n";
       cout << "====== GAME OVER ========\n";
       cout << "=========================\n\n";
+      return;
 
    }
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
@@ -74,15 +136,18 @@ void idle(void){
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
-        world.moveInX(0.5 * deltaTime);
+      //   world.moveInX(0.5 * deltaTime);
+        player->moveSurfaceInX(-0.5 * deltaTime);
+        player->moveInX(-0.5 * deltaTime);
       //   player->moveSurfaceInX(-0.5 *  deltaTime);
        }
    }
     if(keyStatus['d'] == 1){
       if(player->getFacing() == -1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
-         world.moveInX(-0.5 * deltaTime);
-         // player->moveSurfaceInX(0.5 * deltaTime);
+         // world.moveInX(-0.5 * deltaTime);
+         player->moveSurfaceInX(0.5 * deltaTime);
+         player->moveInX(0.5 * deltaTime);
        }
    }
     if (keyStatus['w'] == 1){
@@ -90,6 +155,9 @@ void idle(void){
    }
     if(keyStatus['s'] == 1){
       player->moveArm(-1);
+   }
+   if(keyStatus['r'] == 1){
+      if(player->live() < 1) init();
    }
    if(keyStatus[' '] ==  1){
       if(!player->hasJumping()){   
@@ -145,26 +213,7 @@ void keyUp(unsigned char key, int x, int y) {
 }
 
 
-void init(void) {
-   //  ResetKeyStatus();
-    // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(0.0f, 0.0f, 1.0f, 0.0f); // Black, no opacity(alpha).
 
-   //  glMatrixMode(GL_PROJECTION);  // Select the projection matrix
-   //  glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
-   //          (ViewingWidth / 2),   // X coordinate of right edge
-   //          -(ViewingHeight / 2), // Y coordinate of bottom edge
-   //          (ViewingHeight / 2),  // Y coordinate of top edge
-   //          -100,                 // Z coordinate of the “near” plane
-   //          100);                 // Z coordinate of the “far” plane
-    
-   glMatrixMode(GL_PROJECTION);  
-   glOrtho(0.0, ViewingWidth, 0.0, ViewingWidth, -ViewingWidth, ViewingWidth);
-
-
-    glMatrixMode(GL_MODELVIEW);  
-    glLoadIdentity();
-}
 
 void mira(int x, int y){
    y = WINDOW_SIZE  - y;
@@ -187,18 +236,6 @@ int main(int argc, char** argv)
     glutCreateWindow ("Trabalho-CG");
     init ();
 
-   // Receber da função que le o SVG uma matriz d n linha e 4 colunas
-   float size_bloc = 50.0;
-   float _test[4][4] = {
-         {50 *2, 30.0, size_bloc, size_bloc},
-         {300, 150, size_bloc*5, size_bloc},
-         {600, 0, size_bloc, 2*size_bloc},
-         {900, 0, size_bloc, 2.3*size_bloc},
-         
-         };
-
-    world.build(_test); 
-    player = world.getPlayer();
 
 
    //  bots = world.getBots();

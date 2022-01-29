@@ -37,6 +37,7 @@ class Player {
     GLfloat gX;
     GLfloat gY;
     GLfloat gAngleArm;
+    int gAngleLeg;
     GLfloat yCenter;
     GLfloat xCenter;
     Surface* _surface;
@@ -54,7 +55,7 @@ class Player {
     void drawBody(GLint x, GLint y);
     void drawArm(GLint x, GLint y, GLint angle);
     void drawHeader(GLint x, GLint y);
-    void drawLegs(GLint x, GLint y);
+    void drawLeg(GLint x, GLint y, int main_lag);
     void drawPlayer(GLint x, GLint y, GLint angle);
 
     void drawRef(GLint x, GLint y);
@@ -65,6 +66,7 @@ class Player {
         gX =  x_init;//250;
         gY =  y_init + ( arm_height  + body_height) / 2;
         gAngleArm = INITIAL_ANGLE + 2;
+        gAngleLeg = 0;
         yCenter =  gY + (body_height / 2);
         xCenter =  (body_width / 2);
         gFacing = 1;

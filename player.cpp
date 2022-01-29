@@ -6,7 +6,6 @@
 using namespace std;
 
 
-
 void Player::drawBody(GLint x, GLint y){
     glPushMatrix();
     glTranslatef(x, y, 0);
@@ -38,9 +37,14 @@ void Player::drawArm(GLint x, GLint y, GLint angle){
     glPopMatrix();
 }
 
-void Player::drawLegs(GLint x, GLint y){
+void Player::drawLeg(GLint x, GLint y, int main_lag){
     glPushMatrix();
     glTranslatef(x, y, 0);
+    // glTranslatef(x,  0 , 0);
+    // glTranslatef(0 , y + body_height, 0);
+
+    GLfloat angle = gAngleLeg % 45; 
+    glRotatef(angle * gFacing * main_lag, 0, 0, 1);
     glTranslatef(0,  (-body_height + (body_height - legs_height)), 0);
     rectangle(legs_height, legs_width, get<0>(_body_color), get<1>(_body_color), get<2>(_body_color));
     glPopMatrix();
@@ -60,7 +64,8 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
-    Player::drawLegs(x,y);
+    Player::drawLeg(x,y, 1);
+    Player::drawLeg(x,y, -1);
     // Player::drawRef(x,y);
     glPopMatrix();
 
@@ -73,12 +78,15 @@ void Player::drawPlayer(GLint x, GLint y, GLint angle){
 void Player::moveInX(GLfloat dx){
     int unit = MOVE_UNIT;
     gX += (dx * unit);
+    
     // printf("Move player x =>\t %f \n", gX);
 }
 void Player::moveSurfaceInX(GLfloat dx){
     int unit = MOVE_UNIT;
     _surface->traslateX(dx * unit);
     // printf("Move player x =>\t %f \n", gX);
+    gAngleLeg += dx *  unit;
+
 }
 
 void Player::moveArm(GLfloat dy){
@@ -155,7 +163,6 @@ void Player::jump(GLdouble clock, Collision* collision){
     
 
     if(top_collision != NULL){
-        cout << "ta aaqui\n";
         top_collision->changeColor();
         junping = 0;
         return;
@@ -171,7 +178,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         float max_jupm = (body_height + arm_height + legs_height) * 2;
 
         junping = 1;
-        
+        gAngleLeg = 44;
         // gY = (dy *  gY ) + yInitJump;
 
         float aux = -(timerJump * timerJump * max_jupm ) + max_jupm ;
@@ -182,6 +189,7 @@ void Player::jump(GLdouble clock, Collision* collision){
         
         Surface* floor = collision->hasFloor(_surface);
         if(timerJump > 0.0 && floor != NULL){
+            gAngleLeg = 0;
             junping = 0;
             timerJump = -1;
             yInitJump = floor->getTop();
@@ -198,6 +206,7 @@ void Player::stopJump(){
         junping = 0;
         timerJump = -1;
         yInitJump = _surface->getBooton() + (legs_height);
+        gAngleLeg = 0;
         // gY - (legs_width + yInitJump);
     }
 };
