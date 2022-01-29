@@ -1,4 +1,4 @@
-#include "./includes/collision.h"
+#include "../includes/collision.h"
 
 #include <cstdio>
 #include <math.h>

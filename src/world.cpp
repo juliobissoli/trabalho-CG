@@ -1,4 +1,4 @@
-#include "./includes/world.h"
+#include "../includes/world.h"
 
 #include <cstdio>
 #include <math.h>

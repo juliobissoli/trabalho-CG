@@ -1,4 +1,4 @@
-#include "./includes/shot.h"
+#include "../includes/shot.h"
 #include <cstdio>
 #include <math.h>
 #define DISTANCIA_MAX 500 * 3

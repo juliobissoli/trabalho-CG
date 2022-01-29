@@ -1,4 +1,4 @@
-#include "includes/bot.h"
+#include "../includes/bot.h"
 
 Player *Bot::botCollision(tuple<GLfloat, GLfloat> position){
   if (_bot->live() > 0 && _bot->playerCollision(position)){

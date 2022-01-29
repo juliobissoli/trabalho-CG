@@ -1,4 +1,4 @@
-#include "./includes/player.h"
+#include "../includes/player.h"
 #include <string>
 #include <cmath>
 

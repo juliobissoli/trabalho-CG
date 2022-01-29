@@ -3,15 +3,15 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
-#include "./includes/world.h"
-#include "./includes/player.h"
-#include "./includes/surface.h"
-#include "./includes/collision.h"
-#include "./includes/read_svg.h"
+#include "../includes/world.h"
+#include "../includes/player.h"
+#include "../includes/surface.h"
+#include "../includes/collision.h"
+#include "../includes/read_svg.h"
 
 #include <iostream>
 
-#define WINDOW_SIZE 800
+#define WINDOW_SIZE 500
 
 using namespace std;
 
@@ -34,10 +34,9 @@ static GLdouble framerate = 0;
 
 
 void handleFinish(bool success){  
-   glClear (GL_COLOR_BUFFER_BIT);
     glColor3f(1.0f, 1.0f, 1.0f); 
     tuple<GLfloat, GLfloat> coord = player->getPos(); 
-    glRasterPos2f(get<0>(coord) + 30.0, 0);
+    glRasterPos2f(0.0, 0.0);
     if(success)
         sprintf(str, "VITORIA!");
     else
@@ -51,10 +50,14 @@ void handleFinish(bool success){
     
 }
 void display(void){
+   // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_COLOR_BUFFER_BIT); 
+
    if(player->live() < 0){
       handleFinish(false);
       cout << "=========================\n";
       cout << "====== GAME OVER ========\n";
+      cout << "==========="<< player->live() << "============\n";
       cout << "=========================\n\n";
 
    }
@@ -67,17 +70,21 @@ void display(void){
          }
       }
   
-   glEnd();
+   // glEnd();
    /* Desenhar no frame buffer! */
    glutSwapBuffers(); //Funcao apropriada para janela double buffer
+   // glutPostRedisplay();
+
 }
 
 
 
 void idle(void){
    
-   if(player->live() < 0)return;
-   
+   if(player->live() < 0) return;
+   else {
+
+      cout << "pq ainda esta aqui" << player->live() << endl;
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
     
@@ -142,6 +149,7 @@ void idle(void){
 
 
     glutPostRedisplay();
+   }
 }
 
 
@@ -229,7 +237,13 @@ void click(int button, int state, int x, int y){
 
 int main(int argc, char** argv)
 {
-    read_svg.loadinFile("/home/esther/Julio/UFES/trabalho-CG/arena_teste.svg");
+   if (argc <= 1){
+        cout << "Erro, por favor insira o caminho completo do arquivo" << endl;
+        return 0;
+    }else{
+    string path = argv[argc-1];
+    cout << "path " << path;
+    read_svg.loadinFile(path);
    //  read_svg.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
    // read_svg.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
     world.build(read_svg.getRecs(),
@@ -237,6 +251,7 @@ int main(int argc, char** argv)
                 read_svg.getWidth(),
                 read_svg.getHeight()
                 ); 
+    }
     tuple<double, double, double> circ = read_svg.getPlayer();
     player = new Player(get<0>(circ), get<1>(circ),  ((float)get<2>(circ)) * 2.3, "green");
     world.setPlayer(player);
@@ -246,7 +261,6 @@ int main(int argc, char** argv)
     glutInitWindowSize (WINDOW_SIZE, WINDOW_SIZE); 
     glutInitWindowPosition (10, 10);
     glutCreateWindow ("Trabalho-CG");
-    init ();
     glutDisplayFunc(display); 
     glutKeyboardFunc(keyPress);
     glutKeyboardUpFunc(keyUp);    
@@ -254,6 +268,7 @@ int main(int argc, char** argv)
     glutPassiveMotionFunc(mira);
     glutMouseFunc(click);
 
+    init ();
 
     glutMainLoop();
 

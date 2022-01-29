@@ -1,4 +1,4 @@
-#include "./includes/polygon.h"
+#include "../includes/polygon.h"
 #include <cmath>
 
 

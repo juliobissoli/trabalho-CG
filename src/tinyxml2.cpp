@@ -16,7 +16,7 @@ must not be misrepresented as being the original software.
 distribution.
 */
 
-#include "includes/tinyxml2.h"
+#include "../includes/tinyxml2.h"
 
 #include <new>		// yes, this one new style header, is in the Android SDK.
 #if defined(ANDROID_NDK) || defined(__BORLANDC__) || defined(__QNXNTO__)
