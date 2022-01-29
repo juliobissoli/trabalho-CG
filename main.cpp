@@ -34,6 +34,7 @@ static GLdouble framerate = 0;
 
 
 void handleFinish(bool success){  
+   glClear (GL_COLOR_BUFFER_BIT);
     glColor3f(1.0f, 1.0f, 1.0f); 
     tuple<GLfloat, GLfloat> coord = player->getPos(); 
     glRasterPos2f(get<0>(coord) + 30.0, 0);
@@ -50,7 +51,6 @@ void handleFinish(bool success){
     
 }
 void display(void){
-   glClear (GL_COLOR_BUFFER_BIT);
    if(player->live() < 0){
       handleFinish(false);
       cout << "=========================\n";
@@ -122,6 +122,9 @@ void idle(void){
     if(keyStatus['s'] == 1){
       player->moveArm(-1);
    }
+      if(keyStatus['q'] == 1){
+      player->decrementLive();
+   }
    if(keyStatus[' '] ==  1){
       if(!player->hasJumping()){   
        player->jump(deltaTime, world.getObstacles());      
@@ -161,6 +164,9 @@ void keyPress(unsigned char key, int x, int y){
    } 
    if(key == ' '){
       keyStatus[' '] = 1;   
+   }
+   if(key == 'q'){
+      keyStatus['q'] = 1;   
    }
 //    if(key == 'w'){
 //       keyStatus['w'] = 1;      
@@ -223,8 +229,8 @@ void click(int button, int state, int x, int y){
 
 int main(int argc, char** argv)
 {
-   //  readeing.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
-    read_svg.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
+    read_svg.loadinFile("/home/esther/Julio/UFES/trabalho-CG/arena_teste.svg");
+   //  read_svg.loadinFile("/home/motora/UFES/2021-2/CG/trabalho-CG/arena_teste.svg");
    // read_svg.loadinFile("/home/jcsbissoli/UFES/2021-2/CG/Trabalho/T1/arena_teste.svg");
     world.build(read_svg.getRecs(),
                 read_svg.getCircles(),
