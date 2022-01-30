@@ -81,14 +81,15 @@ class Player {
 
 
   public:
-    Player(float x_init, float y_init,string color) {
-        _live = 1;
-        gX =  x_init;//250;
-        gY =  y_init + ( arm_height  + body_height) / 2;
-        gAngleArm = INITIAL_ANGLE + 2;
-        gAngleLeg = 0;
-        yCenter =  gY + (body_height / 2);
-        xCenter =  (body_width / 2);
+    Player(float x_init, float y_init, float size, string color) {
+
+        _live = 1; // Inicia com uma vida;
+        height_player = size;
+        gX =  x_init;
+        gY =  y_init + body_height;
+        this->handleAjusteSize();
+        gAngleArm = INITIAL_ANGLE;
+         gAngleLeg = 0;
         gFacing = 1;
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;

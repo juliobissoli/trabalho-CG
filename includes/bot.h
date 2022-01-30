@@ -23,7 +23,7 @@ private:
     /* data */
 public:
     Bot(GLfloat x_init, GLfloat y_init, float size){
-         _bot = new Player(x_init, y_init, size,"red");
+         _bot = new Player(x_init, y_init, size, "red");
     }
     ~Bot();
 
