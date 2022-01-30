@@ -8,7 +8,7 @@
 #include "../includes/surface.h"
 #include "../includes/collision.h"
 #include "../includes/read_svg.h"
-
+#include "../includes/polygon.h"
 #include <iostream>
 
 #define WINDOW_SIZE 500
@@ -34,17 +34,19 @@ static GLdouble framerate = 0;
 
 
 void handleFinish(bool success){  
-    glColor3f(1.0f, 1.0f, 1.0f); 
-    tuple<GLfloat, GLfloat> coord = player->getPos(); 
-    glRasterPos2f(0.0, 0.0);
-    if(success)
+
+   //  rectangle(world.getHeight(), world.getWidth(), 0.1, 0.1, 0.1);
+    glColor3f(1.0f, 1.0f, 1.0f);  
+    glRasterPos2f(player->getX() - 10.0, world.getHeight()/2);
+   cout << "ta no fim x = " << player->getX() << " y = "<<  ViewingWidth/2 ;
+    if(success)   
         sprintf(str, "VITORIA!");
     else
         sprintf(str, "GAME OVER!");
     char* text;    
     text = str;
     while (*text) {
-        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *text);
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *text);
         text++;
     }
     
@@ -53,33 +55,41 @@ void display(void){
    // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT); 
 
-   if(player->live() < 0){
+
+   
+   if(player->live() < 1){
       end_game = true;
       handleFinish(false);
       cout << "=========================\n";
       cout << "====== GAME OVER ========\n";
       cout << "=========================\n\n";
-
+      // return;
    }
-   if(player->success()){
+   else if(player->success()){
       handleFinish(true);
       cout << "=========================\n";
       cout << "====== Ganhooooooo ======\n";
       cout << "=========================\n\n";
-   }
-   world.draw();
-   player->draw();
+      // return;
+   }  
+   else {
+
+      world.draw();
+      player->draw();
+
+
    if (shot){
         Player* bot = world.checkBotsCollision(shot->getPos());
          if(bot != NULL){
             bot->decrementLive();
          }
       }
+   }
   
    // glEnd();
    /* Desenhar no frame buffer! */
    glutSwapBuffers(); //Funcao apropriada para janela double buffer
-   // glutPostRedisplay();
+   glutPostRedisplay();
 
 }
 
@@ -96,16 +106,10 @@ void resetGame(){
 }
 
 void idle(void){
-   
-   if(player->live() < 0 ||  player->success()) return;
+   if(player->live() < 1 ||  player->success()) return;
    else {
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
-    glLoadIdentity();
-    
-   //  glOrtho(player->getX() - world.getHeight()/2,
-   //          player->getX() + world.getHeight()/2,
-   //          -world.getHeight()/2, world.getHeight()/2,
-   //          -1,1);    
+    glLoadIdentity();    
      glOrtho(player->getX() - world.getHeight()/2,
              player->getX() + world.getHeight()/2,
              0.0, 
@@ -119,7 +123,6 @@ void idle(void){
     deltaTime = curTime - prevTime;
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
-   // cout << "tempos  \t" << "deltaTime: " << deltaTime << "\t prevTime: " << prevTime << "\t framerate: " << framerate << "\t curTime: "<< curTime << "\n"; 
 
     player->moveShot(deltaTime, world.getObstacles());
    
@@ -139,7 +142,7 @@ void idle(void){
          player->moveSurfaceInX(0.1 * deltaTime);
          player->moveInX(0.1 * deltaTime);
        }
-       if(player->getX() >= world.getWidth() - 10){
+       if(player->getSurface()->getRight() >= world.getWidth() - 5){
           player->setSuccesPlayer(true);
           cout << "========== GANHOOOO ========\n";
        }
@@ -164,7 +167,7 @@ void idle(void){
    }
    // // se não esta pulando aplica gravidade;
    else{
-       player->handleGravity(deltaTime, world.getObstacles());
+       player->handleGravity(deltaTime * 0.5, world.getObstacles());
    }
 
 

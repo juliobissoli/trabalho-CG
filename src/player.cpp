@@ -98,8 +98,7 @@ void Player::moveInY(GLfloat dy){
 void Player::moveSurfaceInX(GLfloat dx){
     int unit = move_init;
     _surface->traslateX(dx * unit);
-    // printf("Move player x =>\t %f \n", gX);
-    gAngleLeg += dx *  unit;
+    gAngleLeg += dx *  unit + body_width;
 
 }
 
