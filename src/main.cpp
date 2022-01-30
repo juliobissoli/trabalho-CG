@@ -142,7 +142,7 @@ void idle(void){
          player->moveSurfaceInX(0.1 * deltaTime);
          player->moveInX(0.1 * deltaTime);
        }
-       if(player->getSurface()->getRight() >= world.getWidth() - 5){
+       if(player->getSurface()->getRight() >= world.getWidth() - 10){
           player->setSuccesPlayer(true);
           cout << "========== GANHOOOO ========\n";
        }
@@ -178,10 +178,10 @@ void idle(void){
 
 
 void keyPress(unsigned char key, int x, int y){
-   if (key == 'a'){      
+   if (key == 'a' || key == 'A'){      
       keyStatus['a'] = 1;      
    } 
-   if(key == 'd'){
+   if(key == 'd' || key == 'D' ){
       keyStatus['d'] = 1;      
    } 
     // So para teste
