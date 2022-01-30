@@ -18,23 +18,24 @@
 #include "player.h"
 #include "bot.h"
 #include "collision.h"
+// #include "read_svg.h"
 
 
 // #define size_bloc 50.0 //remover tamanho so para teste
-#define MAX_VIEW_X 1500
-#define MAX_VIEW_Y 800
+// #define MAX_VIEW_X 300
+// #define MAX_VIEW_Y 100
   
 using namespace std;
 
 class World {
-
+    // Read read;
     GLfloat gX;
     GLfloat gY;
 
+    GLfloat _max_x;
+    GLfloat _max_y;
+
     Collision* _obstacles;
-    // Surface *surface; //remover isso apos resolver colizões
-    // vector<vector<float>> matrix(float, vector<float>);
-    // std::vector<std::vector<float> > matrix (float(2), std::vector<float>(4));
     vector<Surface*> _surfaces;
     vector<Bot*> _bots;
     Player* _player_ref;
@@ -48,43 +49,46 @@ class World {
       void drawCircle(GLfloat x, GLfloat y);
       void desenhaRef();
       void setSurfaceInMat(Surface* mat_colision[MAX_VIEW_X][MAX_VIEW_Y], Surface *s);
-
+      void drawSky();
+      
       tuple<int, int> handleeGetPointer(Surface* s, string x_direction, string y_direction  );
     public:
       World(){
           gX = 0;
           gY = 0; 
-          // oponente = new Player(300.0, 0.0, "red");
-          _obstacles = new Collision();
-          Bot* b1 = new Bot(300.0, 200.0);
-          Bot* b2 = new Bot(700.0, 0);
-          _player_ref = new Player(400.0, 0.0, "green");
-
-          _bots.push_back(b1);
-          _bots.push_back(b2);
+          _max_x = MAX_VIEW_X;
+          _max_y = MAX_VIEW_Y;
           _deltaTime = 0.0;
-
-
-          // surface =  new Surface( gX, gY, size_bloc, size_bloc);
-
       }
 
       // Monta o array de superficies (obstáculos); 
-    void build(float _test[4][4]);
+    // void build(float _test[4][4]);
+    void build( vector<tuple<double,double,double,double>> recs, 
+                vector<tuple<double,double,double>> circles,
+                float max_width,
+                float max_height
+                );
+
     void draw();
-    vector<Surface*> getSurfaces(){return _surfaces;};
+    void destroi();
     void moveInX(GLfloat dx);
-    Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
+    void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
+    void setPlayer(Player* p){_player_ref = p;}
     bool checkObstacleCollision(Surface* s);
     bool finishWord(Surface* s);
 
+    
+     GLfloat getWidth(){return  _max_x ;};
+     GLfloat getHeight(){return  _max_y;};
+
+    vector<Surface*> getSurfaces(){return _surfaces;};
+    Player* checkBotsCollision(tuple<GLfloat, GLfloat> position);
     Surface* obstacleCollision(Surface* s, string direction){return _obstacles->detectCollision(s, direction);};
     Collision* getObstacles(){return _obstacles;}
     Surface* hasFloor(Surface* s){return _obstacles->hasFloor(s);}
-    vector<Bot*>getBots();
+    vector<Bot*> getBots();
+    Player* getPlayer(Player* p){return _player_ref;}
 
-    void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
-    Player* getPlayer(){return _player_ref;}
 
 
 };

@@ -18,13 +18,13 @@
 #define INITIAL_X 0.0
 #define INITIAL_Y 0.0
 #define INITIAL_ANGLE 0.0
-#define body_height 40.0
-#define body_width 25.0
-#define radius_header 20.0
-#define arm_width 30.0
-#define arm_height 5.0
-#define legs_width 10.0
-#define legs_height 30.0
+// #define body_height 40.0
+// #define body_width 25.0
+// #define radius_header 20.0
+// #define arm_width 30.0
+// #define arm_height 5.0
+// #define legs_width 10.0
+// #define legs_height 30.0
 
 
 #define MOVE_UNIT 1
@@ -42,12 +42,31 @@ class Player {
     GLfloat xCenter;
     Surface* _surface;
     Shot* _shot;
+    Collision* _obstacle;
+    Surface* _floor;
+    bool  success_game;
+
+
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
     int junping;  // flag para informar se o personagem esta pulando
     GLfloat yInitJump; // posição inicial do pulo em y
     float timerJump;
+
+
     tuple <float, float, float> _body_color;
     tuple <float, float, float> _shot_color;
+
+    float body_height;
+    float body_width;
+    float radius_header;
+    float arm_width;
+    float arm_height;
+    float legs_width;
+    float legs_height;
+
+    float height_player;
+
+    float move_init;
 
     
   
@@ -57,8 +76,9 @@ class Player {
     void drawHeader(GLint x, GLint y);
     void drawLeg(GLint x, GLint y, int main_lag);
     void drawPlayer(GLint x, GLint y, GLint angle);
-
     void drawRef(GLint x, GLint y);
+    void handleAjusteSize();
+
 
   public:
     Player(float x_init, float y_init,string color) {
@@ -73,15 +93,18 @@ class Player {
         junping = 0; //Inicializa com o personagem estatico
         yInitJump = gY;
         timerJump = -1;
+        _floor = NULL;
+        _shot = NULL;
+        _surface = new Surface(gX, gY - (legs_height) , body_width, height_player);
         if(color == "green") _body_color = {0.0, 0.5, 0.0};
         else _body_color = {1.0, 0.0, 0.0};
-
-        _surface = new Surface(gX, gY - (legs_height) , body_width, body_height + (radius_header * 2) + legs_height);
+        success_game = false;
     };
-    void Desenha() {
-        if(_live > 0){
 
-        drawPlayer(gX, gY, gAngleArm);
+
+    void draw() {
+        if(_live > 0){
+          drawPlayer(gX, gY, gAngleArm);
         }
         else {
           cout << "++ TA MORTO ++\n";
@@ -100,10 +123,10 @@ class Player {
     void invertFacing(){gFacing = gFacing * -1;}
     int getFacing(){return gFacing;}
     tuple<GLfloat, GLfloat>getPos(){return make_tuple(gX, gY);}
+    GLfloat getX(){return gX;};
     Shot* shootGun();
     void moveShot(float deltaTime, Collision* obstacles);
-
-    // bool playerCollision(GLfloat x, GLfloat y);
+    void handleGravity(float deltaTime, Collision* obstacles);
     bool playerCollision(tuple<GLfloat, GLfloat> pointer);
 
     void decrementLive(){_live -= 1;}
@@ -111,7 +134,10 @@ class Player {
     Surface* getSurface(){return _surface;}
     int live(){return _live;}
     Shot* getShot(){return _shot;}
- 
+    float getMoveUnit(){return move_init;}
+    void reciseHeight(float dy){height_player = dy;}
+    void setSuccesPlayer(bool value){this->success_game = value;}
+    bool success(){return this->success_game;}
 };
 
 
