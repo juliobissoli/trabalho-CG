@@ -70,10 +70,11 @@ class World {
                 );
 
     void draw();
+    void destroi();
     void moveInX(GLfloat dx);
-    bool checkObstacleCollision(Surface* s);
     void setDeltaTime(GLdouble deltaTime){_deltaTime = deltaTime;}
     void setPlayer(Player* p){_player_ref = p;}
+    bool checkObstacleCollision(Surface* s);
     bool finishWord(Surface* s);
 
     

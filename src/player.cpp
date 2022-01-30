@@ -52,7 +52,7 @@ void Player::drawRef(GLint x, GLint y){
 void Player::drawPlayer(GLint x, GLint y, GLint angle){
     
     glPushMatrix();
-    _surface->draw();
+    // _surface->draw();
     Player::drawBody(x, y);
     Player::drawArm(x,y, angle);
     Player::drawHeader(x,y);
@@ -145,8 +145,8 @@ void Player::moveShot(float deltaTime, Collision* obstacles){
 }
 void Player::moveArm2(GLfloat dy, GLfloat dx){
 
-    float y =  dy - gY + (body_height / 2);
-    float x =  dx - gX + (body_width / 2);
+    float y =  dy - gY; // + (body_height / 2);
+    float x =  dx - gX; // + (body_width / 2);
     float theta = atan (y/x) * 180 / M_PI;
     if(theta < 45  && theta > -45 ){
         gAngleArm = theta * gFacing;

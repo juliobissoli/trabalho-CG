@@ -26,6 +26,17 @@ void World::build(  vector<tuple<double,double,double,double>> recs,
                     float max_height ){
   cout << "=======Build do mundo======= \n";
   
+  cout << "Add limites do mundo na matriz de objetos\n";
+  tuple<double,double,double,double> left_liit = make_tuple(0.0, 0.0, 5.0,  max_height);
+  tuple<double,double,double,double> rigth_liit = make_tuple(max_width, 0.0 , 1.0,  max_height);
+  tuple<double,double,double,double> top_liit = make_tuple(max_width/2, max_height, max_width,  1.0);
+  tuple<double,double,double,double> botton_liit = make_tuple(max_width/2, 0, max_width,  1.0);
+
+  recs.push_back(left_liit);
+  recs.push_back(rigth_liit);
+  recs.push_back(top_liit);
+  recs.push_back(botton_liit);
+
   // Iniciliaza as superficies
   for (auto r : recs){
     if((GLfloat)get<0>(r) > -1 && (GLfloat)get<1>(r) > -1){
@@ -72,8 +83,6 @@ void World::draw(){
       b->draw();
     }
   }
-
-  cout << "desenha mund\n";
 }
 
 
@@ -111,4 +120,12 @@ bool World::checkObstacleCollision(Surface* s){
 
 bool World::finishWord(Surface* s){
   return _obstacles->finishWord(s);
+}
+
+void  World::destroi(){
+  _bots.clear();
+  _surfaces.clear();
+    gX = 0;
+    gY = 0;
+  delete _player_ref;
 }

@@ -28,7 +28,7 @@ const GLint ViewingHeight = 500;
 
 int keyStatus[256];
 
-
+bool end_game = false;
 static GLdouble framerate = 0;
 
 
@@ -54,12 +54,18 @@ void display(void){
    glClear(GL_COLOR_BUFFER_BIT); 
 
    if(player->live() < 0){
+      end_game = true;
       handleFinish(false);
       cout << "=========================\n";
       cout << "====== GAME OVER ========\n";
-      cout << "==========="<< player->live() << "============\n";
       cout << "=========================\n\n";
 
+   }
+   if(player->success()){
+      handleFinish(true);
+      cout << "=========================\n";
+      cout << "====== Ganhooooooo ======\n";
+      cout << "=========================\n\n";
    }
    world.draw();
    player->draw();
@@ -77,14 +83,22 @@ void display(void){
 
 }
 
-
+void resetGame(){
+   world.destroi();
+   world.build(read_svg.getRecs(),
+            read_svg.getCircles(),
+            read_svg.getWidth(),
+            read_svg.getHeight()
+            ); 
+    tuple<double, double, double> circ = read_svg.getPlayer();
+    player = new Player(get<0>(circ), get<1>(circ),  ((float)get<2>(circ)) * 2.3, "green");
+    world.setPlayer(player);
+}
 
 void idle(void){
    
-   if(player->live() < 0) return;
+   if(player->live() < 0 ||  player->success()) return;
    else {
-
-      cout << "pq ainda esta aqui" << player->live() << endl;
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
     
@@ -93,7 +107,7 @@ void idle(void){
    //          -world.getHeight()/2, world.getHeight()/2,
    //          -1,1);    
      glOrtho(player->getX() - world.getHeight()/2,
-             world.getHeight(),
+             player->getX() + world.getHeight()/2,
              0.0, 
              world.getHeight(), 
              -1, 1);
@@ -112,30 +126,37 @@ void idle(void){
     if (keyStatus['a'] == 1){
       if(player->getFacing() == 1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "left") == NULL){
-        world.moveInX(0.1 * deltaTime);
-      //   player->moveSurfaceInX(-0.1 *  deltaTime);
+      //   world.moveInX(0.1 * deltaTime);
+        player->moveSurfaceInX(-0.1 *  deltaTime);
+        player->moveInX(-0.1 *  deltaTime);
        }
+ 
    }
     if(keyStatus['d'] == 1){
       if(player->getFacing() == -1) player->invertFacing();
       if(world.obstacleCollision(player->getSurface(), "right") == NULL){
-         world.moveInX(-0.1 * deltaTime);
-         // player->moveSurfaceInX(0.1 * deltaTime);
+         // world.moveInX(-0.1 * deltaTime);
+         player->moveSurfaceInX(0.1 * deltaTime);
+         player->moveInX(0.1 * deltaTime);
+       }
+       if(player->getX() >= world.getWidth() - 10){
+          player->setSuccesPlayer(true);
+          cout << "========== GANHOOOO ========\n";
        }
    }
-    if (keyStatus['w'] == 1){
+   if (keyStatus['w'] == 1){
         player->moveArm(1);
    }
-    if(keyStatus['s'] == 1){
+   if(keyStatus['s'] == 1){
       player->moveArm(-1);
    }
-      if(keyStatus['q'] == 1){
+   if(keyStatus['q'] == 1){
       player->decrementLive();
    }
    if(keyStatus[' '] ==  1){
       if(!player->hasJumping()){   
        player->jump(deltaTime, world.getObstacles());      
-      }
+   }
 
    }
    if(player->hasJumping()){
@@ -176,9 +197,14 @@ void keyPress(unsigned char key, int x, int y){
    if(key == 'q'){
       keyStatus['q'] = 1;   
    }
-//    if(key == 'w'){
-//       keyStatus['w'] = 1;      
-//    }
+   if(key == 'r'){
+      cout << "reinicia jogo" << end_game << endl;
+      // if(end_game)
+       resetGame();        
+   }
+   if(key == 27){
+     exit(0);       
+   }
    glutPostRedisplay();
 }
 

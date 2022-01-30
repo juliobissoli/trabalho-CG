@@ -10,7 +10,7 @@
 #include "player.h"
 #include "collision.h"
 
-#define MAX_TIME_SHOT 10
+#define MAX_TIME_SHOT 7
 
 
 using namespace std;

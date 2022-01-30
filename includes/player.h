@@ -41,6 +41,7 @@ class Player {
     Shot* _shot;
     Collision* _obstacle;
     Surface* _floor;
+    bool  success_game;
 
 
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
@@ -94,6 +95,7 @@ class Player {
         _surface = new Surface(gX, gY - (legs_height) , body_width, height_player);
         if(color == "green") _body_color = {0.0, 0.5, 0.0};
         else _body_color = {1.0, 0.0, 0.0};
+        success_game = false;
     };
 
 
@@ -131,7 +133,8 @@ class Player {
     Shot* getShot(){return _shot;}
     float getMoveUnit(){return move_init;}
     void reciseHeight(float dy){height_player = dy;}
- 
+    void setSuccesPlayer(bool value){this->success_game = value;}
+    bool success(){return this->success_game;}
 };
 
 
