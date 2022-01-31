@@ -45,6 +45,7 @@ class Player {
     Collision* _obstacle;
     Surface* _floor;
     bool  success_game;
+    GLfloat _last_y_mouse;
 
 
     int gFacing; // Sentido para onde o personagem esta virado 0 para frente 1 para traz
@@ -66,7 +67,7 @@ class Player {
 
     float height_player;
 
-    float move_init;
+    float move_unit;
 
     
   
@@ -100,6 +101,7 @@ class Player {
         if(color == "green") _body_color = {0.0, 0.5, 0.0};
         else _body_color = {1.0, 0.0, 0.0};
         success_game = false;
+        _last_y_mouse =  0;
     };
 
 
@@ -107,10 +109,7 @@ class Player {
         if(_live > 0){
           drawPlayer(gX, gY, gAngleArm);
         }
-        else {
-          cout << "++ TA MORTO ++\n";
-        }
-        // printf(" Bateu aqui ==> %f \n", gX);
+        else cout << "++ TA MORTO ++\n";
     };
 
     void moveInX(GLfloat dx);
@@ -135,7 +134,7 @@ class Player {
     Surface* getSurface(){return _surface;}
     int live(){return _live;}
     Shot* getShot(){return _shot;}
-    float getMoveUnit(){return move_init;}
+    float getMoveUnit(){return move_unit;}
     void reciseHeight(float dy){height_player = dy;}
     void setSuccesPlayer(bool value){this->success_game = value;}
     bool success(){return this->success_game;}

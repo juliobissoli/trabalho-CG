@@ -78,25 +78,25 @@ void Player::handleAjusteSize(){
         body_width  = height_player / 3; // 25.0;
         arm_width  = height_player / 3;  // 30.0;
         legs_width  = height_player / 9; // 10.0;
-        move_init = body_width / 3;
+        move_unit = body_width / 3;
 }
 
 void Player::moveInX(GLfloat dx){
-    int unit = move_init;
+    int unit = move_unit;
     gX += (dx * unit);
     
     // printf("Move player x =>\t %f \n", gX);
 }
 
 void Player::moveInY(GLfloat dy){
-     int unit = move_init;
+     int unit = move_unit;
     gY += (dy * unit);
     _surface->resetY(gY - (legs_height * 2));
 }
 
 
 void Player::moveSurfaceInX(GLfloat dx){
-    int unit = move_init;
+    int unit = move_unit;
     _surface->traslateX(dx * unit);
     gAngleLeg += dx *  unit + body_width;
 
@@ -116,15 +116,6 @@ void Player::handleGravity(float deltaTime, Collision* obstacles){
     }
    
 }
-
-
-void Player::moveArm(GLfloat dy){
-    int unit = move_init;
-    if((gAngleArm < 45 && dy > 0) || (gAngleArm > -45 && dy < 0)){
-        gAngleArm += (dy * unit);
-    }
-}
-
 
 
 Shot *Player::shootGun(){
@@ -162,6 +153,20 @@ void Player::moveArm2(GLfloat dy, GLfloat dx){
     }
 }
 
+void Player::moveArm(GLfloat dy){
+    if (_last_y_mouse == 0){ _last_y_mouse = dy;}
+
+    GLfloat deltaY = dy -_last_y_mouse;
+    gAngleArm += deltaY * 0.3 * gFacing;
+
+    if (this->gAngleArm > 45){    gAngleArm = 45;}
+    if (this->gAngleArm < -45){    gAngleArm = -45;}
+
+    _last_y_mouse = dy;
+
+}
+
+
 void Player::jump(GLdouble clock, Collision* collision){
 
     if(clock <= 0) return;
@@ -192,7 +197,6 @@ void Player::jump(GLdouble clock, Collision* collision){
         _surface->resetY(aux);
         gY = aux + legs_height;
         // _surface->getTop() + (legs_height);
-        cout << "pulo gY = " << gY << endl;
         
         Surface* floor = collision->hasFloor(_surface);
         if(timerJump > 0.0 && floor != NULL){

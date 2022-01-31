@@ -241,7 +241,9 @@ void init(void) {
 
 void mira(int x, int y){
    y = WINDOW_SIZE  - y;
-   player->moveArm2(y, x);
+   tuple<GLfloat , GLfloat> pos = player->getPos();
+   // player->moveArm2(y, x);
+   player->moveArm(y);
 }
 
 void click(int button, int state, int x, int y){
