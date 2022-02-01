@@ -22,13 +22,3 @@ void Shot::move(GLdouble deltaTime) {
 }
 
 Shot::~Shot() {}
-
-// bool Shot::valid() {
-
-//     // if(world->botCollision(_x, _y) != NULL){
-//     //     cout << "ACERTO UMA PLAYER \n";
-//     //     return false;
-//     // }
-
-//      return DISTANCIA_MAX > sqrt(pow(_x, 2) + pow(_y, 2));
-// }

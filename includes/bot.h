@@ -1,6 +1,5 @@
 #ifndef BOT_H
 
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -12,35 +11,36 @@
 
 #define MAX_TIME_SHOT 7
 
-
 using namespace std;
 
-class Bot{
-    Player* _bot;
+class Bot
+{
+    Player *_bot;
     string rotina; //definir com montar a rotina de o bot
     float time_shot;
+
 private:
     /* data */
 public:
-    Bot(GLfloat x_init, GLfloat y_init, float size){
-         _bot = new Player(x_init, y_init, size, "red");
+    Bot(GLfloat x_init, GLfloat y_init, float size)
+    {
+        _bot = new Player(x_init, y_init, size, "red");
     }
     ~Bot();
 
-    void draw(){_bot->draw();}
-    Player* player(){return _bot;}
-    int live(){return _bot->live();}
-    void moveInX(GLfloat dx){
+    void draw() { _bot->draw(); }
+    Player *player() { return _bot; }
+    int live() { return _bot->live(); }
+    void moveInX(GLfloat dx)
+    {
         _bot->moveInX(dx);
         _bot->moveSurfaceInX(dx);
         time_shot = 0;
     }
 
-    Player* botCollision(tuple<GLfloat, GLfloat> position);
-    void rotine(Collision* obstacles, Player* p, GLdouble curTime);
-    void checkKiledPlayer(Player* p);
+    Player *botCollision(tuple<GLfloat, GLfloat> position);
+    void rotine(Collision *obstacles, Player *p, GLdouble curTime);
+    void checkKiledPlayer(Player *p);
 };
 
-
-
-#endif  /*BOT_H*/
+#endif /*BOT_H*/

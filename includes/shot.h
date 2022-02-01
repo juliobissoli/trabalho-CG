@@ -7,14 +7,11 @@
 
 #include "polygon.h"
 #include "surface.h"
-// #include "world.h"
 
 #include <iostream>
 #include <vector>
 #include <stdio.h>
 #include <tuple>
-
-// #define radiusBullet 5
 
 using namespace std;
 
@@ -27,7 +24,7 @@ class Shot
   GLfloat gDirectionAng;
   GLfloat gVel;
   GLint gDirection;
-  Surface* _surface;
+  Surface *_surface;
   float radiusBullet;
 
 private:
@@ -41,10 +38,10 @@ public:
     _x = x;
     _y = y;
     gDirectionAng = directionAng;
-    gVel = 1/r_bullet;
+    gVel = 1 / r_bullet;
     gDirection = direction; // 1 para frente -1 para traz
     radiusBullet = r_bullet;
-    _surface = new Surface(x, y,  radiusBullet * 2, radiusBullet * 2);
+    _surface = new Surface(x, y, radiusBullet * 2, radiusBullet * 2);
   };
   ~Shot();
   void draw() { drawShot(_x, _y); };
@@ -56,10 +53,7 @@ public:
     tuple<GLfloat, GLfloat> pos = {_x, _y};
     return pos;
   };
-  Surface* getSurface(){return _surface;} 
-
-  // void getVel(GLfloat &velOut) { velOut = gVel; };
-  // void getDirectionAng(GLfloat &directionAngOut){  directionAngOut = gDirectionAng;};
+  Surface *getSurface() { return _surface; }
 };
 
 #endif /* SHOT_H */
